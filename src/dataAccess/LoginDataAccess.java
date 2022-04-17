@@ -1,4 +1,4 @@
-package business;
+package dataAccess;
 
 public interface LoginDataAccess {
 

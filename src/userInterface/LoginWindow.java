@@ -35,4 +35,5 @@ public class LoginWindow extends JFrame {
         controller = new ApplicationController();
     }
 
+
 }

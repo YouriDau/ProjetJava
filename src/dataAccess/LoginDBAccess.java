@@ -1,5 +1,7 @@
 package dataAccess;
 
-public class LoginDBAccess {
+import dataAccess.LoginDataAccess;
+
+public class LoginDBAccess implements LoginDataAccess {
 
 }
