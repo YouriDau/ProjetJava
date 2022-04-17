@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame {
     private Container container;
     private PanelAccueil accueilPage;
+    // commentaire
 
     public MainWindow() {
         super("Magasin");
