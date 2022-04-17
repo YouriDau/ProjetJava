@@ -1,6 +1,5 @@
 package userInterface;
 
-import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +9,6 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame {
     private Container container;
     private PanelAccueil accueilPage;
-    // commentaire
 
     public MainWindow() {
         super("Magasin");
