@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class LoginWindow extends JFrame {
+    // Comme
     private Container container;
     private PanelLoginNorth northPanel;
     private PanelLoginSouth southPanel;
