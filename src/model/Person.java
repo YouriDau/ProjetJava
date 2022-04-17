@@ -1,6 +1,6 @@
 package model;
-
 public class Person {
+    //Arno
     private Integer number;
     private String lastName;
     private Integer phoneNumber;
