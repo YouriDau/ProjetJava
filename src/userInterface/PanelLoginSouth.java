@@ -8,15 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PanelLoginSouth extends JPanel {
-    private JButton submit;
+    private JButton login;
     private ApplicationController controller;
 
     public PanelLoginSouth() {
         this.controller = new ApplicationController();
 
         this.setLayout(new BorderLayout());
-        submit = new JButton("Submit");
-        this.add(submit);
+        login = new JButton("login");
+        this.add(login);
     }
 
     public class SubmitListener implements ActionListener {

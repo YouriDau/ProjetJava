@@ -8,13 +8,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class LoginWindow extends JFrame {
-    // Comme
     private Container container;
     private PanelLoginNorth northPanel;
     private PanelLoginSouth southPanel;
     private ApplicationController controller;
 
     public LoginWindow() {
+
         super("login");
         setBounds(100, 100, 400, 130);
 
