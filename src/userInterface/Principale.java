@@ -1,7 +1,9 @@
 package userInterface;
 
+import com.sun.tools.javac.Main;
+
 public class Principale {
     public static void main(String[] args) {
-        LoginWindow login = new LoginWindow();
+        MainWindow mainWindow = new MainWindow();
     }
 }

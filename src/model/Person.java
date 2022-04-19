@@ -24,8 +24,8 @@ public class Person {
         this.type = type;
     }
 
-    public Person(Integer number, String lastName, Integer phoneNumber, String email,
-                  Boolean hasBadge) {
+    public Person(Integer number, String lastName, Integer phoneNumber,
+                  String email, Boolean hasBadge) {
         this.number = number;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
