@@ -3,7 +3,7 @@ package model;
 public class Person {
     private Integer number;
     private String lastName;
-    private Integer phoneNumber;
+    private String phoneNumber;
     private String email;
     private String firstName;
     private Integer VATNumber;
@@ -11,29 +11,29 @@ public class Person {
     private Boolean hasBadge;
     private PersonType type;
 
-    public Person(Integer number, String lastName, Integer phoneNumber, String email,
+    public Person(Integer number, String lastName, String phoneNumber, String email,
                   String firstName, Integer VATNumber, Integer nbFidelityPoints, Boolean hasBadge, PersonType type) {
-        this.number = number;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.firstName = firstName;
-        this.VATNumber = VATNumber;
-        this.nbFidelityPoints = nbFidelityPoints;
-        this.hasBadge = hasBadge;
-        this.type = type;
+        setNumber(number);
+        setLastName(lastName);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setFirstName(firstName);
+        setVATNumber(VATNumber);
+        setNbFidelityPoints(nbFidelityPoints);
+        setHasBadge(hasBadge);
+        setType(type);
     }
 
-    public Person(Integer number, String lastName, Integer phoneNumber,
+    public Person(Integer number, String lastName, String phoneNumber,
                   String email, Boolean hasBadge) {
-        this.number = number;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.hasBadge = hasBadge;
-        this.firstName = null;
-        this.VATNumber = null;
-        this.nbFidelityPoints = null;
+        setNumber(number);
+        setLastName(lastName);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setHasBadge(hasBadge);
+        setFirstName(null);
+        setVATNumber(null);
+        setNbFidelityPoints(null);
     }
 
     public Integer getNumber() {
@@ -44,7 +44,7 @@ public class Person {
         return lastName;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -66,5 +66,45 @@ public class Person {
 
     public Boolean getHasBadge() {
         return hasBadge;
+    }
+
+    public PersonType getType() {
+        return type;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setVATNumber(Integer VATNumber) {
+        this.VATNumber = VATNumber;
+    }
+
+    public void setNbFidelityPoints(Integer nbFidelityPoints) {
+        this.nbFidelityPoints = nbFidelityPoints;
+    }
+
+    public void setHasBadge(Boolean hasBadge) {
+        this.hasBadge = hasBadge;
+    }
+
+    public void setType(PersonType type) {
+        this.type = type;
     }
 }
