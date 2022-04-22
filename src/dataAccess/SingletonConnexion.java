@@ -8,6 +8,5 @@ public class SingletonConnexion {
             connexion = new SingletonConnexion();
         }
         return connexion;
-    }
-     */
+    }*/
 }

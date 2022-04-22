@@ -15,7 +15,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super("Magasin");
-        setBounds(2000, 100, 500, 500);
+        setBounds(100, 100, 500, 500);
 
         container = this.getContentPane();
         container.setLayout(new BorderLayout());

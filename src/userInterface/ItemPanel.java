@@ -13,6 +13,7 @@ public class ItemPanel extends JPanel {
     private GridBagConstraints layoutConstraints;
     private JButton submit;
     private JButton back;
+    private JButton reset;
 
     public ItemPanel () {
         this.setLayout(new GridBagLayout());
@@ -30,22 +31,27 @@ public class ItemPanel extends JPanel {
 
         submit = new JButton("Submit");
         back = new JButton("Back");
+        reset = new JButton("Reset");
 
         layoutConstraints.fill = GridBagConstraints.BOTH;
         layoutConstraints.insets = new Insets(0, 0, 10, 10);
+        layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
         layoutConstraints.gridy = 0;
         this.add(firstNumberLabel, layoutConstraints);
 
-        layoutConstraints.gridx = 1;
+        layoutConstraints.gridwidth = 1;
+        layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 0;
         this.add(firstNumber, layoutConstraints);
 
+        layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
         layoutConstraints.gridy = 1;
         this.add(secondNumberLabel, layoutConstraints);
 
-        layoutConstraints.gridx = 1;
+        layoutConstraints.gridwidth = 1;
+        layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 1;
         this.add(secondNumber, layoutConstraints);
 
@@ -56,5 +62,9 @@ public class ItemPanel extends JPanel {
         layoutConstraints.gridx = 1;
         layoutConstraints.gridy = 2;
         this.add(back, layoutConstraints);
+
+        layoutConstraints.gridx = 2;
+        layoutConstraints.gridy = 2;
+        this.add(reset, layoutConstraints);
     }
 }
