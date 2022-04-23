@@ -33,8 +33,8 @@ public class PointingPanel extends JPanel {
         dateModel2 = new SpinnerDateModel();
         firstDate = new JSpinner(dateModel);
         secondDate = new JSpinner(dateModel2);
-        firstEditor = new JSpinner.DateEditor(firstDate, "dd-MM-yy");
-        secondEditor = new JSpinner.DateEditor(secondDate, "dd-MM-yy");
+        firstEditor = new JSpinner.DateEditor(firstDate, "dd-MM-yyyy");
+        secondEditor = new JSpinner.DateEditor(secondDate, "dd-MM-yyyy");
 
         firstDate.setEditor(firstEditor);
         secondDate.setEditor(secondEditor);
@@ -47,7 +47,7 @@ public class PointingPanel extends JPanel {
         reset = new JButton("Reset");
 
         layoutConstraints.fill = GridBagConstraints.BOTH;
-        layoutConstraints.insets = new Insets(0,0, 10, 10);
+        layoutConstraints.insets = new Insets(0,0, 15, 15);
         layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
         layoutConstraints.gridy = 0;

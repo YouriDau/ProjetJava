@@ -1,5 +1,7 @@
 package userInterface;
 
+import dataAccess.SingletonConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -49,6 +51,7 @@ public class MainWindow extends JFrame {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                SingletonConnection.closeConnection();
                 System.exit(0);
             }
         });

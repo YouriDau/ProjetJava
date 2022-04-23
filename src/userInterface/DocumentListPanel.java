@@ -1,35 +1,37 @@
 package userInterface;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DocumentListPanel extends JPanel{
-    private JButton addDocument;
-    private JButton modifyDocument;
-    private JButton deleteDocument;
-    private GridBagConstraints layoutConstraints;
+    private JTable table;
+    // ____________________
+    // Pour le test
+
+    private GregorianCalendar today = new GregorianCalendar();
+    private String[] columnTitles = {"Number",
+                                     "Creation_date",
+                                     "Payment_condition",
+                                     "credit_limit",
+                                     "document_type",
+                                     "process"};
+    private Object[][] data = {
+            {1, today.get(Calendar.DAY_OF_MONTH) +"-"+ (today.get(Calendar.MONTH)+1) +"-"+ today.get(Calendar.YEAR), "condition 1", 350.5, "Achat process", "Facture"},
+            {2, today.get(Calendar.DAY_OF_MONTH) +"-"+ (today.get(Calendar.MONTH)+1) +"-"+ today.get(Calendar.YEAR), "condition 2", 650.2, "Achat process", "Facture"},
+            {3, today.get(Calendar.DAY_OF_MONTH) +"-"+ (today.get(Calendar.MONTH)+1) +"-"+ today.get(Calendar.YEAR), "condition 3", 100.0, "Achat process", "Facture"}
+    };
+
+    // ____________________
 
     public DocumentListPanel() {
-        this.setLayout(new GridBagLayout());
-        layoutConstraints = new GridBagConstraints();
-        addDocument = new JButton("Add a document");
-        modifyDocument = new JButton("Modify a document");
-        deleteDocument = new JButton("Delete a document");
+        this.setLayout(new BorderLayout());
+        table = new JTable(data, columnTitles);
+        table.setEnabled(false);
 
-        layoutConstraints.fill = GridBagConstraints.BOTH;
-        layoutConstraints.insets = new Insets(0, 0, 10, 10);
-        layoutConstraints.gridwidth = 2;
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridy = 0;
-        this.add(addDocument, layoutConstraints);
-
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridy = 1;
-        this.add(modifyDocument, layoutConstraints);
-
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridy = 2;
-        this.add(deleteDocument, layoutConstraints);
+        this.add(table.getTableHeader(), BorderLayout.PAGE_START);
+        this.add(table, BorderLayout.CENTER);
     }
 }

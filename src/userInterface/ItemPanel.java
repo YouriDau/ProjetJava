@@ -33,8 +33,7 @@ public class ItemPanel extends JPanel {
         back = new JButton("Back");
         reset = new JButton("Reset");
 
-        layoutConstraints.fill = GridBagConstraints.BOTH;
-        layoutConstraints.insets = new Insets(0, 0, 10, 10);
+        layoutConstraints.insets = new Insets(0, 0, 15, 15);
         layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
         layoutConstraints.gridy = 0;
