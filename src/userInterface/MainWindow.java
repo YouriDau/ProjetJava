@@ -51,7 +51,8 @@ public class MainWindow extends JFrame {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                SingletonConnection.closeConnection();
+                if (SingletonConnection.getInstance() != null)
+                    SingletonConnection.closeConnection();
                 System.exit(0);
             }
         });

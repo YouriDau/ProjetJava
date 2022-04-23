@@ -44,7 +44,6 @@ public class DocumentWorkflowPanel extends JPanel {
         submit.addActionListener(new SubmitListener());
         back.addActionListener(new BackListener());
 
-        layoutConstraints.fill = GridBagConstraints.BOTH;
         layoutConstraints.insets = new Insets(0, 0, 15, 15);
         layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
@@ -96,7 +95,7 @@ public class DocumentWorkflowPanel extends JPanel {
             DocumentWorkflowPanel.this.setLayout(new BorderLayout());
             DocumentWorkflowPanel.this.add(new AccueilPanel());
             DocumentWorkflowPanel.this.repaint();
-            setVisible(true);
+            DocumentWorkflowPanel.this.setVisible(true);
         }
     }
 }
