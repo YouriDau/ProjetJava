@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DocumentWorkflowPanel extends JPanel {
@@ -90,12 +89,13 @@ public class DocumentWorkflowPanel extends JPanel {
     }
 
     public class BackListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent event) {
             DocumentWorkflowPanel.this.removeAll();
             DocumentWorkflowPanel.this.setLayout(new BorderLayout());
             DocumentWorkflowPanel.this.add(new AccueilPanel());
             DocumentWorkflowPanel.this.repaint();
-            DocumentWorkflowPanel.this.setVisible(true);
+            setVisible(true);
         }
     }
 }

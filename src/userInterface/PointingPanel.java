@@ -1,5 +1,7 @@
 package userInterface;
 
+import controller.ApplicationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.GregorianCalendar;
@@ -9,8 +11,6 @@ public class PointingPanel extends JPanel {
     private JLabel secondDateLabel;
     private JSpinner firstDate;
     private JSpinner secondDate;
-    private SpinnerDateModel dateModel;
-    private SpinnerDateModel dateModel2;
     private JSpinner.DateEditor firstEditor;
     private JSpinner.DateEditor secondEditor;
     private GregorianCalendar today;
@@ -29,10 +29,8 @@ public class PointingPanel extends JPanel {
         secondDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
         today = new GregorianCalendar();
-        dateModel = new SpinnerDateModel();
-        dateModel2 = new SpinnerDateModel();
-        firstDate = new JSpinner(dateModel);
-        secondDate = new JSpinner(dateModel2);
+        firstDate = new JSpinner(new SpinnerDateModel());
+        secondDate = new JSpinner(new SpinnerDateModel());
         firstEditor = new JSpinner.DateEditor(firstDate, "dd-MM-yyyy");
         secondEditor = new JSpinner.DateEditor(secondDate, "dd-MM-yyyy");
 

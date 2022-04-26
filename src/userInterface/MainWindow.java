@@ -60,6 +60,7 @@ public class MainWindow extends JFrame {
     }
 
     public class SearchByPromoListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
             container.setLayout(new BorderLayout());
@@ -70,6 +71,7 @@ public class MainWindow extends JFrame {
     }
 
     public class SearchByWorkflowTypeListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
             container.setLayout(new BorderLayout());
@@ -80,6 +82,7 @@ public class MainWindow extends JFrame {
     }
 
     public class ShowDocumentsListListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
             container.setLayout(new BorderLayout());
@@ -90,6 +93,7 @@ public class MainWindow extends JFrame {
     }
 
     public class PointingByDateListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
             container.setLayout(new BorderLayout());

@@ -1,23 +1,24 @@
 package business;
 
-import dataAccess.WorkflowTypeDBAccess;
-import dataAccess.WorkflowTypeDataAccess;
+import controller.DataAccess;
+import controller.WorkflowTypeDataAccess;
+import dataAccess.DBAccess;
 import model.WorkflowType;
 
 import java.util.ArrayList;
 
 public class WorkflowTypeManager {
-    private WorkflowTypeDataAccess dao;
+    private DataAccess dao;
 
     public WorkflowTypeManager() {
-        setDao(new WorkflowTypeDBAccess());
+        setDao(new DBAccess());
     }
 
     public ArrayList<WorkflowType> getAllWorkflowTypes() {
         return dao.getAllWorkflowTypes();
     }
 
-    public void setDao(WorkflowTypeDBAccess workflowTypeDBAccess) {
+    public void setDao(DataAccess workflowTypeDBAccess) {
         this.dao = workflowTypeDBAccess;
     }
 }

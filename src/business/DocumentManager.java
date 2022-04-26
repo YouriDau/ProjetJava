@@ -1,16 +1,16 @@
 package business;
 
-import dataAccess.DocumentDBAccess;
-import dataAccess.DocumentDataAccess;
+import controller.DataAccess;
+import dataAccess.DBAccess;
 import model.Document;
 
 import java.util.ArrayList;
 
 public class DocumentManager {
-    private DocumentDataAccess dao;
+    private DataAccess dao;
 
     public DocumentManager() {
-        dao = new DocumentDBAccess();
+        dao = new DBAccess();
     }
 
     public ArrayList<Document> getDocuments(String workflowType) {
