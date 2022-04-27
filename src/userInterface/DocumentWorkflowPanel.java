@@ -19,8 +19,11 @@ public class DocumentWorkflowPanel extends JPanel {
     private ArrayList<WorkflowType> allWorkflowType;
     private String[] types;
     private ApplicationController controller;
+    private Container container;
 
-    public DocumentWorkflowPanel() {
+    public DocumentWorkflowPanel(Container container) {
+        this.container = container;
+
         this.setLayout(new GridBagLayout());
         controller = new ApplicationController();
         layoutConstraints = new GridBagConstraints();
@@ -91,11 +94,10 @@ public class DocumentWorkflowPanel extends JPanel {
     public class BackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            DocumentWorkflowPanel.this.removeAll();
-            DocumentWorkflowPanel.this.setLayout(new BorderLayout());
-            DocumentWorkflowPanel.this.add(new AccueilPanel());
-            DocumentWorkflowPanel.this.repaint();
-            setVisible(true);
+            container.removeAll();
+            container.add(new AccueilPanel());
+            container.revalidate();
+            container.repaint();
         }
     }
 }

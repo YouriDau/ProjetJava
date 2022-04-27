@@ -63,7 +63,6 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.setLayout(new BorderLayout());
             container.add(new ItemPanel());
             container.repaint();
             setVisible(true);
@@ -74,8 +73,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.setLayout(new BorderLayout());
-            container.add(new DocumentWorkflowPanel());
+            container.add(new DocumentWorkflowPanel(container));
             container.repaint();
             setVisible(true);
         }
@@ -85,7 +83,6 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.setLayout(new BorderLayout());
             container.add(new DocumentListPanel());
             container.repaint();
             setVisible(true);
@@ -96,7 +93,6 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.setLayout(new BorderLayout());
             container.add(new PointingPanel());
             container.repaint();
             setVisible(true);

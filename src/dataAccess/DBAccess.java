@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
 
@@ -43,11 +44,13 @@ public class DBAccess implements DataAccess {
     @Override
     public ArrayList<Document> getDocuments(String workflowType) {
         Integer number;
+        GregorianCalendar date;
+        java.sql.Date sqlDate;
+        Integer documentType;
+        Integer workflowNumber;
         Document document;
         String paymentCondition;
         Double creditLimit;
-        Integer documentType;
-        Integer workflowNumber;
 
         ArrayList<Document> documents = new ArrayList<>();
         String sqlInstruction = "SELECT * FROM document " +
@@ -62,6 +65,9 @@ public class DBAccess implements DataAccess {
 
             while (data.next()) {
                 number = data.getInt("number");
+                sqlDate = data.getDate("creation_date");
+                paymentCondition = data.getString("payment_condition");
+                creditLimit = data.getDouble("credit-limit");
 
                 //documents.add(document);
             }
