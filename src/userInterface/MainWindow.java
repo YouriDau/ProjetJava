@@ -12,8 +12,8 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame {
     private Container container;
     private JMenuBar menuBar;
-    private JMenu itemsMenu, documentsMenu, pointingMenu;
-    private JMenuItem searchByPromo, searchByWorkflowType, showDocumentsList, pointingByDate;
+    private JMenu applicationMenu, itemsMenu, documentsMenu, pointingMenu;
+    private JMenuItem quit, searchByPromo, searchByWorkflowType, showDocumentsList, pointingByDate;
 
     public MainWindow() {
         super("Magasin");
@@ -26,25 +26,30 @@ public class MainWindow extends JFrame {
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
 
+        applicationMenu = new JMenu("Application");
         itemsMenu = new JMenu("Items");
         documentsMenu = new JMenu("Documents");
         pointingMenu = new JMenu("Pointing");
 
+        quit = new JMenuItem("Quit");
         searchByPromo = new JMenuItem("By promo");
         searchByWorkflowType = new JMenuItem("By workflow type");
         showDocumentsList = new JMenuItem("Documents list");
         pointingByDate = new JMenuItem("By date");
 
+        quit.addActionListener(new QuitListener());
         searchByPromo.addActionListener(new SearchByPromoListener());
         searchByWorkflowType.addActionListener(new SearchByWorkflowTypeListener());
         showDocumentsList.addActionListener(new ShowDocumentsListListener());
         pointingByDate.addActionListener(new PointingByDateListener());
 
+        applicationMenu.add(quit);
         itemsMenu.add(searchByPromo);
         documentsMenu.add(searchByWorkflowType);
         documentsMenu.add(showDocumentsList);
         pointingMenu.add(pointingByDate);
 
+        menuBar.add(applicationMenu);
         menuBar.add(itemsMenu);
         menuBar.add(documentsMenu);
         menuBar.add(pointingMenu);
@@ -59,11 +64,19 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
+    public class QuitListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (SingletonConnection.getInstance() != null)
+                SingletonConnection.closeConnection();
+            System.exit(0);
+        }
+    }
+
     public class SearchByPromoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new ItemPanel());
+            container.add(new ItemPanel(container));
             container.repaint();
             setVisible(true);
         }

@@ -15,6 +15,10 @@ import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
 
+    public DBAccess()  {
+
+    }
+
     @Override
     public ArrayList<WorkflowType> getAllWorkflowTypes() {
         Integer number;
@@ -38,6 +42,7 @@ public class DBAccess implements DataAccess {
         catch (SQLException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
+
         return workflowTypes;
     }
 
@@ -46,11 +51,11 @@ public class DBAccess implements DataAccess {
         Integer number;
         GregorianCalendar date;
         java.sql.Date sqlDate;
+        String paymentCondition;
         Integer documentType;
         Integer workflowNumber;
-        Document document;
-        String paymentCondition;
         Double creditLimit;
+        Document document;
 
         ArrayList<Document> documents = new ArrayList<>();
         String sqlInstruction = "SELECT * FROM document " +
@@ -62,12 +67,18 @@ public class DBAccess implements DataAccess {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
+            date = new GregorianCalendar();
 
             while (data.next()) {
                 number = data.getInt("number");
                 sqlDate = data.getDate("creation_date");
-                paymentCondition = data.getString("payment_condition");
-                creditLimit = data.getDouble("credit-limit");
+                date.setTime(sqlDate);
+                documentType = data.getInt("document_type");
+                workflowNumber = data.getInt("process");
+
+                document = new Document(number, date, documentType, workflowNumber);
+
+
 
                 //documents.add(document);
             }

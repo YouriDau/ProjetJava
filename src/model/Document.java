@@ -7,21 +7,22 @@ public class Document {
     private GregorianCalendar creationDate;
     private String paymentCondition; // Can be null
     private Double creditLimit; // Can be null
-    private Integer processNumber;
+    private Integer type;
+    private Integer workflowNumber;
 
-    public void Document(Integer number, GregorianCalendar creationDate, String paymentCondition,
-                         Double creditLimit, Integer processNumber) {
+    public Document(Integer number, GregorianCalendar creationDate, String paymentCondition,
+                         Double creditLimit, Integer type, Integer workflowNumber) {
         setNumber(number);
         setCreationDate(creationDate);
         setPaymentCondition(paymentCondition);
         setCreditLimit(creditLimit);
-        setProcessNumber(processNumber);
+        setProcessNumber(workflowNumber);
     }
 
-    public void Document(Integer number, GregorianCalendar creationDate, Integer processNumber) {
+    public Document(Integer number, GregorianCalendar creationDate, Integer type, Integer workflowNumber) {
         setNumber(number);
         setCreationDate(creationDate);
-        setProcessNumber(processNumber);
+        setProcessNumber(workflowNumber);
         setPaymentCondition(null);
         setCreditLimit(null);
     }
@@ -42,8 +43,12 @@ public class Document {
         return creditLimit;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
     public Integer getProcessNumber() {
-        return processNumber;
+        return workflowNumber;
     }
 
     public void setNumber(Integer number) {
@@ -62,7 +67,11 @@ public class Document {
         this.creditLimit = creditLimit;
     }
 
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public void setProcessNumber(Integer processNumber) {
-        this.processNumber = processNumber;
+        this.workflowNumber = processNumber;
     }
 }

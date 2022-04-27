@@ -11,7 +11,7 @@ public class SingletonConnection {
     public static Connection getInstance() {
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_magasin",
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store",
                         "root",
                         "root");
 

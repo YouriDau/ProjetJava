@@ -2,6 +2,8 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ItemPanel extends JPanel {
     private JLabel firstNumberLabel;
@@ -14,8 +16,11 @@ public class ItemPanel extends JPanel {
     private JButton submit;
     private JButton back;
     private JButton reset;
+    private Container container;
 
-    public ItemPanel () {
+    public ItemPanel (Container container) {
+        this.container = container;
+
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
         firstNumberLabel = new JLabel("Choose the min number :");
@@ -25,9 +30,13 @@ public class ItemPanel extends JPanel {
 
         firstNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
         firstNumber = new JSpinner(firstNumberModel);
+        firstNumber.setPreferredSize(new Dimension(50, 20));
+        firstNumber.setEditor(new JSpinner.DefaultEditor(firstNumber));
 
         secondNumberModel = new SpinnerNumberModel(0, 0, 100, 1);
         secondNumber = new JSpinner(secondNumberModel);
+        secondNumber.setPreferredSize(new Dimension(50, 20));
+        secondNumber.setEditor(new JSpinner.DefaultEditor(secondNumber));
 
         submit = new JButton("Submit");
         back = new JButton("Back");
@@ -65,5 +74,15 @@ public class ItemPanel extends JPanel {
         layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 2;
         this.add(reset, layoutConstraints);
+    }
+
+    public class BackListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new AccueilPanel());
+            container.revalidate();
+            container.repaint();
+        }
     }
 }
