@@ -1,7 +1,6 @@
 package business;
 
 import controller.DataAccess;
-import controller.WorkflowTypeDataAccess;
 import dataAccess.DBAccess;
 import model.WorkflowType;
 

@@ -11,7 +11,7 @@ public class DocumentListPanel extends JPanel{
     // ____________________
     // Pour le test
 
-    private GregorianCalendar today = new GregorianCalendar();
+    private GregorianCalendar today;
     private String[] columnTitles = {"Number",
                                      "Creation_date",
                                      "Payment_condition",
@@ -28,8 +28,11 @@ public class DocumentListPanel extends JPanel{
 
     public DocumentListPanel() {
         this.setLayout(new BorderLayout());
+        today = new GregorianCalendar();
         table = new JTable(data, columnTitles);
         table.setEnabled(false);
+
+        today = new GregorianCalendar();
 
         this.add(table.getTableHeader(), BorderLayout.PAGE_START);
         this.add(table, BorderLayout.CENTER);

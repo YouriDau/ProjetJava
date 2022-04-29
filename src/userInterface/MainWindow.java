@@ -56,7 +56,7 @@ public class MainWindow extends JFrame {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                if (SingletonConnection.getInstance() != null)
+                if (!SingletonConnection.connectionIsNull())
                     SingletonConnection.closeConnection();
                 System.exit(0);
             }
@@ -66,7 +66,7 @@ public class MainWindow extends JFrame {
 
     public class QuitListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            if (SingletonConnection.getInstance() != null)
+            if (!SingletonConnection.connectionIsNull())
                 SingletonConnection.closeConnection();
             System.exit(0);
         }

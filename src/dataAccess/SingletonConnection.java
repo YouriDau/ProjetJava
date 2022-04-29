@@ -30,6 +30,9 @@ public class SingletonConnection {
         catch (SQLException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
+    public static boolean connectionIsNull() {
+        return connection == null;
     }
 }

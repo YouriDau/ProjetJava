@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public interface DataAccess {
     public ArrayList<WorkflowType> getAllWorkflowTypes();
-    public ArrayList<Document> getDocuments(String type);
+    public ArrayList<Document> getDocuments(Integer workflowNumber);
 
 }

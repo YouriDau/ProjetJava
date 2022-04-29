@@ -1,7 +1,6 @@
 package dataAccess;
 
 import controller.DataAccess;
-import controller.DocumentDataAccess;
 import model.Document;
 import model.WorkflowType;
 
@@ -47,25 +46,26 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<Document> getDocuments(String workflowType) {
+    public ArrayList<Document> getDocuments(Integer workflowNumber) {
         Integer number;
         GregorianCalendar date;
         java.sql.Date sqlDate;
         String paymentCondition;
         Integer documentType;
-        Integer workflowNumber;
+        Integer processNumber;
         Double creditLimit;
         Document document;
 
         ArrayList<Document> documents = new ArrayList<>();
-        String sqlInstruction = "SELECT * FROM document " +
-                                "WHERE process = " +
-                                "(SELECT number FROM workflow" +
-                                "WHERE workflow_type = ?)";
+        String sqlInstruction = "SELECT * " +
+                                "FROM document WHERE process IN " +
+                                "(SELECT number " +
+                                "FROM workflow WHERE workflow_type = ?);";
 
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, workflowNumber);
             ResultSet data = preparedStatement.executeQuery();
             date = new GregorianCalendar();
 
@@ -74,15 +74,22 @@ public class DBAccess implements DataAccess {
                 sqlDate = data.getDate("creation_date");
                 date.setTime(sqlDate);
                 documentType = data.getInt("document_type");
-                workflowNumber = data.getInt("process");
+                processNumber = data.getInt("process");
 
-                document = new Document(number, date, documentType, workflowNumber);
+                document = new Document(number, date, documentType, processNumber);
 
+                paymentCondition = data.getString("payment_condition");
+                if (!data.wasNull()) {
+                    document.setPaymentCondition(paymentCondition);
+                }
 
+                creditLimit = data.getDouble("credit_limit");
+                if (!data.wasNull()) {
+                    document.setCreditLimit(creditLimit);
+                }
 
-                //documents.add(document);
+                documents.add(document);
             }
-            connection.close();
         }
         catch (SQLException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);

@@ -20,7 +20,7 @@ public class ApplicationController {
         return workflowTypeManager.getAllWorkflowTypes();
     }
 
-    public ArrayList<Document> getDocuments(String type) {
-        return  documentManager.getDocuments(type);
+    public ArrayList<Document> getDocuments(Integer workflowNumber) {
+        return  documentManager.getDocuments(workflowNumber);
     }
 }

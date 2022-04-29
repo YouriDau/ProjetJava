@@ -3,6 +3,8 @@ package model;
 import java.util.GregorianCalendar;
 
 public class Document {
+    private static final String[] columnsTitles = {"Number", "Creation date", "Payment condition", "Credit limit", "Document type", "Workflow number"};
+
     private Integer number;
     private GregorianCalendar creationDate;
     private String paymentCondition; // Can be null
@@ -16,13 +18,15 @@ public class Document {
         setCreationDate(creationDate);
         setPaymentCondition(paymentCondition);
         setCreditLimit(creditLimit);
-        setProcessNumber(workflowNumber);
+        setType(type);
+        setworkflowNumber(workflowNumber);
     }
 
     public Document(Integer number, GregorianCalendar creationDate, Integer type, Integer workflowNumber) {
         setNumber(number);
         setCreationDate(creationDate);
-        setProcessNumber(workflowNumber);
+        setType(type);
+        setworkflowNumber(workflowNumber);
         setPaymentCondition(null);
         setCreditLimit(null);
     }
@@ -47,7 +51,7 @@ public class Document {
         return type;
     }
 
-    public Integer getProcessNumber() {
+    public Integer getworkflowNumber() {
         return workflowNumber;
     }
 
@@ -71,7 +75,11 @@ public class Document {
         this.type = type;
     }
 
-    public void setProcessNumber(Integer processNumber) {
+    public void setworkflowNumber(Integer processNumber) {
         this.workflowNumber = processNumber;
+    }
+
+    public static String[] getColumnsTitles() {
+        return columnsTitles;
     }
 }

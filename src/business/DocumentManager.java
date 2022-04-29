@@ -13,7 +13,7 @@ public class DocumentManager {
         dao = new DBAccess();
     }
 
-    public ArrayList<Document> getDocuments(String workflowType) {
-        return dao.getDocuments(workflowType);
+    public ArrayList<Document> getDocuments(Integer workflowNumber) {
+        return dao.getDocuments(workflowNumber);
     }
 }

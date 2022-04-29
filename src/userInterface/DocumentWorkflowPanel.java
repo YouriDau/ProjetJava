@@ -1,6 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
+import model.Document;
 import model.WorkflowType;
 
 import javax.swing.*;
@@ -83,11 +84,17 @@ public class DocumentWorkflowPanel extends JPanel {
     }
 
     public class SubmitListener implements ActionListener {
-        private int workflowNumber;
+        private Integer workflowNumber;
+        private ArrayList<Document> documents;
 
         public void actionPerformed(ActionEvent event) {
-           // workflowNumber = allWorkflowType.get;
-           // controller.getDocuments(workflowType);
+            workflowNumber = workflowTypes.getSelectedIndex()+1;
+            System.out.println(workflowNumber);
+            documents = controller.getDocuments(workflowNumber);
+            container.removeAll();
+            container.add(new DocumentWorkflowListPanel(documents));
+            container.revalidate();
+            container.repaint();
         }
     }
 
