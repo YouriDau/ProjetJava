@@ -1,40 +1,76 @@
 package userInterface;
 
+import controller.ApplicationController;
+import model.Document;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DocumentListPanel extends JPanel{
+    private static final int NB_TITLES = 6;
+
     private JTable table;
-    // ____________________
-    // Pour le test
-
-    private GregorianCalendar today;
-    private String[] columnTitles = {"Number",
-                                     "Creation_date",
-                                     "Payment_condition",
-                                     "credit_limit",
-                                     "document_type",
-                                     "process"};
-    private Object[][] data = {
-            {1, today.get(Calendar.DAY_OF_MONTH) +"-"+ (today.get(Calendar.MONTH)+1) +"-"+ today.get(Calendar.YEAR), "condition 1", 350.5, "Achat process", "Facture"},
-            {2, today.get(Calendar.DAY_OF_MONTH) +"-"+ (today.get(Calendar.MONTH)+1) +"-"+ today.get(Calendar.YEAR), "condition 2", 650.2, "Achat process", "Facture"},
-            {3, today.get(Calendar.DAY_OF_MONTH) +"-"+ (today.get(Calendar.MONTH)+1) +"-"+ today.get(Calendar.YEAR), "condition 3", 100.0, "Achat process", "Facture"}
-    };
-
-    // ____________________
+    private String[] columnTitles;
+    private Object[][] data;
+    private ApplicationController controller;
+    private DefaultTableCellRenderer centerRenderer;
 
     public DocumentListPanel() {
+        controller = new ApplicationController();
+        columnTitles = new String[NB_TITLES];
+        this.centerRenderer = new DefaultTableCellRenderer();
+        this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         this.setLayout(new BorderLayout());
-        today = new GregorianCalendar();
+
+        setColumnTitles(Document.getColumnsTitles());
+        setData(controller.getAllDocuments());
+
         table = new JTable(data, columnTitles);
         table.setEnabled(false);
 
-        today = new GregorianCalendar();
-
         this.add(table.getTableHeader(), BorderLayout.PAGE_START);
         this.add(table, BorderLayout.CENTER);
+    }
+
+    public void setColumnTitles(String[] columnTitles) {
+        for (int i = 0; i < NB_TITLES; i++) {
+            this.columnTitles[i] = columnTitles[i];
+        }
+    }
+
+    public void setData(ArrayList<Document> documents) {
+        int iDocument = 0;
+        int nbDocuments = documents.size();
+        Document document;
+        this.data = new Object[nbDocuments][NB_TITLES];
+
+        while (iDocument < nbDocuments) {
+            document = documents.get(iDocument);
+
+            this.data[iDocument][0] = document.getNumber();
+            this.data[iDocument][1] = document.getCreationDate().get(Calendar.YEAR);
+            if (document.getPaymentCondition() != null) {
+                this.data[iDocument][2] = document.getPaymentCondition();
+            }
+            if (document.getCreditLimit() != null) {
+                this.data[iDocument][3] = document.getCreditLimit();
+            }
+
+            this.data[iDocument][4] = document.getType();
+            this.data[iDocument][5] = document.getworkflowNumber();
+
+            iDocument++;
+        }
+    }
+
+    public void centerData() {
+        for (int i = 0; i < NB_TITLES; i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
 }

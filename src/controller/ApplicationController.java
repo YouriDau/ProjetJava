@@ -23,4 +23,8 @@ public class ApplicationController {
     public ArrayList<Document> getDocuments(Integer workflowNumber) {
         return  documentManager.getDocuments(workflowNumber);
     }
+
+    public ArrayList<Document> getAllDocuments() {
+        return documentManager.getAllDocuments();
+    }
 }

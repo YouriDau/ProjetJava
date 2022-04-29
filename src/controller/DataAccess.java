@@ -8,5 +8,6 @@ import java.util.ArrayList;
 public interface DataAccess {
     public ArrayList<WorkflowType> getAllWorkflowTypes();
     public ArrayList<Document> getDocuments(Integer workflowNumber);
+    public ArrayList<Document> getAllDocuments();
 
 }

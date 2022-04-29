@@ -16,4 +16,8 @@ public class DocumentManager {
     public ArrayList<Document> getDocuments(Integer workflowNumber) {
         return dao.getDocuments(workflowNumber);
     }
+
+    public ArrayList<Document> getAllDocuments() {
+        return dao.getAllDocuments();
+    }
 }
