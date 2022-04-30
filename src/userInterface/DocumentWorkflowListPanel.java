@@ -22,7 +22,6 @@ public class DocumentWorkflowListPanel extends JPanel {
     public DocumentWorkflowListPanel(ArrayList<Document> documents) {
         this.centerRenderer = new DefaultTableCellRenderer();
         this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-
         this.setLayout(new BorderLayout());
 
         if (documents.isEmpty()) {
