@@ -1,15 +1,14 @@
 package userInterface;
 
 import controller.ApplicationController;
+import exception.DBException;
 import model.Document;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class DocumentListPanel extends JPanel{
     private static final int NB_TITLES = 6;
@@ -21,20 +20,26 @@ public class DocumentListPanel extends JPanel{
     private DefaultTableCellRenderer centerRenderer;
 
     public DocumentListPanel() {
-        controller = new ApplicationController();
-        columnTitles = new String[NB_TITLES];
-        this.centerRenderer = new DefaultTableCellRenderer();
-        this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        this.setLayout(new BorderLayout());
+        try {
+            controller = new ApplicationController();
+            columnTitles = new String[NB_TITLES];
+            this.centerRenderer = new DefaultTableCellRenderer();
+            this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+            this.setLayout(new BorderLayout());
 
-        setColumnTitles(Document.getColumnsTitles());
-        setData(controller.getAllDocuments());
+            setColumnTitles(Document.getColumnsTitles());
+            setData(controller.getAllDocuments());
 
-        table = new JTable(data, columnTitles);
-        table.setEnabled(false);
+            table = new JTable(data, columnTitles);
+            table.setEnabled(false);
 
-        this.add(table.getTableHeader(), BorderLayout.PAGE_START);
-        this.add(table, BorderLayout.CENTER);
+            this.add(table.getTableHeader(), BorderLayout.PAGE_START);
+            this.add(table, BorderLayout.CENTER);
+        }
+        catch (DBException exception) {
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     public void setColumnTitles(String[] columnTitles) {

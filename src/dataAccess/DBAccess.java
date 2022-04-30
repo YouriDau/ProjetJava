@@ -1,6 +1,7 @@
 package dataAccess;
 
 import controller.DataAccess;
+import exception.DBException;
 import model.Document;
 import model.WorkflowType;
 
@@ -14,8 +15,12 @@ import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
 
+    public DBAccess() throws DBException {
+
+    }
+
     @Override
-    public ArrayList<WorkflowType> getAllWorkflowTypes() {
+    public ArrayList<WorkflowType> getAllWorkflowTypes()  {
         Integer number;
         String wording;
         WorkflowType workflowType;
@@ -94,7 +99,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<Document> getAllDocuments() {
+    public ArrayList<Document> getAllDocuments() throws DBException {
         Integer number;
         GregorianCalendar date;
         java.sql.Date sqlDate;
@@ -136,7 +141,7 @@ public class DBAccess implements DataAccess {
             }
         }
         catch (SQLException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+            throw new DBException(exception.getMessage());
         }
         return documents;
     }

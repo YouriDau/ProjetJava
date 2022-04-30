@@ -2,6 +2,7 @@ package business;
 
 import controller.DataAccess;
 import dataAccess.DBAccess;
+import exception.DBException;
 import model.Document;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class DocumentManager {
     private DataAccess dao;
 
-    public DocumentManager() {
+    public DocumentManager() throws DBException {
         dao = new DBAccess();
     }
 
@@ -17,7 +18,7 @@ public class DocumentManager {
         return dao.getDocuments(workflowNumber);
     }
 
-    public ArrayList<Document> getAllDocuments() {
+    public ArrayList<Document> getAllDocuments() throws DBException {
         return dao.getAllDocuments();
     }
 }

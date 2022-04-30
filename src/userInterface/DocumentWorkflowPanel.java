@@ -1,6 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
+import exception.DBException;
 import model.Document;
 import model.WorkflowType;
 
@@ -26,7 +27,12 @@ public class DocumentWorkflowPanel extends JPanel {
         this.container = container;
 
         this.setLayout(new GridBagLayout());
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        }
+        catch (DBException exception) {
+            JOptionPane.showMessageDialog(null, exception, "SQLError", JOptionPane.ERROR_MESSAGE);
+        }
         layoutConstraints = new GridBagConstraints();
 
         allWorkflowType = controller.getAllWorkflowTypes();

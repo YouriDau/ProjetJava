@@ -3,7 +3,7 @@ package model;
 import java.util.GregorianCalendar;
 
 public class Document {
-    private static final String[] columnsTitles = {"Number", "Creation date", "Payment condition", "Credit limit", "Document type", "Workflow number"};
+    public static final String[] columnsTitles = {"Number", "Creation date", "Payment condition", "Credit limit", "Document type", "Workflow number"};
 
     private Integer number;
     private GregorianCalendar creationDate;
