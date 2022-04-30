@@ -80,7 +80,7 @@ public class ItemPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new AccueilPanel());
+            container.add(new HomePanel());
             container.revalidate();
             container.repaint();
         }

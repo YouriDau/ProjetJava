@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class DocumentWorkflowPanel extends JPanel {
+public class WorkflowPanel extends JPanel {
     private JLabel workflowTypesLabel;
     private JComboBox<String> workflowTypes;
     private GridBagConstraints layoutConstraints;
@@ -23,7 +23,7 @@ public class DocumentWorkflowPanel extends JPanel {
     private ApplicationController controller;
     private Container container;
 
-    public DocumentWorkflowPanel(Container container) {
+    public WorkflowPanel(Container container) {
         this.container = container;
 
         this.setLayout(new GridBagLayout());
@@ -98,7 +98,7 @@ public class DocumentWorkflowPanel extends JPanel {
             System.out.println(workflowNumber);
             documents = controller.getDocuments(workflowNumber);
             container.removeAll();
-            container.add(new DocumentWorkflowListPanel(documents));
+            container.add(new WorkflowListPanel(documents));
             container.revalidate();
             container.repaint();
         }
@@ -108,7 +108,7 @@ public class DocumentWorkflowPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new AccueilPanel());
+            container.add(new HomePanel());
             container.revalidate();
             container.repaint();
         }

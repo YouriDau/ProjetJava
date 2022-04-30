@@ -13,7 +13,7 @@ public class MainWindow extends JFrame {
     private Container container;
     private JMenuBar menuBar;
     private JMenu applicationMenu, itemsMenu, documentsMenu, pointingMenu;
-    private JMenuItem quit, searchByPromo, searchByWorkflowType, showDocumentsList, pointingByDate;
+    private JMenuItem quit, searchByPromo, searchByWorkflowType, allDocuments, pointingByDate;
 
     public MainWindow() {
         super("Magasin");
@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
 
         container = this.getContentPane();
         container.setLayout(new BorderLayout());
-        container.add(new AccueilPanel());
+        container.add(new HomePanel());
 
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -34,19 +34,19 @@ public class MainWindow extends JFrame {
         quit = new JMenuItem("Quit");
         searchByPromo = new JMenuItem("By promo");
         searchByWorkflowType = new JMenuItem("By workflow type");
-        showDocumentsList = new JMenuItem("Documents list");
+        allDocuments = new JMenuItem("Documents list");
         pointingByDate = new JMenuItem("By date");
 
         quit.addActionListener(new QuitListener());
         searchByPromo.addActionListener(new SearchByPromoListener());
         searchByWorkflowType.addActionListener(new SearchByWorkflowTypeListener());
-        showDocumentsList.addActionListener(new ShowDocumentsListListener());
+        allDocuments.addActionListener(new AllDocumentsListener());
         pointingByDate.addActionListener(new PointingByDateListener());
 
         applicationMenu.add(quit);
         itemsMenu.add(searchByPromo);
         documentsMenu.add(searchByWorkflowType);
-        documentsMenu.add(showDocumentsList);
+        documentsMenu.add(allDocuments);
         pointingMenu.add(pointingByDate);
 
         menuBar.add(applicationMenu);
@@ -86,17 +86,17 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new DocumentWorkflowPanel(container));
+            container.add(new WorkflowPanel(container));
             container.repaint();
             setVisible(true);
         }
     }
 
-    public class ShowDocumentsListListener implements ActionListener {
+    public class AllDocumentsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new DocumentListPanel());
+            container.add(new AllDocumentsPanel());
             container.repaint();
             setVisible(true);
         }

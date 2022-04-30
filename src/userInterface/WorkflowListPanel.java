@@ -1,45 +1,45 @@
 package userInterface;
 
-import controller.ApplicationController;
-import exception.DBException;
 import model.Document;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class DocumentListPanel extends JPanel{
-    private static final int NB_TITLES = 6;
+public class WorkflowListPanel extends JPanel {
+    public static final int NB_TITLES = 6;
 
     private JTable table;
     private String[] columnTitles;
+    private JLabel listEmpty;
     private Object[][] data;
-    private ApplicationController controller;
     private DefaultTableCellRenderer centerRenderer;
 
-    public DocumentListPanel() {
-        try {
-            controller = new ApplicationController();
-            columnTitles = new String[NB_TITLES];
-            this.centerRenderer = new DefaultTableCellRenderer();
-            this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-            this.setLayout(new BorderLayout());
+    public WorkflowListPanel(ArrayList<Document> documents) {
+        this.centerRenderer = new DefaultTableCellRenderer();
+        this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        this.setLayout(new BorderLayout());
 
+        if (documents.isEmpty()) {
+            listEmpty = new JLabel("The list is empty");
+            listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
+            this.add(listEmpty);
+        } else {
+            columnTitles = new String[NB_TITLES];
             setColumnTitles(Document.getColumnsTitles());
-            setData(controller.getAllDocuments());
+            setData(documents);
 
             table = new JTable(data, columnTitles);
             table.setEnabled(false);
+            centerData();
 
             this.add(table.getTableHeader(), BorderLayout.PAGE_START);
-            this.add(table, BorderLayout.CENTER);
+            this.add(table);
         }
-        catch (DBException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
-        }
-
     }
 
     public void setColumnTitles(String[] columnTitles) {
