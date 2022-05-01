@@ -18,7 +18,7 @@ public class ApplicationController {
         documentManager = new DocumentManager();
     }
 
-    public ArrayList<WorkflowType> getAllWorkflowTypes() {
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException{
         return workflowTypeManager.getAllWorkflowTypes();
     }
 

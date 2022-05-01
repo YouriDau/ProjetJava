@@ -14,7 +14,7 @@ public class WorkflowTypeManager {
         setDao(new DBAccess());
     }
 
-    public ArrayList<WorkflowType> getAllWorkflowTypes() {
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException{
         return dao.getAllWorkflowTypes();
     }
 

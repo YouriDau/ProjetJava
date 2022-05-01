@@ -20,7 +20,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<WorkflowType> getAllWorkflowTypes()  {
+    public ArrayList<WorkflowType> getAllWorkflowTypes()  throws DBException{
         Integer number;
         String wording;
         WorkflowType workflowType;
@@ -40,7 +40,7 @@ public class DBAccess implements DataAccess {
             }
         }
         catch (SQLException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+            throw new DBException(exception.getMessage());
         }
 
         return workflowTypes;

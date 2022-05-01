@@ -23,58 +23,58 @@ public class WorkflowPanel extends JPanel {
     private ApplicationController controller;
     private Container container;
 
-    public WorkflowPanel(Container container) {
+    public WorkflowPanel(Container container){
         this.container = container;
 
         this.setLayout(new GridBagLayout());
         try {
             controller = new ApplicationController();
+            allWorkflowType = controller.getAllWorkflowTypes();
+            layoutConstraints = new GridBagConstraints();
+            setTypes(allWorkflowType);
+
+            workflowTypesLabel = new JLabel("Choose a workflow type :");
+            workflowTypesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            workflowTypes = new JComboBox<String>(types);
+            workflowTypes.setSelectedItem("Facture");
+            workflowTypes.setMaximumRowCount(3);
+            workflowTypes.setEnabled(true);
+
+            submit = new JButton("Submit");
+            back = new JButton("Back");
+            reset = new JButton("Reset");
+
+            submit.addActionListener(new SubmitListener());
+            back.addActionListener(new BackListener());
+
+            layoutConstraints.insets = new Insets(0, 0, 15, 15);
+            layoutConstraints.gridwidth = 2;
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 0;
+            this.add(workflowTypesLabel, layoutConstraints);
+
+            layoutConstraints.gridwidth = 1;
+            layoutConstraints.gridx = 2;
+            layoutConstraints.gridy = 0;
+            this.add(workflowTypes, layoutConstraints);
+
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 1;
+            this.add(submit, layoutConstraints);
+
+            layoutConstraints.gridx = 1;
+            layoutConstraints.gridy = 1;
+            this.add(back, layoutConstraints);
+
+            layoutConstraints.gridx = 2;
+            layoutConstraints.gridy = 1;
+            this.add(reset, layoutConstraints);
         }
         catch (DBException exception) {
-            JOptionPane.showMessageDialog(null, exception, "SQLError", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
         }
-        layoutConstraints = new GridBagConstraints();
 
-        allWorkflowType = controller.getAllWorkflowTypes();
-        setTypes(allWorkflowType);
-
-        workflowTypesLabel = new JLabel("Choose a workflow type :");
-        workflowTypesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        workflowTypes = new JComboBox<String>(types);
-        workflowTypes.setSelectedItem("Facture");
-        workflowTypes.setMaximumRowCount(3);
-        workflowTypes.setEnabled(true);
-
-        submit = new JButton("Submit");
-        back = new JButton("Back");
-        reset = new JButton("Reset");
-
-        submit.addActionListener(new SubmitListener());
-        back.addActionListener(new BackListener());
-
-        layoutConstraints.insets = new Insets(0, 0, 15, 15);
-        layoutConstraints.gridwidth = 2;
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridy = 0;
-        this.add(workflowTypesLabel, layoutConstraints);
-
-        layoutConstraints.gridwidth = 1;
-        layoutConstraints.gridx = 2;
-        layoutConstraints.gridy = 0;
-        this.add(workflowTypes, layoutConstraints);
-
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridy = 1;
-        this.add(submit, layoutConstraints);
-
-        layoutConstraints.gridx = 1;
-        layoutConstraints.gridy = 1;
-        this.add(back, layoutConstraints);
-
-        layoutConstraints.gridx = 2;
-        layoutConstraints.gridy = 1;
-        this.add(reset, layoutConstraints);
     }
 
     public void setTypes(ArrayList<WorkflowType> data) {
