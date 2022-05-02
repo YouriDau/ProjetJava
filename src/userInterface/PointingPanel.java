@@ -91,4 +91,11 @@ public class PointingPanel extends JPanel {
             secondDate.setValue(today.getTime());
         }
     }
+
+    public class Submit implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
 }

@@ -47,23 +47,23 @@ public class WorkflowPanel extends JPanel {
             submit.addActionListener(new SubmitListener());
 
             layoutConstraints.insets = new Insets(0, 0, 15, 15);
-            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 0;
             this.add(workflowTypesLabel, layoutConstraints);
 
-            layoutConstraints.gridwidth = 1;
-            layoutConstraints.gridx = 2;
+            layoutConstraints.gridx = 1;
             layoutConstraints.gridy = 0;
             this.add(workflowTypes, layoutConstraints);
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 1;
+            layoutConstraints.anchor = GridBagConstraints.LINE_END;
             this.add(submit, layoutConstraints);
 
 
-            layoutConstraints.gridx = 2;
+            layoutConstraints.gridx = 1;
             layoutConstraints.gridy = 1;
+            layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(back, layoutConstraints);
         }
         catch (DBException exception) {
