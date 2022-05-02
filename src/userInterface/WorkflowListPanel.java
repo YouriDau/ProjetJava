@@ -1,81 +1,55 @@
 package userInterface;
 
+import controller.ApplicationController;
+import exception.DBException;
 import model.Document;
 
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class WorkflowListPanel extends JPanel {
-    public static final int NB_TITLES = 6;
 
-    private JTable table;
-    private String[] columnTitles;
     private JLabel listEmpty;
-    private Object[][] data;
-    private DefaultTableCellRenderer centerRenderer;
+    private JButton back;
+    private Container container;
+    private ApplicationController controller;
+    private ArrayList<Document> documents;
+    private DocumentsModel model;
+    private JTable table;
+    private JScrollPane scrollPane;
 
-    public WorkflowListPanel(ArrayList<Document> documents) {
-        this.centerRenderer = new DefaultTableCellRenderer();
-        this.centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+    public WorkflowListPanel(int workflowNumber, Container container) {
         this.setLayout(new BorderLayout());
+        this.container = container;
 
-        if (documents.isEmpty()) {
-            listEmpty = new JLabel("The list is empty");
-            listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
-            this.add(listEmpty);
-        } else {
-            columnTitles = new String[NB_TITLES];
-            setColumnTitles(Document.getColumnsTitles());
-            setData(documents);
+        try {
+            controller = new ApplicationController();
+            documents = controller.getDocuments(workflowNumber);
 
-            table = new JTable(data, columnTitles);
-            table.setEnabled(false);
-            centerData();
+            if (documents.isEmpty()) {
+                listEmpty = new JLabel("The list is empty");
+                listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
-            this.add(table.getTableHeader(), BorderLayout.PAGE_START);
-            this.add(table);
-        }
-    }
+                back = new BackButton(container);
 
-    public void setColumnTitles(String[] columnTitles) {
-        for (int i = 0; i < NB_TITLES; i++) {
-            this.columnTitles[i] = columnTitles[i];
-        }
-    }
+                this.add(listEmpty, BorderLayout.CENTER);
+                this.add(back, BorderLayout.AFTER_LAST_LINE);
+            } else {
+                model = new DocumentsModel(controller.getDocuments(workflowNumber));
 
-    public void setData(ArrayList<Document> documents) {
-        int iDocument = 0;
-        int nbDocuments = documents.size();
-        Document document;
-        this.data = new Object[nbDocuments][NB_TITLES];
+                table = new JTable(model);
+                scrollPane = new JScrollPane(table);
 
-        while (iDocument < nbDocuments) {
-            document = documents.get(iDocument);
-
-            this.data[iDocument][0] = document.getNumber();
-            this.data[iDocument][1] = document.getCreationDate().get(Calendar.YEAR);
-            if (document.getPaymentCondition() != null) {
-                this.data[iDocument][2] = document.getPaymentCondition();
+                this.add(scrollPane);
+                this.add(table.getTableHeader(), BorderLayout.PAGE_START);
+                this.add(table, BorderLayout.CENTER);
             }
-            if (document.getCreditLimit() != null) {
-                this.data[iDocument][3] = document.getCreditLimit();
-            }
-
-            this.data[iDocument][4] = document.getType();
-            this.data[iDocument][5] = document.getworkflowNumber();
-
-            iDocument++;
         }
-    }
-
-    public void centerData() {
-        for (int i = 0; i < NB_TITLES; i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        catch(DBException exception) {
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

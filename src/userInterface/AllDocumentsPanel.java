@@ -10,7 +10,6 @@ import java.awt.*;
 public class AllDocumentsPanel extends JPanel{
     public final static int NB_COLUMNS = 6;
 
-    private Container container;
     private ApplicationController controller;
     private DocumentsModel model;
     private JTable table;
@@ -19,7 +18,6 @@ public class AllDocumentsPanel extends JPanel{
     private JScrollPane scrollPane;
 
     public AllDocumentsPanel() {
-        this.container = container;
         this.setLayout(new BorderLayout());
 
         try {
@@ -27,12 +25,11 @@ public class AllDocumentsPanel extends JPanel{
             model = new DocumentsModel(controller.getAllDocuments());
 
             table = new JTable(model);
-            //table.setEnabled(false);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
 
-            setColumnsSize();
-            setColumnsName();
+            //setColumnsSize();
+            //setColumnsName();
 
             this.add(scrollPane);
             this.add(table.getTableHeader(), BorderLayout.PAGE_START);

@@ -15,13 +15,15 @@ public class PointingPanel extends JPanel {
     private JSpinner.DateEditor secondEditor;
     private GregorianCalendar today;
     private GridBagConstraints layoutConstraints;
+    private Container container;
     private JButton submit;
     private JButton back;
     private JButton reset;
 
-    public PointingPanel() {
+    public PointingPanel(Container container) {
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
+        this.container = container;
 
         firstDateLabel = new JLabel("First date : ");
         firstDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -41,7 +43,7 @@ public class PointingPanel extends JPanel {
         secondDate.setValue(today.getTime());
 
         submit = new JButton("Submit");
-        back = new JButton("Back");
+        back = new BackButton(container);
         reset = new JButton("Reset");
 
         layoutConstraints.fill = GridBagConstraints.BOTH;

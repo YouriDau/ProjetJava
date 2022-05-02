@@ -61,6 +61,7 @@ public class MainWindow extends JFrame {
                 System.exit(0);
             }
         });
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -106,7 +107,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new PointingPanel());
+            container.add(new PointingPanel(container));
             container.repaint();
             setVisible(true);
         }

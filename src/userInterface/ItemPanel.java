@@ -39,7 +39,7 @@ public class ItemPanel extends JPanel {
         secondNumber.setEditor(new JSpinner.DefaultEditor(secondNumber));
 
         submit = new JButton("Submit");
-        back = new JButton("Back");
+        back = new BackButton(container);
         reset = new JButton("Reset");
 
         layoutConstraints.insets = new Insets(0, 0, 15, 15);
@@ -74,15 +74,5 @@ public class ItemPanel extends JPanel {
         layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 2;
         this.add(reset, layoutConstraints);
-    }
-
-    public class BackListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            container.removeAll();
-            container.add(new HomePanel());
-            container.revalidate();
-            container.repaint();
-        }
     }
 }

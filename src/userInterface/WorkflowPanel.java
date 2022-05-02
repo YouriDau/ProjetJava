@@ -42,11 +42,10 @@ public class WorkflowPanel extends JPanel {
             workflowTypes.setEnabled(true);
 
             submit = new JButton("Submit");
-            back = new JButton("Back");
+            back = new BackButton(container);
             reset = new JButton("Reset");
 
             submit.addActionListener(new SubmitListener());
-            back.addActionListener(new BackListener());
 
             layoutConstraints.insets = new Insets(0, 0, 15, 15);
             layoutConstraints.gridwidth = 2;
@@ -91,24 +90,11 @@ public class WorkflowPanel extends JPanel {
 
     public class SubmitListener implements ActionListener {
         private Integer workflowNumber;
-        private ArrayList<Document> documents;
 
         public void actionPerformed(ActionEvent event) {
             workflowNumber = workflowTypes.getSelectedIndex()+1;
-            System.out.println(workflowNumber);
-            documents = controller.getDocuments(workflowNumber);
             container.removeAll();
-            container.add(new WorkflowListPanel(documents));
-            container.revalidate();
-            container.repaint();
-        }
-    }
-
-    public class BackListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            container.removeAll();
-            container.add(new HomePanel());
+            container.add(new WorkflowListPanel(workflowNumber, container));
             container.revalidate();
             container.repaint();
         }
