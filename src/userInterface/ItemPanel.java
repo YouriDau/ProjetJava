@@ -1,5 +1,7 @@
 package userInterface;
 
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,7 @@ public class ItemPanel extends JPanel {
     private JButton back;
     private JButton reset;
     private Container container;
+    private MainWindow mainWindow;
 
     public ItemPanel (Container container) {
         this.container = container;

@@ -1,5 +1,6 @@
 package userInterface;
 
+import com.sun.tools.javac.Main;
 import dataAccess.SingletonConnection;
 
 import javax.swing.*;
@@ -97,8 +98,11 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
+            //MainWindow.this.setSize(600, 500);
             container.add(new AllDocumentsPanel());
             container.repaint();
+            MainWindow.this.pack();
+            MainWindow.this.setTitle("Documents");
             setVisible(true);
         }
     }

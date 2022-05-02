@@ -16,9 +16,11 @@ public class AllDocumentsPanel extends JPanel{
     private TableColumn column;
     private String[] columnsName;
     private JScrollPane scrollPane;
+    private GridBagConstraints layoutConstraints;
 
     public AllDocumentsPanel() {
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
+        layoutConstraints = new GridBagConstraints();
 
         try {
             controller = new ApplicationController();
@@ -28,12 +30,16 @@ public class AllDocumentsPanel extends JPanel{
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
 
-            //setColumnsSize();
-            //setColumnsName();
+            setColumnsSize();
+            setColumnsName();
 
-            this.add(scrollPane);
-            this.add(table.getTableHeader(), BorderLayout.PAGE_START);
-            this.add(table, BorderLayout.CENTER);
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 0;
+            this.add(table.getTableHeader(), layoutConstraints);
+
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 1;
+            this.add(table, layoutConstraints);
         }
         catch (DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
@@ -42,10 +48,18 @@ public class AllDocumentsPanel extends JPanel{
     }
 
     public void setColumnsSize() {
-        for (int i = 0; i < NB_COLUMNS; i++) {
-            column = table.getColumnModel().getColumn(i);
-            column.setPreferredWidth(50);
-        }
+        column = table.getColumnModel().getColumn(0);
+        column.setPreferredWidth(55);
+        column = table.getColumnModel().getColumn(1);
+        column.setPreferredWidth(80);
+        column = table.getColumnModel().getColumn(2);
+        column.setPreferredWidth(130);
+        column = table.getColumnModel().getColumn(3);
+        column.setPreferredWidth(80);
+        column = table.getColumnModel().getColumn(4);
+        column.setPreferredWidth(100);
+        column = table.getColumnModel().getColumn(5);
+        column.setPreferredWidth(100);
     }
 
     public void setColumnsName() {
