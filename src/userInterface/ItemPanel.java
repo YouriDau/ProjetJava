@@ -75,4 +75,22 @@ public class ItemPanel extends JPanel {
         layoutConstraints.gridy = 2;
         this.add(reset, layoutConstraints);
     }
+
+    public class BackListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new HomePanel());
+            container.revalidate();
+            container.repaint();
+        }
+    }
+
+    public class ResetListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
 }
