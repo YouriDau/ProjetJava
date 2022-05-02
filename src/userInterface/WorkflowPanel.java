@@ -43,7 +43,6 @@ public class WorkflowPanel extends JPanel {
 
             submit = new JButton("Submit");
             back = new BackButton(container);
-            reset = new JButton("Reset");
 
             submit.addActionListener(new SubmitListener());
 
@@ -62,13 +61,10 @@ public class WorkflowPanel extends JPanel {
             layoutConstraints.gridy = 1;
             this.add(submit, layoutConstraints);
 
-            layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 1;
-            this.add(back, layoutConstraints);
 
             layoutConstraints.gridx = 2;
             layoutConstraints.gridy = 1;
-            this.add(reset, layoutConstraints);
+            this.add(back, layoutConstraints);
         }
         catch (DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
@@ -92,7 +88,7 @@ public class WorkflowPanel extends JPanel {
         private Integer workflowNumber;
 
         public void actionPerformed(ActionEvent event) {
-            workflowNumber = workflowTypes.getSelectedIndex()+1;
+            workflowNumber = workflowTypes.getSelectedIndex() + 1;
             container.removeAll();
             container.add(new WorkflowListPanel(workflowNumber, container));
             container.revalidate();

@@ -4,6 +4,8 @@ import controller.ApplicationController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
 public class PointingPanel extends JPanel {
@@ -78,6 +80,15 @@ public class PointingPanel extends JPanel {
 
         layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 2;
+        reset.addActionListener( new ResetListener());
         this.add(reset, layoutConstraints);
+    }
+
+    public class ResetListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            firstDate.setValue(today.getTime());
+            secondDate.setValue(today.getTime());
+        }
     }
 }
