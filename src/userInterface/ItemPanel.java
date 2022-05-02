@@ -42,6 +42,7 @@ public class ItemPanel extends JPanel {
         back = new BackButton(container);
         reset = new JButton("Reset");
 
+
         layoutConstraints.insets = new Insets(0, 0, 15, 15);
         layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
@@ -73,6 +74,7 @@ public class ItemPanel extends JPanel {
 
         layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 2;
+        reset.addActionListener(new ResetListener());
         this.add(reset, layoutConstraints);
     }
 
@@ -87,10 +89,10 @@ public class ItemPanel extends JPanel {
     }
 
     public class ResetListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            firstNumber.setValue(0);
+            secondNumber.setValue(0);
         }
     }
 }
