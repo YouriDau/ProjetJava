@@ -87,6 +87,7 @@ public class WorkflowPanel extends JPanel {
     public class SubmitListener implements ActionListener {
         private Integer workflowNumber;
 
+        @Override
         public void actionPerformed(ActionEvent event) {
             workflowNumber = workflowTypes.getSelectedIndex() + 1;
             container.removeAll();

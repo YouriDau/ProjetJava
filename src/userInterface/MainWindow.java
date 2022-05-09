@@ -56,6 +56,7 @@ public class MainWindow extends JFrame {
         menuBar.add(pointingMenu);
 
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 if (!SingletonConnection.connectionIsNull())
                     SingletonConnection.closeConnection();
@@ -67,6 +68,7 @@ public class MainWindow extends JFrame {
     }
 
     public class QuitListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent event) {
             if (!SingletonConnection.connectionIsNull())
                 SingletonConnection.closeConnection();
@@ -98,11 +100,10 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            //MainWindow.this.setSize(600, 500);
+            MainWindow.this.setSize(561, 500);
             container.add(new AllDocumentsPanel());
             container.repaint();
-            MainWindow.this.pack();
-            MainWindow.this.setTitle("Documents");
+            //MainWindow.this.pack();
             setVisible(true);
         }
     }

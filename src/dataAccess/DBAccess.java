@@ -33,7 +33,7 @@ public class DBAccess implements DataAccess {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
-                number = data.getInt("number");
+                number = data.getInt("id");
                 wording = data.getString("wording");
                 workflowType = new WorkflowType(number, wording);
                 workflowTypes.add(workflowType);
@@ -74,7 +74,7 @@ public class DBAccess implements DataAccess {
                 number = data.getInt("number");
                 sqlDate = data.getDate("creation_date");
                 date.setTime(sqlDate);
-                documentType = data.getInt("document_type");
+                documentType = data.getInt("type");
                 processNumber = data.getInt("process");
 
                 document = new Document(number, date, documentType, processNumber);
@@ -122,7 +122,7 @@ public class DBAccess implements DataAccess {
                 number = data.getInt("number");
                 sqlDate = data.getDate("creation_date");
                 date.setTime(sqlDate);
-                documentType = data.getInt("document_type");
+                documentType = data.getInt("type");
                 processNumber = data.getInt("process");
 
                 document = new Document(number, date, documentType, processNumber);
