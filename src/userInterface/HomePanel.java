@@ -7,7 +7,7 @@ public class HomePanel extends JPanel {
     private JLabel text;
 
     public HomePanel() {
-        text = new JLabel("Bienvenue sur notre site");
+        text = new JLabel("Welcome on our app");
         text.setHorizontalAlignment(SwingConstants.CENTER);
         text.setFont(new Font("Verdana", Font.PLAIN, 17));
         this.setLayout(new BorderLayout());

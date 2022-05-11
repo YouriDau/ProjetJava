@@ -1,25 +1,25 @@
 package controller;
 
 import business.DocumentManager;
-import business.WorkflowTypeManager;
+import business.WorkflowManager;
 import exception.DBException;
 import model.Document;
+import model.DocumentType;
 import model.WorkflowType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ApplicationController {
-    private WorkflowTypeManager workflowTypeManager;
+    private WorkflowManager workflowManager;
     private DocumentManager documentManager;
 
     public ApplicationController() throws DBException {
-        workflowTypeManager = new WorkflowTypeManager();
+        workflowManager = new WorkflowManager();
         documentManager = new DocumentManager();
     }
 
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException{
-        return workflowTypeManager.getAllWorkflowTypes();
+        return workflowManager.getAllWorkflowTypes();
     }
 
     public ArrayList<Document> getDocuments(Integer workflowNumber) {
@@ -28,5 +28,17 @@ public class ApplicationController {
 
     public ArrayList<Document> getAllDocuments() throws DBException {
         return documentManager.getAllDocuments();
+    }
+
+    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException {
+        return documentManager.getAllDocumentTypes();
+    }
+
+    public ArrayList<Integer> getAllWorkflow() throws DBException {
+        return workflowManager.getAllWorkflow();
+    }
+
+    public void addDocument(Document document) throws DBException {
+        documentManager.addDocument(document);
     }
 }

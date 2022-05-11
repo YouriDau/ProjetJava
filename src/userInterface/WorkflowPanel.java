@@ -13,13 +13,10 @@ import java.util.ArrayList;
 
 public class WorkflowPanel extends JPanel {
     private JLabel workflowTypesLabel;
-    private JComboBox<String> workflowTypes;
+    private JComboBox workflowTypes;
     private GridBagConstraints layoutConstraints;
     private JButton submit;
     private JButton back;
-    private JButton reset;
-    private ArrayList<WorkflowType> allWorkflowType;
-    private String[] types;
     private ApplicationController controller;
     private Container container;
 
@@ -27,19 +24,16 @@ public class WorkflowPanel extends JPanel {
         this.container = container;
 
         this.setLayout(new GridBagLayout());
+        layoutConstraints = new GridBagConstraints();
         try {
             controller = new ApplicationController();
-            allWorkflowType = controller.getAllWorkflowTypes();
-            layoutConstraints = new GridBagConstraints();
-            setTypes(allWorkflowType);
 
             workflowTypesLabel = new JLabel("Choose a workflow type :");
             workflowTypesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-            workflowTypes = new JComboBox<String>(types);
-            workflowTypes.setSelectedItem("Facture");
-            workflowTypes.setMaximumRowCount(3);
-            workflowTypes.setEnabled(true);
+            workflowTypes = new JComboBox();
+            workflowTypes.setMaximumRowCount(4);
+            fillWorkflowTypes(controller.getAllWorkflowTypes());
 
             submit = new JButton("Submit");
             back = new BackButton(container);
@@ -72,16 +66,10 @@ public class WorkflowPanel extends JPanel {
 
     }
 
-    public void setTypes(ArrayList<WorkflowType> data) {
-        String[] types;
-
-        types = new String[data.size()];
-        int i = 0;
-        for (WorkflowType info:data) {
-            types[i] = info.getWording();
-            i++;
+    public void fillWorkflowTypes(ArrayList<WorkflowType> type) {
+        for (WorkflowType info:type) {
+            workflowTypes.addItem(info.getWording());
         }
-        this.types = types;
     }
 
     public class SubmitListener implements ActionListener {

@@ -1,24 +1,24 @@
 package model;
 
 public class DocumentType {
-    private Integer number;
+    private Integer id;
     private String wording;
 
-    public DocumentType(Integer number, String wording) {
-        setNumber(number);
+    public DocumentType(Integer id, String wording) {
+        setId(id);
         setWording(wording);
     }
 
     public Integer getNumber() {
-        return number;
+        return id;
     }
 
     public String getWording() {
         return wording;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setWording(String wording) {

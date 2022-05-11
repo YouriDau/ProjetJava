@@ -6,6 +6,8 @@ import exception.DBException;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AllDocumentsPanel extends JPanel{
     public final static int NB_COLUMNS = 6;
@@ -17,8 +19,11 @@ public class AllDocumentsPanel extends JPanel{
     private String[] columnsName;
     private JScrollPane scrollPane;
     private GridBagConstraints layoutConstraints;
+    private JButton addDocument;
+    private Container container;
 
-    public AllDocumentsPanel() {
+    public AllDocumentsPanel(Container container) {
+        this.container = container;
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
 
@@ -30,15 +35,23 @@ public class AllDocumentsPanel extends JPanel{
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
 
+            addDocument = new JButton("Add a new document");
+
+            addDocument.addActionListener(new AddDocumentListener());
+
             setColumnsSize();
             setColumnsName();
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 0;
-            this.add(table.getTableHeader(), layoutConstraints);
+            this.add(addDocument);
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 1;
+            this.add(table.getTableHeader(), layoutConstraints);
+
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 2;
             this.add(table, layoutConstraints);
         }
         catch (DBException exception) {
@@ -66,6 +79,16 @@ public class AllDocumentsPanel extends JPanel{
         columnsName = new String[NB_COLUMNS];
         for (int i = 0; i < NB_COLUMNS; i++) {
             columnsName[i] = model.getColumnName(i);
+        }
+    }
+
+    public class AddDocumentListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new NewDocumentPanel(container));
+            container.revalidate();
+            container.repaint();
         }
     }
 }

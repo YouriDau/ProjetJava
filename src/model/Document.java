@@ -23,12 +23,7 @@ public class Document {
     }
 
     public Document(Integer number, GregorianCalendar creationDate, Integer type, Integer workflowNumber) {
-        setNumber(number);
-        setCreationDate(creationDate);
-        setType(type);
-        setworkflowNumber(workflowNumber);
-        setPaymentCondition(null);
-        setCreditLimit(null);
+        this(number, creationDate, null, null, type, workflowNumber);
     }
 
     public Integer getNumber() {
