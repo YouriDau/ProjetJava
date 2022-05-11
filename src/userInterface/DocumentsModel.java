@@ -16,7 +16,7 @@ public class DocumentsModel extends AbstractTableModel {
         columnNames.add("Creation date");
         columnNames.add("Payment condition");
         columnNames.add("Credit limit");
-        columnNames.add("Document type number");
+        columnNames.add("Document type");
         columnNames.add("Process number");
         setContents(documents);
     }

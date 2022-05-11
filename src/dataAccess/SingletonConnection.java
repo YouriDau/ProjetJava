@@ -1,5 +1,7 @@
 package dataAccess;
 
+import exception.SingletonConnectionException;
+
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +10,8 @@ import java.sql.SQLException;
 public class SingletonConnection {
     private static Connection connection;
 
-    public static Connection getInstance() {
+
+    public static Connection getInstance() throws SingletonConnectionException {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store",
@@ -17,18 +20,20 @@ public class SingletonConnection {
 
             }
             catch (SQLException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+                throw new SingletonConnectionException(exception.getMessage());
+                //JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         return connection;
     }
 
-    public static void closeConnection() {
+    public static void closeConnection() throws SingletonConnectionException {
         try {
             connection.close();
         }
         catch (SQLException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+            throw new SingletonConnectionException(exception.getMessage());
+            //
         }
     }
 

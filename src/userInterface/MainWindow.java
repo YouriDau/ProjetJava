@@ -2,6 +2,7 @@ package userInterface;
 
 import com.sun.tools.javac.Main;
 import dataAccess.SingletonConnection;
+import exception.SingletonConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +60,12 @@ public class MainWindow extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 if (!SingletonConnection.connectionIsNull())
-                    SingletonConnection.closeConnection();
+                    try {
+                        SingletonConnection.closeConnection();
+                    }
+                    catch(SingletonConnectionException exception) {
+                        JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                    }
                 System.exit(0);
             }
         });
@@ -71,7 +77,12 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (!SingletonConnection.connectionIsNull())
-                SingletonConnection.closeConnection();
+                try {
+                    SingletonConnection.closeConnection();
+                }
+                catch(SingletonConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                }
             System.exit(0);
         }
     }

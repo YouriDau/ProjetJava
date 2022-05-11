@@ -1,7 +1,9 @@
 package userInterface;
 
 import controller.ApplicationController;
+import dataAccess.SingletonConnection;
 import exception.DBException;
+import exception.SingletonConnectionException;
 import model.Document;
 import model.WorkflowType;
 
@@ -63,7 +65,9 @@ public class WorkflowPanel extends JPanel {
         catch (DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
         }
-
+        catch (SingletonConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void fillWorkflowTypes(ArrayList<WorkflowType> type) {

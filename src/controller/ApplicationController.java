@@ -3,6 +3,7 @@ package controller;
 import business.DocumentManager;
 import business.WorkflowManager;
 import exception.DBException;
+import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
 import model.WorkflowType;
@@ -13,32 +14,32 @@ public class ApplicationController {
     private WorkflowManager workflowManager;
     private DocumentManager documentManager;
 
-    public ApplicationController() throws DBException {
+    public ApplicationController() throws DBException, SingletonConnectionException {
         workflowManager = new WorkflowManager();
         documentManager = new DocumentManager();
     }
 
-    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException{
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
         return workflowManager.getAllWorkflowTypes();
     }
 
-    public ArrayList<Document> getDocuments(Integer workflowNumber) {
+    public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         return  documentManager.getDocuments(workflowNumber);
     }
 
-    public ArrayList<Document> getAllDocuments() throws DBException {
+    public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         return documentManager.getAllDocuments();
     }
 
-    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException {
+    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
         return documentManager.getAllDocumentTypes();
     }
 
-    public ArrayList<Integer> getAllWorkflow() throws DBException {
+    public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException {
         return workflowManager.getAllWorkflow();
     }
 
-    public void addDocument(Document document) throws DBException {
+    public void addDocument(Document document) throws DBException, SingletonConnectionException {
         documentManager.addDocument(document);
     }
 }

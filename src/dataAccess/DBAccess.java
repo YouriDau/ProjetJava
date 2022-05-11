@@ -2,6 +2,7 @@ package dataAccess;
 
 import controller.DataAccess;
 import exception.DBException;
+import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
 import model.WorkflowType;
@@ -13,12 +14,12 @@ import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
 
-    public DBAccess() throws DBException {
+    public DBAccess() throws DBException, SingletonConnectionException {
 
     }
 
     @Override
-    public ArrayList<Integer> getAllWorkflow() throws DBException {
+    public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException {
         Integer id;
         ArrayList<Integer> workflowNumbers = new ArrayList<>();
         String sqlInstruction = "SELECT id FROM workflow;";
@@ -40,7 +41,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<WorkflowType> getAllWorkflowTypes()  throws DBException{
+    public ArrayList<WorkflowType> getAllWorkflowTypes()  throws DBException, SingletonConnectionException{
         Integer id;
         String wording;
         WorkflowType workflowType;
@@ -67,7 +68,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<Document> getDocuments(Integer workflowNumber) {
+    public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         Integer number;
         GregorianCalendar date;
         java.sql.Date sqlDate;
@@ -113,13 +114,13 @@ public class DBAccess implements DataAccess {
             }
         }
         catch (SQLException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+            throw new DBException(exception.getMessage());
         }
         return documents;
     }
 
     @Override
-    public ArrayList<Document> getAllDocuments() throws DBException {
+    public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         Integer number;
         GregorianCalendar date;
         java.sql.Date sqlDate;
@@ -167,7 +168,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<DocumentType> getAllDocumentTypes() throws  DBException {
+    public ArrayList<DocumentType> getAllDocumentTypes() throws  DBException, SingletonConnectionException {
         Integer id;
         String wording;
         DocumentType documentType;
@@ -194,7 +195,9 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public void addDocument(Document document) throws  DBException {
+    public void addDocument(Document document) throws  DBException, SingletonConnectionException {
+        int lastDocumentId;
+        ResultSet data;
         String sqlInstruction = "INSERT INTO document(creation_date, type, process)" +
                                 "VALUES(?, ?, ?);";
         Connection connection = SingletonConnection.getInstance();
@@ -208,17 +211,28 @@ public class DBAccess implements DataAccess {
 
             preparedStatement.executeUpdate();
 
+            sqlInstruction = "SELECT LAST_INSERT_ID() as id FROM document";
+            preparedStatement = connection.prepareStatement(sqlInstruction);
+            data = preparedStatement.executeQuery();
+
+            data.next();
+            lastDocumentId = data.getInt("id");
+
             if (document.getPaymentCondition() != null) {
-                sqlInstruction = "UPDATE document SET payment_condition = ?";
+                sqlInstruction = "UPDATE document SET payment_condition = ?" +
+                                 "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, document.getPaymentCondition());
+                preparedStatement.setString(2, Integer.toString(lastDocumentId));
                 preparedStatement.executeUpdate();
             }
 
             if (document.getCreditLimit() != null) {
-                sqlInstruction = "UPDATE document SET credit_limit = ?";
+                sqlInstruction = "UPDATE document SET credit_limit = ?" +
+                                 "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setDouble(1, document.getCreditLimit());
+                preparedStatement.setString(2, Integer.toString(lastDocumentId));
                 preparedStatement.executeUpdate();
             }
         }

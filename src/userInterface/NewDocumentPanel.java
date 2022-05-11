@@ -2,6 +2,7 @@ package userInterface;
 
 import controller.ApplicationController;
 import exception.DBException;
+import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
 
@@ -113,6 +114,9 @@ public class NewDocumentPanel extends JPanel {
         catch(DBException exception){
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
         }
+        catch (SingletonConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
@@ -162,7 +166,7 @@ public class NewDocumentPanel extends JPanel {
                 // Vérifier si crédit limit est rempli
                 if (!creditLimit.getText().equals("")) {
                     newCreditLimit =  Double.parseDouble(creditLimit.getText());
-                } else {
+                } else { // A voir si else utile
                     newCreditLimit = null;
                 }
 
@@ -173,11 +177,13 @@ public class NewDocumentPanel extends JPanel {
                 }
                 catch (DBException exception) {
                     JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-
+                }
+                catch (SingletonConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                 }
 
                 container.removeAll();
-                container.add(new NewDocumentPanel(container));
+                container.add(new AllDocumentsPanel(container));
                 container.revalidate();
                 container.repaint();
             }

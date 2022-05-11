@@ -2,6 +2,7 @@ package userInterface;
 
 import controller.ApplicationController;
 import exception.DBException;
+import exception.SingletonConnectionException;
 import model.Document;
 
 import javax.swing.*;
@@ -50,6 +51,9 @@ public class WorkflowListPanel extends JPanel {
         }
         catch(DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (SingletonConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
     }
 }

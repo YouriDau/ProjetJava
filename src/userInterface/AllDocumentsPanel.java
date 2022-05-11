@@ -2,6 +2,7 @@ package userInterface;
 
 import controller.ApplicationController;
 import exception.DBException;
+import exception.SingletonConnectionException;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -16,7 +17,6 @@ public class AllDocumentsPanel extends JPanel{
     private DocumentsModel model;
     private JTable table;
     private TableColumn column;
-    private String[] columnsName;
     private JScrollPane scrollPane;
     private GridBagConstraints layoutConstraints;
     private JButton addDocument;
@@ -32,15 +32,14 @@ public class AllDocumentsPanel extends JPanel{
             model = new DocumentsModel(controller.getAllDocuments());
 
             table = new JTable(model);
+            table.setPreferredScrollableViewportSize(new Dimension(520, 300));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
 
             addDocument = new JButton("Add a new document");
-
             addDocument.addActionListener(new AddDocumentListener());
 
             setColumnsSize();
-            setColumnsName();
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 0;
@@ -52,10 +51,13 @@ public class AllDocumentsPanel extends JPanel{
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 2;
-            this.add(table, layoutConstraints);
+            this.add(scrollPane, layoutConstraints);
         }
         catch (DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (SingletonConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -66,20 +68,13 @@ public class AllDocumentsPanel extends JPanel{
         column = table.getColumnModel().getColumn(1);
         column.setPreferredWidth(80);
         column = table.getColumnModel().getColumn(2);
-        column.setPreferredWidth(130);
+        column.setPreferredWidth(100);
         column = table.getColumnModel().getColumn(3);
         column.setPreferredWidth(80);
         column = table.getColumnModel().getColumn(4);
         column.setPreferredWidth(100);
         column = table.getColumnModel().getColumn(5);
         column.setPreferredWidth(100);
-    }
-
-    public void setColumnsName() {
-        columnsName = new String[NB_COLUMNS];
-        for (int i = 0; i < NB_COLUMNS; i++) {
-            columnsName[i] = model.getColumnName(i);
-        }
     }
 
     public class AddDocumentListener implements ActionListener {
