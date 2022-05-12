@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Document {
@@ -32,6 +33,14 @@ public class Document {
 
     public GregorianCalendar getCreationDate() {
         return creationDate;
+    }
+
+    public String getCreationDateStr() {
+        int year = creationDate.get(Calendar.YEAR);
+        int month = creationDate.get(Calendar.MONTH)+1;
+        int day = creationDate.get(Calendar.DAY_OF_MONTH);
+
+        return year + "-" + month + "-" + day;
     }
 
     public String getPaymentCondition() {

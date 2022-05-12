@@ -10,6 +10,7 @@ import model.WorkflowType;
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
@@ -137,9 +138,10 @@ public class DBAccess implements DataAccess {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
-            date = new GregorianCalendar();
 
             while (data.next()) {
+                date = new GregorianCalendar();
+
                 number = data.getInt("number");
                 sqlDate = data.getDate("creation_date");
                 date.setTime(sqlDate);
@@ -237,6 +239,22 @@ public class DBAccess implements DataAccess {
             }
         }
         catch (SQLException exception) {
+            throw new DBException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteDocument(int id) throws DBException, SingletonConnectionException {
+        String sqlInstruction = "DELETE FROM document " +
+                                "WHERE number = ?";
+        Connection connection = SingletonConnection.getInstance();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
+            int nbRowEffected = preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
             throw new DBException(exception.getMessage());
         }
     }

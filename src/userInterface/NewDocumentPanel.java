@@ -148,6 +148,7 @@ public class NewDocumentPanel extends JPanel {
         private Matcher matcher;
         private Document document;
         private Double newCreditLimit;
+        private String newPaymentCondition;
 
         public void actionPerformed(ActionEvent event) {
             // Vérifier si le text à - de 100 caractères
@@ -177,11 +178,17 @@ public class NewDocumentPanel extends JPanel {
                 // Vérifier si crédit limit est rempli
                 if (!creditLimit.getText().equals("")) {
                     newCreditLimit =  Double.parseDouble(creditLimit.getText());
-                } else { // A voir si else utile
+                } else {
                     newCreditLimit = null;
                 }
 
-                document = new Document(null, new GregorianCalendar(), paymentCondition.getText(), newCreditLimit,
+                if (!paymentCondition.getText().equals("")) {
+                    newPaymentCondition = paymentCondition.getText();
+                } else {
+                    newPaymentCondition = null;
+                }
+
+                document = new Document(null, new GregorianCalendar(), newPaymentCondition, newCreditLimit,
                                 documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber(), workflowNumbers[workflowsComboBox.getSelectedIndex()]);
                 try {
                     controller.addDocument(document);

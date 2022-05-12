@@ -42,4 +42,8 @@ public class ApplicationController {
     public void addDocument(Document document) throws DBException, SingletonConnectionException {
         documentManager.addDocument(document);
     }
+
+    public void deleteDocument(int id) throws DBException, SingletonConnectionException {
+        documentManager.deleteDocument(id);
+    }
 }

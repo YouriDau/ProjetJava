@@ -16,4 +16,5 @@ public interface DataAccess {
     public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException;
 
     public void addDocument(Document document) throws DBException, SingletonConnectionException;
+    public void deleteDocument(int id) throws DBException, SingletonConnectionException;
 }

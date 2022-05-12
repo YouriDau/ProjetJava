@@ -31,4 +31,8 @@ public class DocumentManager {
     public void addDocument(Document document) throws DBException, SingletonConnectionException {
         dao.addDocument(document);
     }
+
+    public void deleteDocument(int id) throws DBException, SingletonConnectionException {
+        dao.deleteDocument(id);
+    }
 }

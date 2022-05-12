@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 public class DocumentsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
-    private ArrayList<Document> documents;
+    private ArrayList<Document> contents;
 
     public DocumentsModel(ArrayList<Document> documents) {
         columnNames = new ArrayList<>();
@@ -26,7 +26,7 @@ public class DocumentsModel extends AbstractTableModel {
     }
 
     public int getRowCount() {
-        return documents.size();
+        return contents.size();
     }
 
     public String getColumnName(int column) {
@@ -34,18 +34,11 @@ public class DocumentsModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int column) {
-        Document document = documents.get(row);
-        int year = document.getCreationDate().get(Calendar.YEAR);
-        int month = document.getCreationDate().get(Calendar.MONTH) + 1;
-        int day = document.getCreationDate().get(Calendar.DAY_OF_MONTH);
-
-        String date = year + "-" +
-                      month + "-" +
-                      day;
+        Document document = contents.get(row);
 
         switch (column) {
             case 0: return document.getNumber();
-            case 1: return date;
+            case 1: return document.getCreationDateStr();
             case 2: {
                     if (document.getPaymentCondition() != null)
                         return document.getPaymentCondition();
@@ -85,6 +78,6 @@ public class DocumentsModel extends AbstractTableModel {
     }
 
     public void setContents(ArrayList<Document> documents) {
-        this.documents = documents;
+        this.contents = documents;
     }
 }
