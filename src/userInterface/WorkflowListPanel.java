@@ -7,8 +7,6 @@ import model.Document;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class WorkflowListPanel extends JPanel {
@@ -44,9 +42,8 @@ public class WorkflowListPanel extends JPanel {
                 table = new JTable(model);
                 scrollPane = new JScrollPane(table);
 
-                this.add(scrollPane);
                 this.add(table.getTableHeader(), BorderLayout.PAGE_START);
-                this.add(table, BorderLayout.CENTER);
+                this.add(scrollPane, BorderLayout.CENTER);
             }
         }
         catch(DBException exception) {

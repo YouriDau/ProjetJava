@@ -35,21 +35,29 @@ public class DocumentsModel extends AbstractTableModel {
 
     public Object getValueAt(int row, int column) {
         Document document = documents.get(row);
-        String date = document.getCreationDate().get(Calendar.YEAR) + "-" +
-                      document.getCreationDate().get(Calendar.MONTH) + "-" +
-                      document.getCreationDate().get(Calendar.DAY_OF_MONTH);
+        int year = document.getCreationDate().get(Calendar.YEAR);
+        int month = document.getCreationDate().get(Calendar.MONTH) + 1;
+        int day = document.getCreationDate().get(Calendar.DAY_OF_MONTH);
+
+        String date = year + "-" +
+                      month + "-" +
+                      day;
 
         switch (column) {
             case 0: return document.getNumber();
             case 1: return date;
-            case 2: if (document.getPaymentCondition() != null)
+            case 2: {
+                    if (document.getPaymentCondition() != null)
                         return document.getPaymentCondition();
                     else
                         return null;
-            case 3: if (document.getCreditLimit() != null)
+                    }
+            case 3: {
+                    if (document.getCreditLimit() != null)
                         return document.getCreditLimit();
                     else
                         return null;
+                    }
             case 4: return document.getType();
             case 5: return document.getworkflowNumber();
             default: return null;
@@ -61,7 +69,7 @@ public class DocumentsModel extends AbstractTableModel {
         switch (column) {
             case 0: c = Integer.class;
                 break;
-            case 1: c = GregorianCalendar.class;
+            case 1: c = String.class;
                 break;
             case 2: c = String.class;
                 break;
@@ -73,7 +81,6 @@ public class DocumentsModel extends AbstractTableModel {
                 break;
             default: c = String.class;
         }
-
         return c;
     }
 

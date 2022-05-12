@@ -15,7 +15,8 @@ import java.util.ArrayList;
 
 public class WorkflowPanel extends JPanel {
     private JLabel workflowTypesLabel;
-    private JComboBox workflowTypes;
+    private JComboBox workflowTypesComboBox;
+    private WorkflowType[] workflowTypes;
     private GridBagConstraints layoutConstraints;
     private JButton submit;
     private JButton back;
@@ -33,8 +34,8 @@ public class WorkflowPanel extends JPanel {
             workflowTypesLabel = new JLabel("Choose a workflow type :");
             workflowTypesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-            workflowTypes = new JComboBox();
-            workflowTypes.setMaximumRowCount(4);
+            workflowTypesComboBox = new JComboBox();
+            workflowTypesComboBox.setMaximumRowCount(4);
             fillWorkflowTypes(controller.getAllWorkflowTypes());
 
             submit = new JButton("Submit");
@@ -49,7 +50,7 @@ public class WorkflowPanel extends JPanel {
 
             layoutConstraints.gridx = 1;
             layoutConstraints.gridy = 0;
-            this.add(workflowTypes, layoutConstraints);
+            this.add(workflowTypesComboBox, layoutConstraints);
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 1;
@@ -71,8 +72,12 @@ public class WorkflowPanel extends JPanel {
     }
 
     public void fillWorkflowTypes(ArrayList<WorkflowType> type) {
+        workflowTypes = new WorkflowType[type.size()];
+        int i = 0;
         for (WorkflowType info:type) {
-            workflowTypes.addItem(info.getWording());
+            workflowTypes[i] = info;
+            workflowTypesComboBox.addItem(info.getWording());
+            i++;
         }
     }
 
@@ -81,7 +86,7 @@ public class WorkflowPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            workflowNumber = workflowTypes.getSelectedIndex() + 1;
+            workflowNumber = workflowTypes[workflowTypesComboBox.getSelectedIndex()].getNumber();
             container.removeAll();
             container.add(new WorkflowListPanel(workflowNumber, container));
             container.revalidate();

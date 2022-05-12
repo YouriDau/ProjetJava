@@ -5,12 +5,14 @@ import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
+import model.Workflow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,8 +27,10 @@ public class NewDocumentPanel extends JPanel {
     private JLabel workflowLabel;
     private JTextArea paymentCondition;
     private JTextField creditLimit;
-    private JComboBox documentsComboBox;
+    private JComboBox documentTypesComboBox;
     private JComboBox workflowsComboBox;
+    private DocumentType[] documentTypes;
+    private Integer[] workflowNumbers;
     private JButton submit;
     private JButton back;
 
@@ -48,8 +52,8 @@ public class NewDocumentPanel extends JPanel {
 
             creditLimit = new JTextField(12);
 
-            documentsComboBox = new JComboBox<>();
-            documentsComboBox.setMaximumRowCount(4);
+            documentTypesComboBox = new JComboBox<>();
+            documentTypesComboBox.setMaximumRowCount(4);
             fillDocumentTypes(controller.getAllDocumentTypes());
 
             workflowsComboBox = new JComboBox<>();
@@ -90,7 +94,7 @@ public class NewDocumentPanel extends JPanel {
             layoutConstraints.gridx = 1;
             layoutConstraints.gridy = 2;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            this.add(documentsComboBox, layoutConstraints);
+            this.add(documentTypesComboBox, layoutConstraints);
 
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 3;
@@ -121,13 +125,20 @@ public class NewDocumentPanel extends JPanel {
     }
 
     public void fillDocumentTypes(ArrayList<DocumentType> documents) {
+        this.documentTypes = new DocumentType[documents.size()];
+        int i = 0;
         for (DocumentType document:documents) {
-            documentsComboBox.addItem(document.getWording());
+            this.documentTypes[i] = document;
+            documentTypesComboBox.addItem(document.getWording());
+            i++;
         }
     }
 
     public void fillWorkflows(ArrayList<Integer> workflowsId) {
+        workflowNumbers = new Integer[workflowsId.size()];
+        int i = 0;
         for (Integer id : workflowsId) {
+            workflowNumbers[i] = id;
             workflowsComboBox.addItem(id);
         }
     }
@@ -170,8 +181,8 @@ public class NewDocumentPanel extends JPanel {
                     newCreditLimit = null;
                 }
 
-                document = new Document(null, new GregorianCalendar(), paymentCondition.getText(), newCreditLimit, documentsComboBox.getSelectedIndex()+1, workflowsComboBox.getSelectedIndex()+1);
-
+                document = new Document(null, new GregorianCalendar(), paymentCondition.getText(), newCreditLimit,
+                                documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber(), workflowNumbers[workflowsComboBox.getSelectedIndex()]);
                 try {
                     controller.addDocument(document);
                 }

@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AllDocumentsPanel extends JPanel{
-    public final static int NB_COLUMNS = 6;
-
     private ApplicationController controller;
     private DocumentsModel model;
     private JTable table;
@@ -32,6 +30,7 @@ public class AllDocumentsPanel extends JPanel{
             model = new DocumentsModel(controller.getAllDocuments());
 
             table = new JTable(model);
+
             table.setPreferredScrollableViewportSize(new Dimension(520, 300));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
