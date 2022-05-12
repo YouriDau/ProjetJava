@@ -3,6 +3,7 @@ package dataAccess;
 import controller.DataAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
+import model.Detail;
 import model.Document;
 import model.DocumentType;
 import model.WorkflowType;
@@ -39,6 +40,20 @@ public class DBAccess implements DataAccess {
             throw new DBException(exception.getMessage());
         }
         return workflowNumbers;
+    }
+    public Detail getDetails() throws DBException, SingletonConnectionException{
+        return null;
+    }
+    public Detail getDetail(Integer itemIdReceive) throws DBException, SingletonConnectionException{
+        Integer code;
+        Double unit_price;
+        Integer quantity;
+        Double vatRate;
+        Integer backOrder;
+        Integer documentId;
+        Integer itemId;
+        Integer lotId;
+        return null;
     }
 
     @Override

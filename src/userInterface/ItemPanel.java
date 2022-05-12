@@ -45,7 +45,6 @@ public class ItemPanel extends JPanel {
         back = new BackButton(container);
         reset = new JButton("Reset");
 
-
         layoutConstraints.insets = new Insets(0, 0, 15, 15);
         layoutConstraints.gridwidth = 2;
         layoutConstraints.gridx = 0;
@@ -69,6 +68,7 @@ public class ItemPanel extends JPanel {
 
         layoutConstraints.gridx = 0;
         layoutConstraints.gridy = 2;
+        submit.addActionListener(new SubmitListener ());
         this.add(submit, layoutConstraints);
 
         layoutConstraints.gridx = 1;
@@ -96,6 +96,16 @@ public class ItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             firstNumber.setValue(0);
             secondNumber.setValue(0);
+        }
+    }
+
+    public class SubmitListener implements ActionListener{
+        private Integer minValue;
+        private Integer maxValue;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            minValue = Integer.parseInt(firstNumber.getValue().toString());
+            maxValue = Integer.parseInt(secondNumber.getValue().toString());
         }
     }
 }

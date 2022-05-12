@@ -2,6 +2,7 @@ package controller;
 
 import exception.DBException;
 import exception.SingletonConnectionException;
+import model.Detail;
 import model.Document;
 import model.DocumentType;
 import model.WorkflowType;
@@ -17,4 +18,6 @@ public interface DataAccess {
 
     public void addDocument(Document document) throws DBException, SingletonConnectionException;
     public void deleteDocument(int id) throws DBException, SingletonConnectionException;
+    public Detail getDetails() throws DBException, SingletonConnectionException;
+    public Detail getDetail(Integer itemIdReceive) throws DBException, SingletonConnectionException;
 }
