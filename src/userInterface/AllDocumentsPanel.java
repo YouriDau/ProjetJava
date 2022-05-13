@@ -37,17 +37,20 @@ public class AllDocumentsPanel extends JPanel{
 
             table = new JTable(model);
 
-            table.setPreferredScrollableViewportSize(new Dimension(520, 300));
+            table.setPreferredScrollableViewportSize(new Dimension(515, 300));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
 
             addDocument = new JButton("Add a new document");
             addDocument.addActionListener(new AddDocumentListener());
 
-            modifyDocument = new JButton("Modify");
             deleteDocument = new JButton("Delete");
+            modifyDocument = new JButton("Modify");
+
+            //modifyDocument.setBorder(BorderFactory.createLineBorder(Color.blue));
 
             deleteDocument.addActionListener(new DeleteDocumentListener());
+            modifyDocument.addActionListener(new ModifyDocumentListener());
 
             setColumnsSize();
 
@@ -71,7 +74,6 @@ public class AllDocumentsPanel extends JPanel{
             layoutConstraints.gridy = 3;
             this.add(modifyDocument, layoutConstraints);
 
-            layoutConstraints.anchor = GridBagConstraints.EAST;
             layoutConstraints.gridx = 1;
             layoutConstraints.gridy = 3;
             this.add(deleteDocument, layoutConstraints);
@@ -114,11 +116,16 @@ public class AllDocumentsPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
-                controller.deleteDocument(allDocuments.get(table.getSelectedRow()).getNumber());
-                container.removeAll();
-                container.add(new AllDocumentsPanel(container));
-                container.revalidate();
-                container.repaint();
+                if (table.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(null, "Please, select a row to delete", "No row selected", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    controller.deleteDocument(allDocuments.get(table.getSelectedRow()).getNumber());
+                    container.removeAll();
+                    container.add(new AllDocumentsPanel(container));
+                    container.revalidate();
+                    container.repaint();
+                }
+
             }
             catch (DBException exception) {
                 JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
@@ -126,6 +133,17 @@ public class AllDocumentsPanel extends JPanel{
             catch (SingletonConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+
+    public class ModifyDocumentListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            JOptionPane.showMessageDialog(null, "test");
+            container.removeAll();
+            container.add(new ModifyDocumentPanel(container));
+            container.revalidate();
+            container.repaint();
         }
     }
 }
