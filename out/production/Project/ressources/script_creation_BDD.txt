@@ -1,0 +1,235 @@
+#CREATE DATABASE store;
+USE store;
+
+DROP TABLE IF EXISTS `person_type`;
+CREATE TABLE person_type (
+	id INT AUTO_INCREMENT,
+    wording varchar(50) NOT NULL,
+    CONSTRAINT person_type_pk
+		PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS `person`;
+CREATE TABLE person (
+	number INT AUTO_INCREMENT,
+    lastName varchar(30) NOT NULL,
+    phoneNumber numeric(11) NOT NULL,
+    email varchar(50) NOT NULL,
+    firstName varchar(30),
+    VATNumber numeric,
+    nbFidelityPoints numeric,
+    hasBadge boolean NOT NULL,
+    type INT NOT NULL,
+    
+    CONSTRAINT person_pk
+		PRIMARY KEY(number),
+	CONSTRAINT person_fk
+		FOREIGN KEY(type)
+        REFERENCES person_type(id)
+);
+
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE address (
+	house_number numeric(10),
+	street_name varchar(45),
+    cityName varchar(45),
+    postal_code numeric(8),
+    country varchar(25),
+    inhabitant INT NOT NULL, 
+    
+    CONSTRAINT address_pk
+		PRIMARY KEY(house_number, street_name, cityName, postal_code, country),
+	CONSTRAINT address_fk
+		FOREIGN KEY(inhabitant)
+        REFERENCES person(number)
+);
+
+DROP TABLE IF EXISTS `document_type`;
+CREATE TABLE document_type (
+	id INT AUTO_INCREMENT,
+    wording varchar(50) NOT NULL,
+    
+    CONSTRAINT document_type_pk
+		PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS `workflow_type`;
+CREATE TABLE workflow_type (
+	id INT AUTO_INCREMENT,
+    wording varchar(50) NOT NULL,
+    
+    CONSTRAINT workflow_type_pk
+		PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS `workflow`;
+CREATE TABLE workflow (
+	id INT AUTO_INCREMENT,
+    type INT NOT NULL,
+    
+    CONSTRAINT workflow_pk
+		PRIMARY KEY(id),
+	CONSTRAINT workflow_fk
+		FOREIGN KEY(type)
+		REFERENCES workflow_type(id)
+);
+
+DROP TABLE IF EXISTS `document`;
+CREATE TABLE document (
+	number INT AUTO_INCREMENT,
+    creation_date date NOT NULL,
+    payment_condition varchar(100),
+    credit_limit decimal(5, 0),
+    type INT NOT NULL,
+    process INT NOT NULL NOT NULL,
+    
+    CONSTRAINT document_pk
+		PRIMARY KEY(number),
+    CONSTRAINT document_fk
+		FOREIGN KEY(type)
+        REFERENCES document_type(id),
+		FOREIGN KEY(process)
+		REFERENCES workflow(id)
+);
+
+DROP TABLE IF EXISTS `pointing`;
+CREATE TABLE pointing(
+	employee INT NOT NULL,
+    pointing_date date NOT NULL,
+    pointing_hour numeric(4) NOT NULL,
+    
+    CONSTRAINT pointing_pk
+		PRIMARY KEY(employee, pointing_date, pointing_hour),
+	CONSTRAINT pointing_fk
+		FOREIGN KEY (employee)
+        REFERENCES person(number)
+);
+
+DROP TABLE IF EXISTS `traceability`;
+CREATE TABLE traceability(
+	person INT NOT NULL,
+    document INT NOT NULL,
+    
+    CONSTRAINT traceability_pk
+		PRIMARY KEY(person, document),
+	CONSTRAINT traceability_fk
+		FOREIGN KEY (person)
+        REFERENCES person(number),
+        FOREIGN KEY (document)
+        REFERENCES document(number)
+);
+
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE item(
+	id INT AUTO_INCREMENT,
+	wording varchar(50) NOT NULL,
+	production_date date,
+    packaging varchar(50) NOT NULL,
+    minimum_level numeric(4) NOT NULL,
+    quantity_in_stock INT NOT NULL, 
+    CONSTRAINT item_pk
+		PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS `promotion`;
+CREATE TABLE promotion(
+	id INT AUTO_INCREMENT,
+    percentage INT NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    item INT NOT NULL,
+    
+    CONSTRAINT promotion_pk
+		PRIMARY KEY(id),
+	CONSTRAINT promotion_fk
+		FOREIGN KEY (item)
+        REFERENCES item(id)
+);
+
+DROP TABLE IF EXISTS `lot`;
+CREATE TABLE lot(
+	reference INT AUTO_INCREMENT,
+    arrivage_date date NOT NULL,
+    expiration_date date NOT NULL,
+    
+    CONSTRAINT lot_pk
+		PRIMARY KEY(reference)
+);
+
+DROP TABLE IF EXISTS `detail`;
+CREATE TABLE detail(
+	code INT AUTO_INCREMENT,
+    unit_price decimal(3,3) NOT NULL,
+    quantity numeric(4) NOT NULL,
+    vat_rate decimal(3,3) NOT NULL,
+    back_order numeric(4),
+    document INT NOT NULL,
+    item INT NOT NULL,
+    lot INT,
+	CONSTRAINT detail_pk
+		PRIMARY KEY(code),
+	CONSTRAINT detail_fk
+		FOREIGN KEY (document)
+        REFERENCES document(number),
+		FOREIGN KEY (item)
+        REFERENCES item(id),
+        FOREIGN KEY (lot)
+        REFERENCES lot(reference)
+    
+);
+
+DROP TABLE IF EXISTS `recipe`;
+CREATE TABLE recipe(
+	ingredient INT,
+	food INT,
+    CONSTRAINT recipe_pk
+		PRIMARY KEY(ingredient, food),
+	CONSTRAINT recipe_fk
+		FOREIGN KEY (ingredient)
+        REFERENCES item(id),
+		FOREIGN KEY (food)
+        REFERENCES item(id)    
+);
+
+INSERT INTO workflow_type(wording)
+VALUES ('Purchasing process');
+INSERT INTO workflow_type(wording)
+VALUES ('selling process');
+
+INSERT INTO workflow(type)
+VALUES (1);
+INSERT INTO workflow(type)
+VALUES (2);
+
+INSERT INTO document_type(wording)
+VALUES ('Facture');
+INSERT INTO document_type(wording)
+VALUES ('Bon de commande');
+INSERT INTO document_type(wording)
+VALUES ('Bon de livraison');
+INSERT INTO document_type(wording)
+VALUES ('Bon de vente');
+
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process)
+VALUES (CURRENT_DATE, 'payment''s conditions here', 135.5, 1, 1);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process)
+VALUES (CURRENT_DATE, 'payment''s conditions here', 90.9, 4, 2);
+
+#Création d'item
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('coca', CURRENT_DATE, 'pack de 6', 60, 200);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('fanta', CURRENT_DATE, 'pack de 6', 40, 120);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('pomme', CURRENT_DATE, 'en Vrac', 30, 60);
+#Création Promotion
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (30, '2022-04-01','2022-05-31' , 3);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (10, '2022-06-01','2022-07-31' , 3);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (70, '2021-04-01','2021-05-31' , 1);
+INSERT INTO lot(arrivage_date, expiration_date)
+VALUES ('2020-06-01','2025-07-31');
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (2.50, 30,0.26 ,null,1,3,1);
