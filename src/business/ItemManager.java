@@ -15,7 +15,12 @@ public class ItemManager {
         dao = new DBAccess();
     }
 
-    public ArrayList<Detail> getDetails(){
+    public ArrayList<Detail> getDetails(Integer ids[]){
+        return null;
+    }
+
+    public Detail getDetail(Integer id){
+
         return null;
     }
 

@@ -3,10 +3,7 @@ package dataAccess;
 import controller.DataAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.Detail;
-import model.Document;
-import model.DocumentType;
-import model.WorkflowType;
+import model.*;
 
 import javax.swing.*;
 import java.sql.*;
@@ -45,6 +42,7 @@ public class DBAccess implements DataAccess {
         return null;
     }
     public Detail getDetail(Integer itemIdReceive) throws DBException, SingletonConnectionException{
+        // colonnes de la base de données
         Integer code;
         Double unit_price;
         Integer quantity;
@@ -53,7 +51,36 @@ public class DBAccess implements DataAccess {
         Integer documentId;
         Integer itemId;
         Integer lotId;
-        return null;
+        // Variable a initialiser
+        Detail detail;
+        // etablissement de la connexion
+        Connection connection = SingletonConnection.getInstance();
+        // Requête SQL
+        String sqlInstruction = "SELECT * FROM detail";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            //
+            data.next();
+            //
+            code = data.getInt("code");
+            unit_price = data.getDouble("unit_price");
+            quantity = data.getInt("quantity");
+            vatRate = data.getDouble("vat_rate");
+            backOrder = data.getInt("back_order");
+            documentId = data.getInt("document");
+            itemId = data.getInt("item");
+            lotId = data.getInt("lot");
+
+            detail = new Detail(code, unit_price, quantity, vatRate, backOrder, documentId, itemId, lotId);
+
+
+        }
+        catch (SQLException exception){
+            throw new DBException(exception.getMessage());
+        }
+
+        return detail;
     }
 
     @Override
