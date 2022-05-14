@@ -233,6 +233,8 @@ INSERT INTO lot(arrivage_date, expiration_date)
 VALUES ('2020-06-01','2025-07-31');
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (2.50,50,0.26 ,null,1,3,1);
+
+
 #CREATE DATABASE store;
 USE store;
 

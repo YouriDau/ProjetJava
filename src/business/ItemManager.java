@@ -5,6 +5,8 @@ import dataAccess.DBAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Detail;
+import model.Item;
+import model.Promotion;
 
 import java.util.ArrayList;
 
@@ -12,16 +14,22 @@ public class ItemManager {
     private DataAccess dao;
 
     public ItemManager() throws DBException, SingletonConnectionException{
-        dao = new DBAccess();
+        setDao(new DBAccess());
     }
 
-    public ArrayList<Detail> getDetails(Integer ids[]){
-        return null;
+    public void setDao(DataAccess itemDBAccess){
+        this.dao = itemDBAccess;
+    }
+    public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
+        return dao.getDetails(items);
     }
 
-    public Detail getDetail(Integer id){
+    public ArrayList<Promotion> getPromotions(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+        return dao.getPromotions(littleValue, bigValue);
+    }
 
-        return null;
+    public ArrayList<Item> getItems(ArrayList<Promotion> promotions) throws DBException, SingletonConnectionException{
+        return dao.getItems(promotions);
     }
 
 

@@ -1,22 +1,23 @@
 package controller;
 
 import business.DocumentManager;
+import business.ItemManager;
 import business.WorkflowManager;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.Document;
-import model.DocumentType;
-import model.WorkflowType;
+import model.*;
 
 import java.util.ArrayList;
 
 public class ApplicationController {
     private WorkflowManager workflowManager;
     private DocumentManager documentManager;
+    private ItemManager itemManager;
 
     public ApplicationController() throws DBException, SingletonConnectionException {
         workflowManager = new WorkflowManager();
         documentManager = new DocumentManager();
+        itemManager = new ItemManager();
     }
 
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
@@ -45,5 +46,17 @@ public class ApplicationController {
 
     public void deleteDocument(int id) throws DBException, SingletonConnectionException {
         documentManager.deleteDocument(id);
+    }
+
+    public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
+        return itemManager.getDetails(items);
+    }
+
+    public ArrayList<Promotion> getPromotions(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+        return itemManager.getPromotions(littleValue, bigValue);
+    }
+
+    public ArrayList<Item> getItems(ArrayList<Promotion> promotions) throws DBException, SingletonConnectionException{
+        return itemManager.getItems(promotions);
     }
 }

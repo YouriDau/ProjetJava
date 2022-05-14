@@ -13,7 +13,7 @@ public class Detail {
     private Integer itemId;
     private Integer lotId;
 
-    public Detail(Integer code,Double unit_price,Integer quantity,Double vatRate,Integer backOrder,Integer documentId, Integer itemId,Integer lotId){
+    /*public Detail(Integer code,Double unit_price,Integer quantity,Double vatRate,Integer backOrder,Integer documentId, Integer itemId,Integer lotId){
         setCode(code);
         setUnit_price(unit_price);
         setQuantity(quantity);
@@ -22,7 +22,19 @@ public class Detail {
         setDocumentId(documentId);
         setItemId(itemId);
         setLotId(lotId);
+    }*/
+
+    public Detail(Integer code, Double unit_price, Integer itemId){
+        setCode(code);
+        setUnit_price(unit_price);
+        setItemId(itemId);
     }
+    // getters
+
+    public Double getUnit_price() {
+        return unit_price;
+    }
+
     // Setters
     public void setCode(Integer code) {
         this.code = code;
@@ -30,7 +42,7 @@ public class Detail {
     public void setUnit_price(Double unit_price) {
         this.unit_price = unit_price;
     }
-    public void setQuantity(Integer quantity) {
+   /* public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
     public void setVatRate(Double vatRate) {
@@ -41,11 +53,11 @@ public class Detail {
     }
     public void setDocumentId(Integer documentId) {
         this.documentId = documentId;
-    }
+    }*/
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
-    public void setLotId(Integer lotId) {
+   /* public void setLotId(Integer lotId) {
         this.lotId = lotId;
-    }
+    }*/
 }
