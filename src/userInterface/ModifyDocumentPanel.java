@@ -69,6 +69,7 @@ public class ModifyDocumentPanel extends JPanel {
             workflowsComboBox = new JComboBox<>();
             workflowsComboBox.setMaximumRowCount(4);
             fillWorkflows(controller.getAllWorkflow());
+            workflowsComboBox.setSelectedItem(document.getworkflowNumber());
 
             submit = new JButton("submit");
             back = new BackButton(container);
@@ -127,12 +128,12 @@ public class ModifyDocumentPanel extends JPanel {
             this.add(workflowsComboBox, layoutConstraints);
 
             layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 4;
+            layoutConstraints.gridy = 5;
             layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
             this.add(submit, layoutConstraints);
 
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 4;
+            layoutConstraints.gridy = 5;
             this.add(back, layoutConstraints);
         }
         catch(DBException exception){
@@ -160,6 +161,7 @@ public class ModifyDocumentPanel extends JPanel {
         for (Integer id : workflowsId) {
             workflowNumbers[i] = id;
             workflowsComboBox.addItem(id);
+            i++;
         }
     }
 
@@ -175,56 +177,56 @@ public class ModifyDocumentPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Le nombre de caractères ne peut pas être suppérieur à 100\nNombre de caractères actuel : " + paymentCondition.getText().length(),
                         "Error payment condition", JOptionPane.ERROR_MESSAGE);
             } else {
-                pattern = Pattern.compile("^[A-Za-z \\d]*$");
+                pattern = Pattern.compile("^[A-Za-z\\d\\p{javaWhitespace}]*$");
                 matcher = pattern.matcher(paymentCondition.getText());
 
-                // Vérifier si le text est alphanumérique uniquement de "a" à "z" et des chiffres
+                // Vérifier si le text est alphanumérique uniquement de "a" à "z", espaces et des chiffres
                 if (!matcher.matches()) {
                     JOptionPane.showMessageDialog(null, "Les conditions de paiements doivent uniquement\ncomprendre des lettres et des chiffres",
                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-            pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
-            matcher = pattern.matcher(creditLimit.getText());
-
-            // Vérifier si le nombre respecte bien le format décimal, entier ou null
-            if (!matcher.matches()) {
-                JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
-                        "Error credit limit", JOptionPane.ERROR_MESSAGE);
-                creditLimit.setText("");
-            } else {
-                // Vérifier si crédit limit est rempli
-                if (!creditLimit.getText().equals("")) {
-                    newCreditLimit =  Double.parseDouble(creditLimit.getText());
                 } else {
-                    newCreditLimit = null;
-                }
+                    pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
+                    matcher = pattern.matcher(creditLimit.getText());
 
-                if (!paymentCondition.getText().equals("")) {
-                    newPaymentCondition = paymentCondition.getText();
-                } else {
-                    newPaymentCondition = null;
-                }
+                    // Vérifier si le nombre respecte bien le format décimal, entier ou null
+                    if (!matcher.matches()) {
+                        JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
+                                "Error credit limit", JOptionPane.ERROR_MESSAGE);
+                        creditLimit.setText("");
+                    } else {
+                        // Vérifier si crédit limit est rempli
+                        if (!creditLimit.getText().equals("")) {
+                            newCreditLimit =  Double.parseDouble(creditLimit.getText());
+                        } else {
+                            newCreditLimit = null;
+                        }
 
-                document.setPaymentCondition(newPaymentCondition);
-                document.setCreditLimit(newCreditLimit);
-                document.setType(documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber());
-                document.setworkflowNumber(workflowNumbers[workflowsComboBox.getSelectedIndex()]);
-                try {
-                    controller.modifyDocument(document);
-                }
-                catch (DBException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-                }
-                catch (SingletonConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
-                }
+                        if (!paymentCondition.getText().equals("")) {
+                            newPaymentCondition = paymentCondition.getText();
+                        } else {
+                            newPaymentCondition = null;
+                        }
 
-                container.removeAll();
-                container.add(new AllDocumentsPanel(container));
-                container.revalidate();
-                container.repaint();
+                        document.setPaymentCondition(newPaymentCondition);
+                        document.setCreditLimit(newCreditLimit);
+                        document.setType(documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber());
+                        document.setworkflowNumber(workflowNumbers[workflowsComboBox.getSelectedIndex()]);
+                        try {
+                            controller.modifyDocument(document);
+                        }
+                        catch (DBException exception) {
+                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch (SingletonConnectionException exception) {
+                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        container.removeAll();
+                        container.add(new AllDocumentsPanel(container));
+                        container.revalidate();
+                        container.repaint();
+                    }
+                }
             }
         }
     }

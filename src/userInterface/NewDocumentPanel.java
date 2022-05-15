@@ -156,54 +156,54 @@ public class NewDocumentPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Le nombre de caractères ne peut pas être suppérieur à 100\nNombre de caractères actuel : " + paymentCondition.getText().length(),
                                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
             } else {
-                pattern = Pattern.compile("^[A-Za-z\\d]*$");
+                pattern = Pattern.compile("^[A-Za-z\\d\\n\\p{javaWhitespace}]*$");
                 matcher = pattern.matcher(paymentCondition.getText());
 
                 // Vérifier si le text est alphanumérique uniquement de "a" à "z" et des chiffres
                 if (!matcher.matches()) {
                     JOptionPane.showMessageDialog(null, "Les conditions de paiements doivent uniquement\ncomprendre des lettres et des chiffres",
                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-            pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
-            matcher = pattern.matcher(creditLimit.getText());
-
-            // Vérifier si le nombre respecte bien le format décimal, entier ou null
-            if (!matcher.matches()) {
-                JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
-                        "Error credit limit", JOptionPane.ERROR_MESSAGE);
-                creditLimit.setText("");
-            } else {
-                // Vérifier si crédit limit est rempli
-                if (!creditLimit.getText().equals("")) {
-                    newCreditLimit =  Double.parseDouble(creditLimit.getText());
                 } else {
-                    newCreditLimit = null;
-                }
+                    pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
+                    matcher = pattern.matcher(creditLimit.getText());
 
-                if (!paymentCondition.getText().equals("")) {
-                    newPaymentCondition = paymentCondition.getText();
-                } else {
-                    newPaymentCondition = null;
-                }
+                    // Vérifier si le nombre respecte bien le format décimal, entier ou null
+                    if (!matcher.matches()) {
+                        JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
+                                "Error credit limit", JOptionPane.ERROR_MESSAGE);
+                        creditLimit.setText("");
+                    } else {
+                        // Vérifier si crédit limit est rempli
+                        if (!creditLimit.getText().equals("")) {
+                            newCreditLimit =  Double.parseDouble(creditLimit.getText());
+                        } else {
+                            newCreditLimit = null;
+                        }
 
-                document = new Document(null, new GregorianCalendar(), newPaymentCondition, newCreditLimit,
+                        if (!paymentCondition.getText().equals("")) {
+                            newPaymentCondition = paymentCondition.getText();
+                        } else {
+                            newPaymentCondition = null;
+                        }
+
+                        document = new Document(null, new GregorianCalendar(), newPaymentCondition, newCreditLimit,
                                 documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber(), workflowNumbers[workflowsComboBox.getSelectedIndex()]);
-                try {
-                    controller.addDocument(document);
-                }
-                catch (DBException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-                }
-                catch (SingletonConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
-                }
+                        try {
+                            controller.addDocument(document);
+                        }
+                        catch (DBException exception) {
+                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                        }
+                        catch (SingletonConnectionException exception) {
+                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                        }
 
-                container.removeAll();
-                container.add(new AllDocumentsPanel(container));
-                container.revalidate();
-                container.repaint();
+                        container.removeAll();
+                        container.add(new AllDocumentsPanel(container));
+                        container.revalidate();
+                        container.repaint();
+                    }
+                }
             }
         }
     }

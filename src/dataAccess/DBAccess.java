@@ -5,10 +5,8 @@ import exception.DBException;
 import exception.SingletonConnectionException;
 import model.*;
 
-import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
@@ -379,7 +377,7 @@ public class DBAccess implements DataAccess {
     }
     @Override
     public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
-        String sqlInstruction = "UPDATE document" +
+        String sqlInstruction = "UPDATE document " +
                                 "SET payment_condition = ?, credit_limit = ?, type = ?, process = ? " +
                                 "WHERE number = ?";
         Connection connection = SingletonConnection.getInstance();
@@ -387,8 +385,18 @@ public class DBAccess implements DataAccess {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
-            preparedStatement.setString(1, document.getPaymentCondition());
-            preparedStatement.setDouble(2, document.getCreditLimit());
+            if (document.getPaymentCondition() != null){
+                preparedStatement.setString(1, document.getPaymentCondition());
+            } else {
+                preparedStatement.setNull(1, Types.VARCHAR);
+            }
+
+            if (document.getCreditLimit() != null) {
+                preparedStatement.setDouble(2, document.getCreditLimit());
+            } else {
+                preparedStatement.setNull(2, Types.DECIMAL);
+            }
+
             preparedStatement.setInt(3, document.getType());
             preparedStatement.setInt(4, document.getworkflowNumber());
             preparedStatement.setInt(5, document.getNumber());
