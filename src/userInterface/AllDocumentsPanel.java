@@ -21,8 +21,8 @@ public class AllDocumentsPanel extends JPanel{
     private JScrollPane scrollPane;
     private GridBagConstraints layoutConstraints;
     private JButton addDocument;
-    private JButton modifyDocument;
     private JButton deleteDocument;
+    private JButton modifyDocument;
     private Container container;
 
     public AllDocumentsPanel(Container container) {
@@ -33,7 +33,7 @@ public class AllDocumentsPanel extends JPanel{
         try {
             controller = new ApplicationController();
             allDocuments = controller.getAllDocuments();
-            model = new DocumentsModel(controller.getAllDocuments());
+            model = new DocumentsModel(allDocuments);
 
             table = new JTable(model);
 
@@ -42,13 +42,10 @@ public class AllDocumentsPanel extends JPanel{
             scrollPane = new JScrollPane(table);
 
             addDocument = new JButton("Add a new document");
-            addDocument.addActionListener(new AddDocumentListener());
-
             deleteDocument = new JButton("Delete");
             modifyDocument = new JButton("Modify");
 
-            //modifyDocument.setBorder(BorderFactory.createLineBorder(Color.blue));
-
+            addDocument.addActionListener(new AddDocumentListener());
             deleteDocument.addActionListener(new DeleteDocumentListener());
             modifyDocument.addActionListener(new ModifyDocumentListener());
 
@@ -61,22 +58,25 @@ public class AllDocumentsPanel extends JPanel{
             layoutConstraints.gridy = 0;
             this.add(addDocument, layoutConstraints);
 
+            layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 1;
+            layoutConstraints.gridy = 4;
+            this.add(modifyDocument, layoutConstraints);
+
+            layoutConstraints.gridwidth = 1;
+            layoutConstraints.anchor = GridBagConstraints.LINE_END;
+            layoutConstraints.gridx = 1;
+            layoutConstraints.gridy = 4;
+            this.add(deleteDocument, layoutConstraints);
+
+            layoutConstraints.gridwidth = 2;
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 2;
             this.add(table.getTableHeader(), layoutConstraints);
 
             layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 2;
+            layoutConstraints.gridy = 3;
             this.add(scrollPane, layoutConstraints);
-
-            layoutConstraints.gridwidth = 1;
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 3;
-            this.add(modifyDocument, layoutConstraints);
-
-            layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 3;
-            this.add(deleteDocument, layoutConstraints);
         }
         catch (DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
@@ -137,13 +137,18 @@ public class AllDocumentsPanel extends JPanel{
     }
 
     public class ModifyDocumentListener implements ActionListener {
+        private Document document;
         @Override
         public void actionPerformed(ActionEvent event) {
-            JOptionPane.showMessageDialog(null, "test");
-            container.removeAll();
-            container.add(new ModifyDocumentPanel(container));
-            container.revalidate();
-            container.repaint();
+            if (table.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Please, select a row to modify", "No row selected", JOptionPane.WARNING_MESSAGE);
+            } else {
+                document = allDocuments.get(table.getSelectedRow());
+                container.removeAll();
+                container.add(new ModifyDocumentPanel(container, document));
+                container.revalidate();
+                container.repaint();
+            }
         }
     }
 }
