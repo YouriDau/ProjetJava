@@ -13,9 +13,11 @@ public class DocumentManager {
     private DataAccess dao;
 
     public DocumentManager() throws DBException, SingletonConnectionException {
-        dao = new DBAccess();
+        setDao(new DBAccess());
     }
-
+    public void setDao(DataAccess documentDBAccess) {
+        this.dao = documentDBAccess;
+    }
     public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         return dao.getDocuments(workflowNumber);
     }

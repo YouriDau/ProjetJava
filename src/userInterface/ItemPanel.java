@@ -106,6 +106,10 @@ public class ItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             minValue = Integer.parseInt(firstNumber.getValue().toString());
             maxValue = Integer.parseInt(secondNumber.getValue().toString());
+            container.removeAll();
+            container.add(new ByPromoPanel(minValue, maxValue, container));
+            container.revalidate();
+            container.repaint();
         }
     }
 }

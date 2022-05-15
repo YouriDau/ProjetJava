@@ -22,7 +22,6 @@ public class Item {
         setId(id);
         setWording(wording);
     }
-
     public Integer getId() {
         return id;
     }
@@ -35,7 +34,10 @@ public class Item {
         this.wording = wording;
     }
 
-   /* public void setProductionDate(GregorianCalendar productionDate) {
+    public String getWording() {
+        return wording;
+    }
+    /* public void setProductionDate(GregorianCalendar productionDate) {
         this.productionDate = productionDate;
     }
 

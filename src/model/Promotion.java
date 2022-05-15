@@ -40,4 +40,8 @@ public class Promotion {
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
+
+    public Integer getPercentage() {
+        return percentage;
+    }
 }
