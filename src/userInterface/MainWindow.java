@@ -92,6 +92,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
+            MainWindow.this.setSize(561, 500);
             container.add(new ItemPanel(container));
             container.repaint();
             setVisible(true);

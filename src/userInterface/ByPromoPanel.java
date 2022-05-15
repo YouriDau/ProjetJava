@@ -28,7 +28,8 @@ public class ByPromoPanel extends JPanel {
     private JScrollPane jScrollPane;
 
     public ByPromoPanel (int minvalue, int maxValue, Container container){
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
+        layoutConstraints = new GridBagConstraints();
         this.container = container;
         try{
             applicationController = new ApplicationController();
@@ -40,8 +41,16 @@ public class ByPromoPanel extends JPanel {
 
                 back = new BackButton(container);
 
-                this.add(listEmpty, BorderLayout.CENTER);
-                this.add(back, BorderLayout.AFTER_LAST_LINE);
+                layoutConstraints.gridwidth = 1;
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 0;
+                this.add(listEmpty, layoutConstraints);
+
+                layoutConstraints.gridwidth = 1;
+                layoutConstraints.insets = new Insets(50, 0, 15, 0);
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 1;
+                this.add(back, layoutConstraints);
             } else{
                 items = applicationController.getItems(promotions);
                 details = applicationController.getDetails(items);
@@ -49,14 +58,32 @@ public class ByPromoPanel extends JPanel {
 
                 table = new JTable(model);
                 table.setPreferredScrollableViewportSize(new Dimension(515,300));
-                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
                 jScrollPane = new JScrollPane(table);
 
                 setColumnSize();
-                this.add(table.getTableHeader(), BorderLayout.CENTER);
 
-                this.add(jScrollPane, BorderLayout.CENTER);
+
+                layoutConstraints.gridwidth = 1;
+                layoutConstraints.anchor = GridBagConstraints.CENTER;
+                layoutConstraints.insets = new Insets(3, 0, 15, 0);
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 2;
+                back = new BackButton(container);
+                this.add(back,layoutConstraints);
+
+                layoutConstraints.gridwidth = 1;
+                layoutConstraints.anchor = GridBagConstraints.CENTER;
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 0;
+                this.add(table.getTableHeader(), layoutConstraints);
+
+                layoutConstraints.gridwidth = 1;
+                layoutConstraints.anchor = GridBagConstraints.CENTER;
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 1;
+                this.add(jScrollPane, layoutConstraints);
 
 
             }

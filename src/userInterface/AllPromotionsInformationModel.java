@@ -51,6 +51,7 @@ public class AllPromotionsInformationModel extends AbstractTableModel {
             default: return null;
         }
     }
+    @Override
     public Class getColumnClass(int column){
         Class c;
         switch (column){
@@ -64,6 +65,7 @@ public class AllPromotionsInformationModel extends AbstractTableModel {
         }
         return c;
     }
+    @Override
     public String getColumnName(int column) {
         return columnNames.get(column);
     }

@@ -106,10 +106,14 @@ public class ItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             minValue = Integer.parseInt(firstNumber.getValue().toString());
             maxValue = Integer.parseInt(secondNumber.getValue().toString());
-            container.removeAll();
-            container.add(new ByPromoPanel(minValue, maxValue, container));
-            container.revalidate();
-            container.repaint();
+            if (minValue > maxValue){
+                JOptionPane.showMessageDialog(null, "Min value is higher than max value", "Error value", JOptionPane.ERROR_MESSAGE);
+            } else {
+                container.removeAll();
+                container.add(new ByPromoPanel(minValue, maxValue, container));
+                container.revalidate();
+                container.repaint();
+            }
         }
     }
 }
