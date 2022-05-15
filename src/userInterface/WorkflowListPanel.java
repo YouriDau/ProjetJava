@@ -6,6 +6,7 @@ import exception.SingletonConnectionException;
 import model.Document;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class WorkflowListPanel extends JPanel {
     private ArrayList<Document> documents;
     private DocumentsModel model;
     private JTable table;
+    private TableColumn column;
     private JScrollPane scrollPane;
 
     public WorkflowListPanel(int workflowNumber, Container container) {
@@ -40,9 +42,14 @@ public class WorkflowListPanel extends JPanel {
                 model = new DocumentsModel(controller.getDocuments(workflowNumber));
 
                 table = new JTable(model);
+                table.setPreferredScrollableViewportSize(new Dimension(515, 300));
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
                 scrollPane = new JScrollPane(table);
 
-                this.add(table.getTableHeader(), BorderLayout.PAGE_START);
+                setColumnsSize();
+
+                this.add(table.getTableHeader(), BorderLayout.CENTER);
                 this.add(scrollPane, BorderLayout.CENTER);
             }
         }
@@ -52,5 +59,20 @@ public class WorkflowListPanel extends JPanel {
         catch (SingletonConnectionException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void setColumnsSize() {
+        column = table.getColumnModel().getColumn(0);
+        column.setPreferredWidth(55);
+        column = table.getColumnModel().getColumn(1);
+        column.setPreferredWidth(80);
+        column = table.getColumnModel().getColumn(2);
+        column.setPreferredWidth(100);
+        column = table.getColumnModel().getColumn(3);
+        column.setPreferredWidth(80);
+        column = table.getColumnModel().getColumn(4);
+        column.setPreferredWidth(100);
+        column = table.getColumnModel().getColumn(5);
+        column.setPreferredWidth(100);
     }
 }

@@ -6,6 +6,7 @@ import exception.SingletonConnectionException;
 import model.Document;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -8,7 +8,12 @@ import model.DocumentType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ModifyDocumentPanel extends JPanel {
     private Container container;
@@ -27,6 +32,8 @@ public class ModifyDocumentPanel extends JPanel {
     private JLabel documentTypeLabel;
     private JLabel workflowLabel;
     private ApplicationController controller;
+    private JButton submit;
+    private JButton back;
 
     public ModifyDocumentPanel(Container container, Document document) {
         this.container = container;
@@ -52,7 +59,8 @@ public class ModifyDocumentPanel extends JPanel {
             paymentCondition.setText(document.getPaymentCondition());
 
             creditLimit = new JTextField(12);
-            creditLimit.setText(document.getCreditLimit().toString());
+            if (document.getCreditLimit() != null)
+                creditLimit.setText(document.getCreditLimit().toString());
 
             documentTypesComboBox = new JComboBox<>();
             documentTypesComboBox.setMaximumRowCount(4);
@@ -61,6 +69,11 @@ public class ModifyDocumentPanel extends JPanel {
             workflowsComboBox = new JComboBox<>();
             workflowsComboBox.setMaximumRowCount(4);
             fillWorkflows(controller.getAllWorkflow());
+
+            submit = new JButton("submit");
+            back = new BackButton(container);
+
+            submit.addActionListener(new SubmitListener());
 
             layoutConstraints.insets = new Insets(0, 0, 15, 15);
             layoutConstraints.gridx = 0;
@@ -112,6 +125,15 @@ public class ModifyDocumentPanel extends JPanel {
             layoutConstraints.gridy = 4;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(workflowsComboBox, layoutConstraints);
+
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 4;
+            layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
+            this.add(submit, layoutConstraints);
+
+            layoutConstraints.gridx = 1;
+            layoutConstraints.gridy = 4;
+            this.add(back, layoutConstraints);
         }
         catch(DBException exception){
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
@@ -138,6 +160,72 @@ public class ModifyDocumentPanel extends JPanel {
         for (Integer id : workflowsId) {
             workflowNumbers[i] = id;
             workflowsComboBox.addItem(id);
+        }
+    }
+
+    public class SubmitListener implements ActionListener {
+        private Pattern pattern;
+        private Matcher matcher;
+        private Double newCreditLimit;
+        private String newPaymentCondition;
+
+        public void actionPerformed(ActionEvent event) {
+            // Vérifier si le text à - de 100 caractères
+            if (paymentCondition.getText().length() > 100) {
+                JOptionPane.showMessageDialog(null, "Le nombre de caractères ne peut pas être suppérieur à 100\nNombre de caractères actuel : " + paymentCondition.getText().length(),
+                        "Error payment condition", JOptionPane.ERROR_MESSAGE);
+            } else {
+                pattern = Pattern.compile("^[A-Za-z \\d]*$");
+                matcher = pattern.matcher(paymentCondition.getText());
+
+                // Vérifier si le text est alphanumérique uniquement de "a" à "z" et des chiffres
+                if (!matcher.matches()) {
+                    JOptionPane.showMessageDialog(null, "Les conditions de paiements doivent uniquement\ncomprendre des lettres et des chiffres",
+                            "Error payment condition", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+            pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
+            matcher = pattern.matcher(creditLimit.getText());
+
+            // Vérifier si le nombre respecte bien le format décimal, entier ou null
+            if (!matcher.matches()) {
+                JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
+                        "Error credit limit", JOptionPane.ERROR_MESSAGE);
+                creditLimit.setText("");
+            } else {
+                // Vérifier si crédit limit est rempli
+                if (!creditLimit.getText().equals("")) {
+                    newCreditLimit =  Double.parseDouble(creditLimit.getText());
+                } else {
+                    newCreditLimit = null;
+                }
+
+                if (!paymentCondition.getText().equals("")) {
+                    newPaymentCondition = paymentCondition.getText();
+                } else {
+                    newPaymentCondition = null;
+                }
+
+                document.setPaymentCondition(newPaymentCondition);
+                document.setCreditLimit(newCreditLimit);
+                document.setType(documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber());
+                document.setworkflowNumber(workflowNumbers[workflowsComboBox.getSelectedIndex()]);
+                try {
+                    controller.modifyDocument(document);
+                }
+                catch (DBException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                }
+                catch (SingletonConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                }
+
+                container.removeAll();
+                container.add(new AllDocumentsPanel(container));
+                container.revalidate();
+                container.repaint();
+            }
         }
     }
 }

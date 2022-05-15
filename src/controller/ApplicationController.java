@@ -48,6 +48,10 @@ public class ApplicationController {
         documentManager.deleteDocument(id);
     }
 
+    public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
+        documentManager.modifyDocument(document);
+    }
+
     public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
         return itemManager.getDetails(items);
     }

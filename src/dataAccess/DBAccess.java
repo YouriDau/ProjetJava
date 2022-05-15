@@ -38,6 +38,7 @@ public class DBAccess implements DataAccess {
         }
         return workflowNumbers;
     }
+    @Override
     public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
         ArrayList<Detail> details= new ArrayList<>();
         for (Item item : items){
@@ -46,6 +47,7 @@ public class DBAccess implements DataAccess {
         }
         return details;
     }
+    @Override
     public Detail getDetail(Integer itemIdReceive) throws DBException, SingletonConnectionException{
         // colonnes de la base de données
         Integer code;
@@ -95,6 +97,7 @@ public class DBAccess implements DataAccess {
 
         return detail;
     }
+    @Override
     public ArrayList<Item> getItems(ArrayList<Promotion> promotions) throws DBException, SingletonConnectionException{
         ArrayList<Item> items = new ArrayList<>();
         for (Promotion promotion : promotions){
@@ -102,6 +105,7 @@ public class DBAccess implements DataAccess {
         }
         return items;
     }
+    @Override
     public Item getItem(Integer idPromotion) throws DBException, SingletonConnectionException{
         // valeurs a récupérer
         Integer id;
@@ -126,6 +130,7 @@ public class DBAccess implements DataAccess {
         }
         return item;
     }
+    @Override
     public ArrayList<Promotion> getPromotions(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
         // colonnes
         Integer id;
@@ -186,7 +191,6 @@ public class DBAccess implements DataAccess {
 
         return workflowTypes;
     }
-
     @Override
     public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         Integer number;
@@ -238,7 +242,6 @@ public class DBAccess implements DataAccess {
         }
         return documents;
     }
-
     @Override
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         Integer number;
@@ -287,7 +290,6 @@ public class DBAccess implements DataAccess {
         }
         return documents;
     }
-
     @Override
     public ArrayList<DocumentType> getAllDocumentTypes() throws  DBException, SingletonConnectionException {
         Integer id;
@@ -314,7 +316,6 @@ public class DBAccess implements DataAccess {
 
         return documentTypes;
     }
-
     @Override
     public void addDocument(Document document) throws  DBException, SingletonConnectionException {
         int lastDocumentId;
@@ -361,7 +362,6 @@ public class DBAccess implements DataAccess {
             throw new DBException(exception.getMessage());
         }
     }
-
     @Override
     public void deleteDocument(int id) throws DBException, SingletonConnectionException {
         String sqlInstruction = "DELETE FROM document " +
@@ -374,6 +374,28 @@ public class DBAccess implements DataAccess {
             int nbRowEffected = preparedStatement.executeUpdate();
         }
         catch(SQLException exception) {
+            throw new DBException(exception.getMessage());
+        }
+    }
+    @Override
+    public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
+        String sqlInstruction = "UPDATE document" +
+                                "SET payment_condition = ?, credit_limit = ?, type = ?, process = ? " +
+                                "WHERE number = ?";
+        Connection connection = SingletonConnection.getInstance();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, document.getPaymentCondition());
+            preparedStatement.setDouble(2, document.getCreditLimit());
+            preparedStatement.setInt(3, document.getType());
+            preparedStatement.setInt(4, document.getworkflowNumber());
+            preparedStatement.setInt(5, document.getNumber());
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
     }
