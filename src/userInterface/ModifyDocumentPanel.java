@@ -31,7 +31,11 @@ public class ModifyDocumentPanel extends JPanel {
     private JLabel creditLimitLabel;
     private JLabel documentTypeLabel;
     private JLabel workflowLabel;
+    private JLabel updateTheStockLabel;
     private ApplicationController controller;
+    private JRadioButton yes;
+    private JRadioButton no;
+    private ButtonGroup buttonsStock;
     private JButton submit;
     private JButton back;
 
@@ -48,7 +52,8 @@ public class ModifyDocumentPanel extends JPanel {
             paymentConditionLabel = new JLabel("Payment's condition : ");
             creditLimitLabel = new JLabel("Credit limit : ");
             documentTypeLabel = new JLabel("Document type : ");
-            workflowLabel = new JLabel("Wofkflow type : ");
+            workflowLabel = new JLabel("Wofkflow number : ");
+            updateTheStockLabel = new JLabel("Update the stock? : ");
 
             number = new JTextField(10);
             number.setText(document.getNumber().toString());
@@ -74,6 +79,13 @@ public class ModifyDocumentPanel extends JPanel {
             submit = new JButton("submit");
             back = new BackButton(container);
 
+            yes = new JRadioButton("yes", false);
+            no = new JRadioButton("no", true);
+
+            buttonsStock = new ButtonGroup();
+            buttonsStock.add(yes);
+            buttonsStock.add(no);
+
             submit.addActionListener(new SubmitListener());
 
             layoutConstraints.insets = new Insets(0, 0, 15, 15);
@@ -82,58 +94,76 @@ public class ModifyDocumentPanel extends JPanel {
             layoutConstraints.anchor = GridBagConstraints.LINE_END;
             this.add(numberLabel, layoutConstraints);
 
+            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 0;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(number, layoutConstraints);
 
+            layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 1;
             layoutConstraints.anchor = GridBagConstraints.LINE_END;
             this.add(paymentConditionLabel, layoutConstraints);
 
+            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 1;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            this.add(paymentCondition, layoutConstraints);
+            this.add(new JScrollPane(paymentCondition), layoutConstraints);
 
+            layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 2;
             layoutConstraints.anchor = GridBagConstraints.LINE_END;
             this.add(creditLimitLabel, layoutConstraints);
 
+            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 2;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(creditLimit, layoutConstraints);
 
+            layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 3;
             layoutConstraints.anchor = GridBagConstraints.LINE_END;
             this.add(documentTypeLabel, layoutConstraints);
 
+            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 3;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(documentTypesComboBox, layoutConstraints);
 
+            layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 4;
             layoutConstraints.anchor = GridBagConstraints.LINE_END;
             this.add(workflowLabel, layoutConstraints);
 
+            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 4;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(workflowsComboBox, layoutConstraints);
 
+            layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 5;
+            layoutConstraints.anchor = GridBagConstraints.LINE_END;
+            this.add(updateTheStockLabel, layoutConstraints);
+
+            layoutConstraints.gridx = 1;
+            layoutConstraints.anchor = GridBagConstraints.LINE_END;
+            this.add(yes, layoutConstraints);
+
+            layoutConstraints.gridx = 2;
+            layoutConstraints.anchor = GridBagConstraints.LINE_END;
+            this.add(no, layoutConstraints);
+
+            layoutConstraints.gridwidth = 1;
+            layoutConstraints.gridx = 0;
+            layoutConstraints.gridy = 6;
             layoutConstraints.fill = GridBagConstraints.HORIZONTAL;
             this.add(submit, layoutConstraints);
 
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 5;
             this.add(back, layoutConstraints);
         }
         catch(DBException exception){
@@ -165,9 +195,10 @@ public class ModifyDocumentPanel extends JPanel {
         }
     }
 
+
+
     public class SubmitListener implements ActionListener {
         private Pattern pattern;
-        private Matcher matcher;
         private Double newCreditLimit;
         private String newPaymentCondition;
 
@@ -177,24 +208,20 @@ public class ModifyDocumentPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Le nombre de caractères ne peut pas être suppérieur à 100\nNombre de caractères actuel : " + paymentCondition.getText().length(),
                         "Error payment condition", JOptionPane.ERROR_MESSAGE);
             } else {
-                pattern = Pattern.compile("^[A-Za-z\\d\\p{javaWhitespace}]*$");
-                matcher = pattern.matcher(paymentCondition.getText());
 
                 // Vérifier si le text est alphanumérique uniquement de "a" à "z", espaces et des chiffres
-                if (!matcher.matches()) {
+                if (!pattern.matches("^[A-Za-z\\d\\p{javaWhitespace}]*$", paymentCondition.getText())) {
                     JOptionPane.showMessageDialog(null, "Les conditions de paiements doivent uniquement\ncomprendre des lettres et des chiffres",
                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
-                    matcher = pattern.matcher(creditLimit.getText());
 
                     // Vérifier si le nombre respecte bien le format décimal, entier ou null
-                    if (!matcher.matches()) {
+                    if (!pattern.matches("^[0-9]*\\.?[0-9]*$", creditLimit.getText())) {
                         JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
                                 "Error credit limit", JOptionPane.ERROR_MESSAGE);
                         creditLimit.setText("");
                     } else {
-                        // Vérifier si crédit limit est rempli
+                        // Vérifier si créditLimit est rempli
                         if (!creditLimit.getText().equals("")) {
                             newCreditLimit =  Double.parseDouble(creditLimit.getText());
                         } else {
@@ -211,6 +238,7 @@ public class ModifyDocumentPanel extends JPanel {
                         document.setCreditLimit(newCreditLimit);
                         document.setType(documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber());
                         document.setworkflowNumber(workflowNumbers[workflowsComboBox.getSelectedIndex()]);
+                        document.setUpdateTheStock(yes.isSelected());
                         try {
                             controller.modifyDocument(document);
                         }

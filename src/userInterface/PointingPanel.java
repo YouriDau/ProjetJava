@@ -87,6 +87,7 @@ public class PointingPanel extends JPanel {
     public class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println(firstEditor.getTextField().getText());
             firstDate.setValue(today.getTime());
             secondDate.setValue(today.getTime());
         }

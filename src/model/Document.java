@@ -1,7 +1,15 @@
 package model;
 
+import exception.DBException;
+import exception.SingletonConnectionException;
+import userInterface.AllDocumentsPanel;
+
+import javax.swing.*;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Document {
     public static final String[] columnsTitles = {"Number", "Creation date", "Payment condition", "Credit limit", "Document type", "Workflow number"};
@@ -12,19 +20,24 @@ public class Document {
     private Double creditLimit; // Can be null
     private Integer type;
     private Integer workflowNumber;
+    private Boolean updateTheStock;
+
+    private Pattern pattern;
+    private Matcher matcher;
 
     public Document(Integer number, GregorianCalendar creationDate, String paymentCondition,
-                         Double creditLimit, Integer type, Integer workflowNumber) {
+                         Double creditLimit, Integer type, Integer workflowNumber, Boolean updateTheStock) {
         setNumber(number);
         setCreationDate(creationDate);
         setPaymentCondition(paymentCondition);
         setCreditLimit(creditLimit);
         setType(type);
         setworkflowNumber(workflowNumber);
+        setUpdateTheStock(updateTheStock);
     }
 
-    public Document(Integer number, GregorianCalendar creationDate, Integer type, Integer workflowNumber) {
-        this(number, creationDate, null, null, type, workflowNumber);
+    public Document(Integer number, GregorianCalendar creationDate, Integer type, Integer workflowNumber, Boolean updateTheStock) {
+        this(number, creationDate, null, null, type, workflowNumber, updateTheStock);
     }
 
     public Integer getNumber() {
@@ -59,6 +72,10 @@ public class Document {
         return workflowNumber;
     }
 
+    public Boolean getUpdateTheStock() {
+        return updateTheStock;
+    }
+
     public void setNumber(Integer number) {
         this.number = number;
     }
@@ -83,7 +100,7 @@ public class Document {
         this.workflowNumber = processNumber;
     }
 
-    public static String[] getColumnsTitles() {
-        return columnsTitles;
+    public void setUpdateTheStock(Boolean updateTheStock) {
+        this.updateTheStock = updateTheStock;
     }
 }

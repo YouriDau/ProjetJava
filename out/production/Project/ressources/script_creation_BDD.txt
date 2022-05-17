@@ -1,4 +1,5 @@
-#CREATE DATABASE store;
+DROP DATABASE store;
+CREATE DATABASE store;
 USE store;
 
 DROP TABLE IF EXISTS `person_type`;
@@ -79,11 +80,12 @@ CREATE TABLE document (
                           number INT AUTO_INCREMENT,
                           creation_date date NOT NULL,
                           payment_condition varchar(100),
-                          credit_limit decimal(5, 0),
+                          credit_limit decimal(5, 2),
                           type INT NOT NULL,
                           process INT NOT NULL NOT NULL,
+                          update_the_stock BOOLEAN NOT NULL,
 
-                          CONSTRAINT document_pk
+                              CONSTRAINT document_pk
                               PRIMARY KEY(number),
                           CONSTRAINT document_fk
                               FOREIGN KEY(type)
@@ -210,10 +212,10 @@ VALUES ('Bon de livraison');
 INSERT INTO document_type(wording)
 VALUES ('Bon de vente');
 
-INSERT INTO document(creation_date, payment_condition, credit_limit, type, process)
-VALUES (CURRENT_DATE, 'payment''s conditions here', 135.5, 1, 1);
-INSERT INTO document(creation_date, payment_condition, credit_limit, type, process)
-VALUES (CURRENT_DATE, 'payment''s conditions here', 90.9, 4, 2);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, updateTheStock)
+VALUES (CURRENT_DATE, 'payment''s conditions here', 135.5, 1, 1, FALSE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, updateTheStock)
+VALUES (CURRENT_DATE, 'payment''s conditions here', 90.9, 4, 2, TRUE);
 
 #Création d'item
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)

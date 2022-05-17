@@ -113,10 +113,10 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            MainWindow.this.setSize(561, 500);
+            //MainWindow.this.setSize(561, 500);
             container.add(new AllDocumentsPanel(container), BorderLayout.PAGE_START);
             container.repaint();
-            //MainWindow.this.pack();
+            MainWindow.this.pack();
             setVisible(true);
         }
     }

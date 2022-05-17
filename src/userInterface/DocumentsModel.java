@@ -18,6 +18,7 @@ public class DocumentsModel extends AbstractTableModel {
         columnNames.add("Credit limit");
         columnNames.add("Document type");
         columnNames.add("Process number");
+        columnNames.add("UpdateTheStock");
         setContents(documents);
     }
 
@@ -53,6 +54,7 @@ public class DocumentsModel extends AbstractTableModel {
                     }
             case 4: return document.getType();
             case 5: return document.getworkflowNumber();
+            case 6: return document.getUpdateTheStock();
             default: return null;
         }
     }
@@ -72,6 +74,7 @@ public class DocumentsModel extends AbstractTableModel {
                 break;
             case 5: c = Integer.class;
                 break;
+            case 6: c = Boolean.class;
             default: c = String.class;
         }
         return c;

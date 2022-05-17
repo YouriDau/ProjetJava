@@ -198,6 +198,7 @@ public class DBAccess implements DataAccess {
         Integer documentType;
         Integer processNumber;
         Double creditLimit;
+        Boolean updateTheStock;
         Document document;
 
         ArrayList<Document> documents = new ArrayList<>();
@@ -219,8 +220,10 @@ public class DBAccess implements DataAccess {
                 date.setTime(sqlDate);
                 documentType = data.getInt("type");
                 processNumber = data.getInt("process");
+                updateTheStock = data.getBoolean("update_the_stock");
 
-                document = new Document(number, date, documentType, processNumber);
+                // A CHANGER
+                document = new Document(number, date, documentType, processNumber, updateTheStock);
 
                 paymentCondition = data.getString("payment_condition");
                 if (!data.wasNull()) {
@@ -249,6 +252,7 @@ public class DBAccess implements DataAccess {
         Integer documentType;
         Integer processNumber;
         Double creditLimit;
+        Boolean updateTheStock;
         Document document;
 
         ArrayList<Document> documents = new ArrayList<>();
@@ -267,8 +271,9 @@ public class DBAccess implements DataAccess {
                 date.setTime(sqlDate);
                 documentType = data.getInt("type");
                 processNumber = data.getInt("process");
+                updateTheStock = data.getBoolean("update_the_stock");
 
-                document = new Document(number, date, documentType, processNumber);
+                document = new Document(number, date, documentType, processNumber, updateTheStock);
 
                 paymentCondition = data.getString("payment_condition");
                 if (!data.wasNull()) {
@@ -318,8 +323,8 @@ public class DBAccess implements DataAccess {
     public void addDocument(Document document) throws  DBException, SingletonConnectionException {
         int lastDocumentId;
         ResultSet data;
-        String sqlInstruction = "INSERT INTO document(creation_date, type, process)" +
-                                "VALUES(?, ?, ?);";
+        String sqlInstruction = "INSERT INTO document(creation_date, type, process, update_the_stock) " +
+                                "VALUES(?, ?, ?, ?);";
         Connection connection = SingletonConnection.getInstance();
 
         try {
@@ -328,15 +333,16 @@ public class DBAccess implements DataAccess {
             preparedStatement.setDate(1, new java.sql.Date(document.getCreationDate().getTimeInMillis()));
             preparedStatement.setInt(2, document.getType());
             preparedStatement.setInt(3, document.getworkflowNumber());
+            preparedStatement.setBoolean(4, document.getUpdateTheStock());
 
             preparedStatement.executeUpdate();
 
-            sqlInstruction = "SELECT LAST_INSERT_ID() as id FROM document";
+            sqlInstruction = "SELECT LAST_INSERT_ID() as last_id FROM document";
             preparedStatement = connection.prepareStatement(sqlInstruction);
             data = preparedStatement.executeQuery();
 
             data.next();
-            lastDocumentId = data.getInt("id");
+            lastDocumentId = data.getInt("last_id");
 
             if (document.getPaymentCondition() != null) {
                 sqlInstruction = "UPDATE document SET payment_condition = ?" +
@@ -378,7 +384,7 @@ public class DBAccess implements DataAccess {
     @Override
     public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
         String sqlInstruction = "UPDATE document " +
-                                "SET payment_condition = ?, credit_limit = ?, type = ?, process = ? " +
+                                "SET payment_condition = ?, credit_limit = ?, type = ?, process = ?, update_the_stock = ? " +
                                 "WHERE number = ?";
         Connection connection = SingletonConnection.getInstance();
 
@@ -399,7 +405,8 @@ public class DBAccess implements DataAccess {
 
             preparedStatement.setInt(3, document.getType());
             preparedStatement.setInt(4, document.getworkflowNumber());
-            preparedStatement.setInt(5, document.getNumber());
+            preparedStatement.setBoolean(5, document.getUpdateTheStock());
+            preparedStatement.setInt(6, document.getNumber());
 
             preparedStatement.executeUpdate();
         }
