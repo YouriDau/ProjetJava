@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 public class Item {
     Integer id;
     String wording;
-/*    GregorianCalendar productionDate;
+    GregorianCalendar productionDate;
     String packaging;
     double minimumLevel;
     Integer quantityInStock;
@@ -17,7 +17,7 @@ public class Item {
         setPackaging(packaging);
         setMinimumLevel(minimumLevel);
         setQuantityInStock(quantityInStock);
-    }*/
+    }
     public Item(Integer id, String wording){
         setId(id);
         setWording(wording);
@@ -37,7 +37,7 @@ public class Item {
     public String getWording() {
         return wording;
     }
-    /* public void setProductionDate(GregorianCalendar productionDate) {
+    public void setProductionDate(GregorianCalendar productionDate) {
         this.productionDate = productionDate;
     }
 
@@ -51,5 +51,5 @@ public class Item {
 
     public void setQuantityInStock(Integer quantityInStock) {
         this.quantityInStock = quantityInStock;
-    }*/
+    }
 }
