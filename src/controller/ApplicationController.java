@@ -48,15 +48,7 @@ public class ApplicationController {
         documentManager.modifyDocument(document);
     }
 
-    public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
-        return itemManager.getDetails(items);
-    }
-
-    public ArrayList<Promotion> getPromotions(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
-        return itemManager.getPromotions(littleValue, bigValue);
-    }
-
-    public ArrayList<Item> getItems(ArrayList<Promotion> promotions) throws DBException, SingletonConnectionException{
-        return itemManager.getItems(promotions);
+    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+        return itemManager.getResearchByPromo(littleValue, bigValue);
     }
 }

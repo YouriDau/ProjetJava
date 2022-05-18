@@ -106,6 +106,8 @@ public class ItemPanel extends JPanel {
             maxValue = Integer.parseInt(secondNumber.getValue().toString());
             if (minValue > maxValue){
                 JOptionPane.showMessageDialog(null, "Min value is higher than max value", "Error value", JOptionPane.ERROR_MESSAGE);
+                firstNumber.setValue(0);
+                secondNumber.setValue(0);
             } else {
                 container.removeAll();
                 container.add(new ByPromoPanel(minValue, maxValue, container));

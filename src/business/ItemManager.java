@@ -7,6 +7,7 @@ import exception.SingletonConnectionException;
 import model.Detail;
 import model.Item;
 import model.Promotion;
+import model.ResearchByPromo;
 
 import java.util.ArrayList;
 
@@ -20,16 +21,8 @@ public class ItemManager {
     public void setDao(DataAccess itemDBAccess){
         this.dao = itemDBAccess;
     }
-    public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
-        return dao.getDetails(items);
-    }
-
-    public ArrayList<Promotion> getPromotions(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
-        return dao.getPromotions(littleValue, bigValue);
-    }
-
-    public ArrayList<Item> getItems(ArrayList<Promotion> promotions) throws DBException, SingletonConnectionException{
-        return dao.getItems(promotions);
+    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+        return dao.getResearchByPromo(littleValue, bigValue);
     }
 
 

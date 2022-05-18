@@ -259,133 +259,36 @@ public class DBAccess implements DataAccess {
         }
     }
 
-    @Override
-    public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
-        ArrayList<Detail> details= new ArrayList<>();
-        for (Item item : items){
-            details.add(getDetail(item.getId()));
-
-        }
-        return details;
-    }
-    @Override
-    public Detail getDetail(Integer itemIdReceive) throws DBException, SingletonConnectionException{
-        // colonnes de la base de données
-        Integer code;
-        Double unit_price;
-        Integer itemId;
-                /*Integer quantity;
-                Double vatRate;
-                Integer backOrder;
-                Integer documentId;
-                Integer lotId;*/
-        // Variable a initialiser
-        Detail detail;
-        // etablissement de la connexion
-        Connection connection = SingletonConnection.getInstance();
-        // Requête SQL
-        String sqlInstruction =
-                "SELECT d.code, d.unit_price, d.item "+
-                        "FROM detail d INNER JOIN item i ON d.item = i.id "+
-                        "and d.code in ("+
-                        "SELECT max(d.code) "+
-                        "FROM detail d "+
-                        "GROUP BY (d.item) "+
-                        ") "+
-                        "where i.id = "+itemIdReceive+";";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data = preparedStatement.executeQuery();
-            //
-            data.next();
-            //
-            code = data.getInt("code");
-            unit_price = data.getDouble("unit_price");
-            itemId = data.getInt("item");
-                    /*quantity = data.getInt("quantity");
-                    vatRate = data.getDouble("vat_rate");
-                    backOrder = data.getInt("back_order");
-                    documentId = data.getInt("document");
-                    lotId = data.getInt("lot");*/
-
-            //detail = new Detail(code, unit_price, quantity, vatRate, backOrder, documentId, itemId, lotId);
-            detail = new Detail(code, unit_price, itemId);
-
-        }
-        catch (SQLException exception){
-            throw new DBException(exception.getMessage());
-        }
-
-        return detail;
-    }
-
-    @Override
-    public ArrayList<Item> getItems(ArrayList<Promotion> promotions) throws DBException, SingletonConnectionException{
-        ArrayList<Item> items = new ArrayList<>();
-        for (Promotion promotion : promotions){
-            items.add(getItem(promotion.getId()));
-        }
-        return items;
-    }
-    @Override
-    public Item getItem(Integer idPromotion) throws DBException, SingletonConnectionException{
-        // valeurs a récupérer
-        Integer id;
-        String wording;
-        Item item;
-        // initialisation de la connection
-        Connection connection = SingletonConnection.getInstance();
-        // requete SQL
-        String sqlInstruction = "SELECT i.id, i.wording " +
-                "FROM item i inner join promotion p on i.id = p.item " +
-                "WHERE p.id = + "+ idPromotion + ";";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data = preparedStatement.executeQuery();
-            //
-            data.next();
-            id = data.getInt("id");
-            wording = data.getString("wording");
-            item = new Item(id,wording);
-        }catch (SQLException exception){
-            throw new DBException(exception.getMessage());
-        }
-        return item;
-    }
-
-    @Override
-    public ArrayList<Promotion> getPromotions(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
-        // colonnes
-        Integer id;
+    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+        // valeurs a recuperer dans la base de données
         Integer percentage;
-        GregorianCalendar startDate;
-        GregorianCalendar endDate;
-        Integer itemId;
-        // variable a initialiser
-        ArrayList<Promotion> promotions = new ArrayList<>();
-        // Requête SQL
-        String sqlInstruction =
-                "SELECT * " +
-                        "FROM promotion " +
-                        "WHERE percentage BETWEEN "+littleValue+" AND "+ bigValue+";";
+        String wordingItem;
+        Double lastUnitPrice;
+        // tableau a initialiser avec des ResearchByPromo
+        ArrayList<ResearchByPromo> researchByPromos = new ArrayList<>();
+        // ResearchByPromo qui ira dans l'arrayList
+        ResearchByPromo researchByPromo;
+        // requête SQL
+        String SQLInstruction = "SELECT p.percentage, i.wording, d.unit_price FROM promotion p INNER JOIN item i on p.item = i.id INNER JOIN detail d on i.id = d.item WHERE percentage BETWEEN "
+                +littleValue
+                +" AND "+ bigValue
+                +" AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
+
         Connection connection = SingletonConnection.getInstance();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
             ResultSet data = preparedStatement.executeQuery();
             while (data.next()){
-                id = data.getInt("id");
                 percentage = data.getInt("percentage");
-                startDate = new GregorianCalendar();
-                startDate.setTime(data.getDate("start_date"));
-                endDate = new GregorianCalendar();
-                endDate.setTime(data.getDate("end_date"));
-                itemId = data.getInt("item");
-                promotions.add(new Promotion(id,percentage,startDate,endDate,itemId));
+                wordingItem = data.getString("wording");
+                lastUnitPrice = data.getDouble("unit_price");
+                researchByPromo = new ResearchByPromo(percentage,wordingItem,lastUnitPrice);
+                researchByPromos.add(researchByPromo);
             }
+
         } catch (SQLException exception){
             throw new DBException(exception.getMessage());
         }
-
-        return promotions;
+        return researchByPromos;
     }
 }

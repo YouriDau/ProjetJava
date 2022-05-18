@@ -6,6 +6,7 @@ import exception.SingletonConnectionException;
 import model.Detail;
 import model.Item;
 import model.Promotion;
+import model.ResearchByPromo;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -15,9 +16,7 @@ import java.util.ArrayList;
 public class ByPromoPanel extends JPanel {
     private Container container;
     private ApplicationController applicationController;
-    private ArrayList<Promotion> promotions;
-    private ArrayList<Item>items;
-    private ArrayList<Detail>details;
+    private ArrayList<ResearchByPromo> researchByPromos;
     private AllPromotionsInformationModel model;
     private JLabel listEmpty;
     private GridBagConstraints layoutConstraints;
@@ -33,9 +32,9 @@ public class ByPromoPanel extends JPanel {
         this.container = container;
         try{
             applicationController = new ApplicationController();
-            promotions = applicationController.getPromotions(minvalue, maxValue);
+            researchByPromos = applicationController.getResearchByPromo(minvalue, maxValue);
 
-            if (promotions.isEmpty()){
+            if (researchByPromos.isEmpty()){
                 listEmpty = new JLabel("The list is empty");
                 listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -52,9 +51,7 @@ public class ByPromoPanel extends JPanel {
                 layoutConstraints.gridy = 1;
                 this.add(back, layoutConstraints);
             } else{
-                items = applicationController.getItems(promotions);
-                details = applicationController.getDetails(items);
-                model = new AllPromotionsInformationModel(promotions,items,details);
+                model = new AllPromotionsInformationModel(researchByPromos);
 
                 table = new JTable(model);
                 table.setPreferredScrollableViewportSize(new Dimension(515,300));
