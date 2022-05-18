@@ -71,7 +71,7 @@ public class MainWindow extends JFrame {
         });
         setLocationRelativeTo(null);
         setVisible(true);
-        setResizable(false);
+        //setResizable(false);
     }
 
     public class QuitListener implements ActionListener {

@@ -21,9 +21,11 @@ public class WorkflowListPanel extends JPanel {
     private JTable table;
     private TableColumn column;
     private JScrollPane scrollPane;
+    private GridBagConstraints layoutConstraints;
 
     public WorkflowListPanel(int workflowNumber, Container container) {
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
+        this.layoutConstraints = new GridBagConstraints();
         this.container = container;
 
         try {
@@ -36,20 +38,35 @@ public class WorkflowListPanel extends JPanel {
 
                 back = new BackButton(container);
 
-                this.add(listEmpty, BorderLayout.CENTER);
-                this.add(back, BorderLayout.AFTER_LAST_LINE);
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 0;
+                this.add(listEmpty, layoutConstraints);
+
+                layoutConstraints.gridx = 1;
+                this.add(back, layoutConstraints);
             } else {
-                model = new DocumentByWorkflowModel(controller.getDocuments(workflowNumber), controller.getAllDocumentTypes());
+                model = new DocumentByWorkflowModel(documents, controller.getAllDocumentTypes());
 
                 table = new JTable(model);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+                table.setPreferredScrollableViewportSize(new Dimension(345,300));
                 scrollPane = new JScrollPane(table);
 
                 setColumnsSize();
 
-                this.add(table.getTableHeader(), BorderLayout.CENTER);
-                this.add(scrollPane, BorderLayout.CENTER);
+                layoutConstraints.insets = new Insets(0, 0, 15, 0);
+                layoutConstraints.gridwidth = 2;
+                layoutConstraints.gridx = 0;
+                layoutConstraints.gridy = 0;
+                this.add(table.getTableHeader(), layoutConstraints);
+
+                layoutConstraints.gridy = 1;
+                this.add(scrollPane,layoutConstraints);
+
+                layoutConstraints.gridwidth = 1;
+                layoutConstraints.gridy = 2;
+                this.add(new BackButton(container), layoutConstraints);
             }
         }
         catch(DBException exception) {

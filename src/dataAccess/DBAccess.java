@@ -290,6 +290,8 @@ public class DBAccess implements DataAccess {
         }
     }
 
+
+
     @Override
     public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{
         ArrayList<Detail> details= new ArrayList<>();
