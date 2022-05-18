@@ -1,8 +1,5 @@
 package userInterface;
 
-import model.Detail;
-import model.Item;
-import model.Promotion;
 import model.ResearchByPromo;
 
 import javax.swing.table.AbstractTableModel;

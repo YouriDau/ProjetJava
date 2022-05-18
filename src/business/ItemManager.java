@@ -4,9 +4,6 @@ import controller.DataAccess;
 import dataAccess.DBAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.Detail;
-import model.Item;
-import model.Promotion;
 import model.ResearchByPromo;
 
 import java.util.ArrayList;
