@@ -5,17 +5,13 @@ import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
-import org.w3c.dom.css.RGBColor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.TextAttribute;
-import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NewDocumentPanel extends JPanel {
@@ -65,14 +61,14 @@ public class NewDocumentPanel extends JPanel {
 
             documentTypesComboBox = new JComboBox<>();
             documentTypesComboBox.setMaximumRowCount(4);
-            fillDocumentTypes(controller.getAllDocumentTypes());
+            //fillDocumentTypes(controller.getAllDocumentTypes());
 
             workflowsComboBox = new JComboBox<>();
             workflowsComboBox.setMaximumRowCount(4);
             fillWorkflows(controller.getAllWorkflow());
 
             submit = new JButton("submit");
-            back = new BackButton(container);
+            back = new HomeButton(container);
 
             yes = new JRadioButton("yes", false);
             no = new JRadioButton("no", true);

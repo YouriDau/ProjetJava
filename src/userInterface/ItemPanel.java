@@ -1,7 +1,5 @@
 package userInterface;
 
-import com.sun.tools.javac.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -42,7 +40,7 @@ public class ItemPanel extends JPanel {
         secondNumber.setEditor(new JSpinner.DefaultEditor(secondNumber));
 
         submit = new JButton("Submit");
-        back = new BackButton(container);
+        back = new HomeButton(container);
         reset = new JButton("Reset");
 
         layoutConstraints.insets = new Insets(0, 0, 15, 15);

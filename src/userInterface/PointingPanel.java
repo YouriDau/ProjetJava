@@ -1,7 +1,5 @@
 package userInterface;
 
-import controller.ApplicationController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,7 +43,7 @@ public class PointingPanel extends JPanel {
         secondDate.setValue(today.getTime());
 
         submit = new JButton("Submit");
-        back = new BackButton(container);
+        back = new HomeButton(container);
         reset = new JButton("Reset");
 
         layoutConstraints.fill = GridBagConstraints.BOTH;

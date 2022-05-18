@@ -22,9 +22,6 @@ public class Document {
     private Integer workflowNumber;
     private Boolean updateTheStock;
 
-    private Pattern pattern;
-    private Matcher matcher;
-
     public Document(Integer number, GregorianCalendar creationDate, String paymentCondition,
                          Double creditLimit, Integer type, Integer workflowNumber, Boolean updateTheStock) {
         setNumber(number);

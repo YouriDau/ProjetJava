@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
+import model.DocumentByWorkflowType;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -16,7 +17,7 @@ public class WorkflowListPanel extends JPanel {
     private JButton back;
     private Container container;
     private ApplicationController controller;
-    private ArrayList<Document> documents;
+    private ArrayList<DocumentByWorkflowType> documents;
     private DocumentByWorkflowModel model;
     private JTable table;
     private TableColumn column;
@@ -36,7 +37,7 @@ public class WorkflowListPanel extends JPanel {
                 listEmpty = new JLabel("The list is empty");
                 listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
-                back = new BackButton(container);
+                back = new HomeButton(container);
 
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 0;
@@ -45,7 +46,7 @@ public class WorkflowListPanel extends JPanel {
                 layoutConstraints.gridx = 1;
                 this.add(back, layoutConstraints);
             } else {
-                model = new DocumentByWorkflowModel(documents, controller.getAllDocumentTypes());
+                model = new DocumentByWorkflowModel(documents);
 
                 table = new JTable(model);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -66,7 +67,7 @@ public class WorkflowListPanel extends JPanel {
 
                 layoutConstraints.gridwidth = 1;
                 layoutConstraints.gridy = 2;
-                this.add(new BackButton(container), layoutConstraints);
+                this.add(new HomeButton(container), layoutConstraints);
             }
         }
         catch(DBException exception) {

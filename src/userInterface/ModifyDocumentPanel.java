@@ -11,8 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ModifyDocumentPanel extends JPanel {
@@ -69,7 +67,7 @@ public class ModifyDocumentPanel extends JPanel {
 
             documentTypesComboBox = new JComboBox<>();
             documentTypesComboBox.setMaximumRowCount(4);
-            fillDocumentTypes(controller.getAllDocumentTypes());
+            //fillDocumentTypes(controller.getAllDocumentTypes());
 
             workflowsComboBox = new JComboBox<>();
             workflowsComboBox.setMaximumRowCount(4);
@@ -77,7 +75,7 @@ public class ModifyDocumentPanel extends JPanel {
             workflowsComboBox.setSelectedItem(document.getworkflowNumber());
 
             submit = new JButton("submit");
-            back = new BackButton(container);
+            back = new HomeButton(container);
 
             yes = new JRadioButton("yes", false);
             no = new JRadioButton("no", true);

@@ -64,47 +64,42 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
-        Integer number;
-        GregorianCalendar date;
-        java.sql.Date sqlDate;
-        String paymentCondition;
-        Integer documentType;
-        Integer processNumber;
+    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
+        Integer documentNumber;
+        Integer workflowId;
         Double creditLimit;
-        Boolean updateTheStock;
-        Document document;
+        String documentType;
+        GregorianCalendar creationDate;
+        java.sql.Date sqlDate;
 
-        ArrayList<Document> documents = new ArrayList<>();
-        String sqlInstruction = "SELECT * " +
-                "FROM document WHERE process IN " +
-                "(SELECT id " +
-                "FROM workflow WHERE type = ?);";
+        DocumentByWorkflowType document;
+        ArrayList<DocumentByWorkflowType> documents = new ArrayList<>();
+
+        String sqlInstruction = "SELECT d.number, d.creation_date, d.credit_limit, w.id, dt.wording " +
+                                "FROM document d " +
+                                "INNER JOIN workflow w " +
+                                "ON (d.process = w.id) " +
+                                "INNER JOIN document_type dt " +
+                                "ON (d.type = dt.id) " +
+                                "WHERE d.process = ?;";
         Connection connection = SingletonConnection.getInstance();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, workflowNumber);
             ResultSet data = preparedStatement.executeQuery();
-            date = new GregorianCalendar();
+            creationDate = new GregorianCalendar();
 
             while (data.next()) {
-                number = data.getInt("number");
-                sqlDate = data.getDate("creation_date");
-                date.setTime(sqlDate);
-                documentType = data.getInt("type");
-                processNumber = data.getInt("process");
-                updateTheStock = data.getBoolean("update_the_stock");
+                documentNumber = data.getInt("d.number");
+                sqlDate = data.getDate("d.creation_date");
+                workflowId = data.getInt("w.id");
+                documentType = data.getString("dt.wording");
 
-                // A CHANGER
-                document = new Document(number, date, documentType, processNumber, updateTheStock);
+                creationDate.setTime(sqlDate);
+                document = new DocumentByWorkflowType(documentNumber, workflowId, creationDate,  documentType);
 
-                paymentCondition = data.getString("payment_condition");
-                if (!data.wasNull()) {
-                    document.setPaymentCondition(paymentCondition);
-                }
-
-                creditLimit = data.getDouble("credit_limit");
+                creditLimit = data.getDouble("d.credit_limit");
                 if (!data.wasNull()) {
                     document.setCreditLimit(creditLimit);
                 }
@@ -168,32 +163,6 @@ public class DBAccess implements DataAccess {
         return documents;
     }
 
-    @Override
-    public ArrayList<DocumentType> getAllDocumentTypes() throws  DBException, SingletonConnectionException {
-        Integer id;
-        String wording;
-        DocumentType documentType;
-        ArrayList<DocumentType> documentTypes = new ArrayList<>();
-        String sqlInstruction = "SELECT * FROM document_type;";
-        Connection connection = SingletonConnection.getInstance();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data = preparedStatement.executeQuery();
-
-            while (data.next()) {
-                id = data.getInt("id");
-                wording = data.getString("wording");
-                documentType = new DocumentType(id, wording);
-                documentTypes.add(documentType);
-            }
-        }
-        catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
-        }
-
-        return documentTypes;
-    }
     @Override
     public void addDocument(Document document) throws  DBException, SingletonConnectionException {
         int lastDocumentId;

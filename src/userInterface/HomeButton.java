@@ -5,10 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BackButton extends JButton {
+public class HomeButton extends JButton {
     private Container container;
 
-    public BackButton(Container container) {
+    public HomeButton(Container container) {
         super("Home");
         this.container = container;
 

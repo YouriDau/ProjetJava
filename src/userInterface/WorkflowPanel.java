@@ -1,10 +1,8 @@
 package userInterface;
 
 import controller.ApplicationController;
-import dataAccess.SingletonConnection;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.Document;
 import model.WorkflowType;
 
 import javax.swing.*;
@@ -39,7 +37,7 @@ public class WorkflowPanel extends JPanel {
             fillWorkflowTypes(controller.getAllWorkflowTypes());
 
             submit = new JButton("Submit");
-            back = new BackButton(container);
+            back = new HomeButton(container);
 
             submit.addActionListener(new SubmitListener());
 

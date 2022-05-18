@@ -39,7 +39,7 @@ public class ByPromoPanel extends JPanel {
                 listEmpty = new JLabel("The list is empty");
                 listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
-                back = new BackButton(container);
+                back = new HomeButton(container);
 
                 layoutConstraints.gridwidth = 1;
                 layoutConstraints.gridx = 0;
@@ -70,7 +70,7 @@ public class ByPromoPanel extends JPanel {
                 layoutConstraints.insets = new Insets(3, 0, 15, 0);
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 2;
-                back = new BackButton(container);
+                back = new HomeButton(container);
                 this.add(back,layoutConstraints);
 
                 layoutConstraints.gridwidth = 1;

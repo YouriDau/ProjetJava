@@ -24,16 +24,12 @@ public class ApplicationController {
         return workflowManager.getAllWorkflowTypes();
     }
 
-    public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         return  documentManager.getDocuments(workflowNumber);
     }
 
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         return documentManager.getAllDocuments();
-    }
-
-    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
-        return documentManager.getAllDocumentTypes();
     }
 
     public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException {

@@ -5,6 +5,7 @@ import dataAccess.DBAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
+import model.DocumentByWorkflowType;
 import model.DocumentType;
 
 import java.util.ArrayList;
@@ -18,16 +19,12 @@ public class DocumentManager {
     public void setDao(DataAccess documentDBAccess) {
         this.dao = documentDBAccess;
     }
-    public ArrayList<Document> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         return dao.getDocuments(workflowNumber);
     }
 
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         return dao.getAllDocuments();
-    }
-
-    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
-        return dao.getAllDocumentTypes();
     }
 
     public void addDocument(Document document) throws DBException, SingletonConnectionException {
