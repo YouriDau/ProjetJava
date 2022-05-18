@@ -245,12 +245,12 @@ public class DBAccess implements DataAccess {
     public void deleteDocument(Integer id) throws DBException, SingletonConnectionException {
         String sqlInstruction = "DELETE FROM document " +
                                 "WHERE number = ?";
-        Connection connection = SingletonConnection.getInstance();
 
         try {
+            Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
-            int nbRowEffected = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         }
         catch(SQLException exception) {
             throw new DBException(exception.getMessage());
@@ -289,8 +289,6 @@ public class DBAccess implements DataAccess {
             throw new DBException(exception.getMessage());
         }
     }
-
-
 
     @Override
     public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException{

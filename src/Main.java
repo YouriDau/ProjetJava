@@ -1,9 +1,6 @@
-package userInterface;
+import userInterface.MainWindow;
 
-import com.sun.tools.javac.Main;
-import model.Person;
-
-public class Principale {
+public class Main {
     public static void main(String[] args) {
         MainWindow mainWindow = new MainWindow();
     }

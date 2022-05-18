@@ -118,7 +118,7 @@ CREATE TABLE traceability(
                                  FOREIGN KEY (person)
                                      REFERENCES person(number),
                              FOREIGN KEY (document)
-                                 REFERENCES document(number)
+                                 REFERENCES document(number) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `item`;
@@ -172,7 +172,7 @@ CREATE TABLE detail(
                            PRIMARY KEY(code),
                        CONSTRAINT detail_fk
                            FOREIGN KEY (document)
-                               REFERENCES document(number),
+                               REFERENCES document(number) ON DELETE CASCADE,
                        FOREIGN KEY (item)
                            REFERENCES item(id),
                        FOREIGN KEY (lot)
