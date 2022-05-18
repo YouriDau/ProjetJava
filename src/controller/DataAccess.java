@@ -18,8 +18,11 @@ public interface DataAccess {
     // CRUD
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException;
     public void addDocument(Document document) throws DBException, SingletonConnectionException;
-    public void deleteDocument(int id) throws DBException, SingletonConnectionException;
+    public void deleteDocument(Integer id) throws DBException, SingletonConnectionException;
     public void modifyDocument(Document document) throws DBException, SingletonConnectionException;
+
+    // Traceability
+    //public void deleteTraceability(Integer id);
 
     // Detail
     public ArrayList<Detail> getDetails(ArrayList<Item> items) throws DBException, SingletonConnectionException;

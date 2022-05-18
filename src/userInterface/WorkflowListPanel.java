@@ -17,7 +17,7 @@ public class WorkflowListPanel extends JPanel {
     private Container container;
     private ApplicationController controller;
     private ArrayList<Document> documents;
-    private DocumentsModel model;
+    private DocumentByWorkflowModel model;
     private JTable table;
     private TableColumn column;
     private JScrollPane scrollPane;
@@ -39,10 +39,9 @@ public class WorkflowListPanel extends JPanel {
                 this.add(listEmpty, BorderLayout.CENTER);
                 this.add(back, BorderLayout.AFTER_LAST_LINE);
             } else {
-                model = new DocumentsModel(controller.getDocuments(workflowNumber));
+                model = new DocumentByWorkflowModel(controller.getDocuments(workflowNumber), controller.getAllDocumentTypes());
 
                 table = new JTable(model);
-                table.setPreferredScrollableViewportSize(new Dimension(515, 300));
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
                 scrollPane = new JScrollPane(table);
@@ -67,12 +66,8 @@ public class WorkflowListPanel extends JPanel {
         column = table.getColumnModel().getColumn(1);
         column.setPreferredWidth(80);
         column = table.getColumnModel().getColumn(2);
-        column.setPreferredWidth(100);
-        column = table.getColumnModel().getColumn(3);
         column.setPreferredWidth(80);
-        column = table.getColumnModel().getColumn(4);
-        column.setPreferredWidth(100);
-        column = table.getColumnModel().getColumn(5);
-        column.setPreferredWidth(100);
+        column = table.getColumnModel().getColumn(3);
+        column.setPreferredWidth(130);
     }
 }

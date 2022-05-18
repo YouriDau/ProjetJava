@@ -212,9 +212,9 @@ VALUES ('Bon de livraison');
 INSERT INTO document_type(wording)
 VALUES ('Bon de vente');
 
-INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, updateTheStock)
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
 VALUES (CURRENT_DATE, 'payment''s conditions here', 135.5, 1, 1, FALSE);
-INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, updateTheStock)
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
 VALUES (CURRENT_DATE, 'payment''s conditions here', 90.9, 4, 2, TRUE);
 
 #Création d'item
