@@ -3,9 +3,6 @@ package userInterface;
 import controller.ApplicationController;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.Detail;
-import model.Item;
-import model.Promotion;
 import model.ResearchByPromo;
 
 import javax.swing.*;
