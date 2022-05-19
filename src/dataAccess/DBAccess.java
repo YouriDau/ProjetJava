@@ -291,4 +291,45 @@ public class DBAccess implements DataAccess {
         }
         return researchByPromos;
     }
+
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation() throws DBException, SingletonConnectionException{
+        // valeurs a récuperer dans la BD
+        String wordingItem;
+        Integer percentagePromotion;
+        Integer percentageId;
+        Integer detailQuantity;
+        // tableau a initialiser
+        ArrayList<BusinessTaskModel> businessTaskModels = new ArrayList<>();
+        // valeur qui s'ajoutera a l'array list
+        BusinessTaskModel businessTaskModel;
+        // Requête SQL
+        String SQLInstruction = "SELECT i.wording,p.percentage, p.id, d.quantity " +
+                "FROM promotion p INNER JOIN item i ON p.item = i.id " +
+                "                 INNER JOIN detail d ON i.id = d.item " +
+                "                 INNER JOIN document doc ON d.document = doc.number " +
+                "                 INNER JOIN document_type dt on doc.type = dt.id " +
+                "WHERE dt.wording = 'Bon de vente' " +
+                "AND doc.creation_date BETWEEN p.start_date AND p.end_date"+
+                "ORDER BY p.id;";
+        // création de la connexion
+        Connection connection = SingletonConnection.getInstance();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            while (data.next()){
+                wordingItem = data.getString("wording");
+                percentagePromotion = data.getInt("percentage");
+                percentageId = data.getInt("id");
+                detailQuantity = data.getInt("quantity");
+                businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, detailQuantity);
+                businessTaskModels.add(businessTaskModel);
+            }
+
+        }catch (SQLException sqlException){
+            throw new DBException(sqlException.getMessage());
+        }
+
+
+        return businessTaskModels;
+    }
 }

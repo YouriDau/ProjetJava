@@ -21,4 +21,5 @@ public interface DataAccess {
     public void modifyDocument(Document document) throws DBException, SingletonConnectionException;
 
     public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException;
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation() throws DBException, SingletonConnectionException;
 }
