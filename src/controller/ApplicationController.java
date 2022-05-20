@@ -51,4 +51,5 @@ public class ApplicationController {
     public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
         return itemManager.getResearchByPromo(littleValue, bigValue);
     }
+
 }
