@@ -1,6 +1,5 @@
 package userInterface;
 
-import com.sun.tools.javac.Main;
 import dataAccess.SingletonConnection;
 import exception.SingletonConnectionException;
 
@@ -14,8 +13,8 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame {
     private Container container;
     private JMenuBar menuBar;
-    private JMenu applicationMenu, itemsMenu, documentsMenu, pointingMenu;
-    private JMenuItem quit, searchByPromo, searchByWorkflowType, allDocuments, pointingByDate;
+    private JMenu applicationMenu, itemsMenu, documentsMenu, pointingMenu, promotionsMenu;
+    private JMenuItem quit, searchByPromo, searchByWorkflowType, allDocuments, pointingByDate, businessTask;
 
     public MainWindow() {
         super("Magasin");
@@ -32,29 +31,36 @@ public class MainWindow extends JFrame {
         itemsMenu = new JMenu("Items");
         documentsMenu = new JMenu("Documents");
         pointingMenu = new JMenu("Pointing");
+        promotionsMenu = new JMenu("Promotions");
+
 
         quit = new JMenuItem("Quit");
         searchByPromo = new JMenuItem("By promo");
         searchByWorkflowType = new JMenuItem("By workflow type");
         allDocuments = new JMenuItem("Documents list");
         pointingByDate = new JMenuItem("By date");
+        businessTask = new JMenuItem("By items");
 
         quit.addActionListener(new QuitListener());
         searchByPromo.addActionListener(new SearchByPromoListener());
         searchByWorkflowType.addActionListener(new SearchByWorkflowTypeListener());
         allDocuments.addActionListener(new AllDocumentsListener());
         pointingByDate.addActionListener(new PointingByDateListener());
+        businessTask.addActionListener( new PromotionsByItemListener());
 
         applicationMenu.add(quit);
         itemsMenu.add(searchByPromo);
         documentsMenu.add(searchByWorkflowType);
         documentsMenu.add(allDocuments);
         pointingMenu.add(pointingByDate);
+        promotionsMenu.add(businessTask);
+
 
         menuBar.add(applicationMenu);
         menuBar.add(itemsMenu);
         menuBar.add(documentsMenu);
         menuBar.add(pointingMenu);
+        menuBar.add(promotionsMenu);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -126,6 +132,16 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
             container.add(new PointingPanel(container));
+            container.repaint();
+            setVisible(true);
+        }
+    }
+
+    public class PromotionsByItemListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            container.removeAll();
+            container.add(new ItemSelectionPanel(container));
             container.repaint();
             setVisible(true);
         }

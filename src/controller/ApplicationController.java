@@ -1,5 +1,6 @@
 package controller;
 
+import business.BusinessTaskManager;
 import business.DocumentManager;
 import business.ItemManager;
 import business.WorkflowManager;
@@ -13,11 +14,13 @@ public class ApplicationController {
     private WorkflowManager workflowManager;
     private DocumentManager documentManager;
     private ItemManager itemManager;
+    private BusinessTaskManager businessTaskManager;
 
     public ApplicationController() throws DBException, SingletonConnectionException {
         workflowManager = new WorkflowManager();
         documentManager = new DocumentManager();
         itemManager = new ItemManager();
+        businessTaskManager = new BusinessTaskManager();
     }
 
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
@@ -52,4 +55,7 @@ public class ApplicationController {
         return itemManager.getResearchByPromo(littleValue, bigValue);
     }
 
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
+        return businessTaskManager.getBusinessTaskInformation(wordingItemReceive);
+    }
 }

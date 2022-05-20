@@ -292,25 +292,28 @@ public class DBAccess implements DataAccess {
         return researchByPromos;
     }
 
-    public ArrayList<BusinessTaskModel> getBusinessTaskInformation() throws DBException, SingletonConnectionException{
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException{
         // valeurs a récuperer dans la BD
         String wordingItem;
         Integer percentagePromotion;
         Integer percentageId;
+        GregorianCalendar startDate = new GregorianCalendar();
+        GregorianCalendar endDate = new GregorianCalendar();
         Integer detailQuantity;
         // tableau a initialiser
         ArrayList<BusinessTaskModel> businessTaskModels = new ArrayList<>();
         // valeur qui s'ajoutera a l'array list
         BusinessTaskModel businessTaskModel;
         // Requête SQL
-        String SQLInstruction = "SELECT i.wording,p.percentage, p.id, d.quantity " +
-                "FROM promotion p INNER JOIN item i ON p.item = i.id " +
-                "                 INNER JOIN detail d ON i.id = d.item " +
-                "                 INNER JOIN document doc ON d.document = doc.number " +
-                "                 INNER JOIN document_type dt on doc.type = dt.id " +
-                "WHERE dt.wording = 'Bon de vente' " +
-                "AND doc.creation_date BETWEEN p.start_date AND p.end_date"+
-                "ORDER BY p.id;";
+        String SQLInstruction = "SELECT i.wording,p.percentage, p.id, p.start_date, p.end_date,SUM(d.quantity) as quantity FROM promotion p " +
+                "                INNER JOIN item i ON p.item = i.id " +
+                "                INNER JOIN detail d ON i.id = d.item " +
+                "                INNER JOIN document doc ON d.document = doc.number " +
+                "                INNER JOIN document_type dt on doc.type = dt.id " +
+                "                WHERE dt.wording = 'Bon de vente' " +
+                "                AND i.wording = " + wordingItemReceive +
+                "                AND doc.creation_date BETWEEN p.start_date AND p.end_date " +
+                "                GROUP BY  p.id;";
         // création de la connexion
         Connection connection = SingletonConnection.getInstance();
         try {
@@ -320,8 +323,10 @@ public class DBAccess implements DataAccess {
                 wordingItem = data.getString("wording");
                 percentagePromotion = data.getInt("percentage");
                 percentageId = data.getInt("id");
+                startDate.setTime(data.getDate("start_date"));
+                endDate.setTime(data.getDate("end_date"));
                 detailQuantity = data.getInt("quantity");
-                businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, detailQuantity);
+                businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
                 businessTaskModels.add(businessTaskModel);
             }
 
@@ -332,4 +337,6 @@ public class DBAccess implements DataAccess {
 
         return businessTaskModels;
     }
+
+    //public ArrayList<String>
 }
