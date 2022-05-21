@@ -339,4 +339,6 @@ public class DBAccess implements DataAccess {
     }
 
     //public ArrayList<String>
+    // SELECT item.id, item.wording
+    // FROM item
 }
