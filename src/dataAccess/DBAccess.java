@@ -292,16 +292,18 @@ public class DBAccess implements DataAccess {
         // requête SQL
         String SQLInstruction = "SELECT p.percentage, i.wording, d.unit_price " +
                                 "FROM promotion p " +
-                                "INNER JOIN item i" +
+                                "INNER JOIN item i " +
                                 "ON p.item = i.id " +
                                 "INNER JOIN detail d " +
                                 "ON i.id = d.item " +
-                                "WHERE percentage BETWEEN " + littleValue + " AND " + bigValue +
+                                "WHERE percentage BETWEEN ? AND ?" +
                                 " AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
 
         Connection connection = SingletonConnection.getInstance();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            preparedStatement.setInt(1,littleValue);
+            preparedStatement.setInt(2,bigValue);
             ResultSet data = preparedStatement.executeQuery();
             while (data.next()) {
                 percentage = data.getInt("percentage");
@@ -337,13 +339,14 @@ public class DBAccess implements DataAccess {
                 "                INNER JOIN document doc ON d.document = doc.number " +
                 "                INNER JOIN document_type dt on doc.type = dt.id " +
                 "                WHERE dt.wording = 'Bon de vente' " +
-                "                AND i.wording = '" + wordingItemReceive + "'" +
+                "                AND i.wording = ?" +
                 "                AND doc.creation_date BETWEEN p.start_date AND p.end_date " +
                 "                GROUP BY  p.id;";
         // création de la connexion
         Connection connection = SingletonConnection.getInstance();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            preparedStatement.setString(1,wordingItemReceive);
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()){
