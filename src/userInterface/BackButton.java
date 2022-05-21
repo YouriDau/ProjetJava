@@ -5,11 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomeButton extends JButton {
+public class BackButton extends JButton {
+    private JPanel panel;
     private Container container;
 
-    public HomeButton(Container container) {
-        super("Home");
+    public BackButton(JPanel panel, Container container) {
+        super("Back");
+        this.panel = panel;
         this.container = container;
 
         this.addActionListener(new BackListener());
@@ -19,7 +21,7 @@ public class HomeButton extends JButton {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            container.add(new HomePanel());
+            container.add(panel);
             container.revalidate();
             container.repaint();
         }

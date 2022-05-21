@@ -61,14 +61,13 @@ public class NewDocumentPanel extends JPanel {
 
             documentTypesComboBox = new JComboBox<>();
             documentTypesComboBox.setMaximumRowCount(4);
-            //fillDocumentTypes(controller.getAllDocumentTypes());
+            fillDocumentTypes(controller.getAllDocumentTypes());
 
             workflowsComboBox = new JComboBox<>();
             workflowsComboBox.setMaximumRowCount(4);
             fillWorkflows(controller.getAllWorkflow());
 
             submit = new JButton("submit");
-            back = new HomeButton(container);
 
             yes = new JRadioButton("yes", false);
             no = new JRadioButton("no", true);
@@ -77,7 +76,6 @@ public class NewDocumentPanel extends JPanel {
             buttonsStock.add(yes);
             buttonsStock.add(no);
 
-            //creditLimit.addActionListener(new CreditLimitListener());
             submit.addActionListener(new SubmitListener());
 
             layoutConstraints.insets = new Insets(0, 0, 15, 15);
@@ -142,7 +140,7 @@ public class NewDocumentPanel extends JPanel {
             this.add(submit, layoutConstraints);
 
             layoutConstraints.gridx = 1;
-            this.add(back, layoutConstraints);
+            this.add(new BackButton(new AllDocumentsPanel(container), container), layoutConstraints);
         }
         catch(DBException exception){
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
@@ -173,28 +171,6 @@ public class NewDocumentPanel extends JPanel {
         }
     }
 
-    // ACTIF SEULEMENT QUAND APPUIE SUR "ENTER" DANS CREDIT LIMIT
-    /*public class CreditLimitListener implements ActionListener {
-        private Pattern pattern;
-        private Matcher matcher;
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            pattern = Pattern.compile("^[0-9]*\\.?[0-9]*$");
-            matcher = pattern.matcher(creditLimit.getText());
-
-            // Vérifier si le nombre respecte bien le format décimal, entier ou null
-            if (!matcher.matches()) {
-                JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
-                        "Error credit limit", JOptionPane.ERROR_MESSAGE);
-                submit.setEnabled(false);
-            } else {
-                submit.setEnabled(true);
-            }
-        }
-    }
-     */
-
     public class SubmitListener implements ActionListener {
         private Document document;
         private Pattern pattern;
@@ -203,27 +179,22 @@ public class NewDocumentPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
+
             if (paymentCondition.getText().length() > 100) {
                 JOptionPane.showMessageDialog(null, "Le nombre de caractères ne peut pas être suppérieur à 100\nNombre de caractères actuel : " + paymentCondition.getText().length(),
                         "Error payment condition", JOptionPane.ERROR_MESSAGE);
-                paymentCondition.setBackground(new Color(255, 155, 155, 255));
             } else {
 
                 // Vérifier si le text est alphanumérique uniquement de "a" à "z" et des chiffres
                 if (!pattern.matches("^[A-Za-z'.\\d\\n\\p{javaWhitespace}]*$", paymentCondition.getText())) {
                     JOptionPane.showMessageDialog(null, "Les conditions de paiements doivent uniquement\ncomprendre des lettres et des chiffres",
                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
-                    paymentCondition.setBackground(new Color(255, 155, 155, 255));
 
                 } else {
-                    paymentCondition.setBackground(new Color(255, 255, 255, 255));
-
                     if (!pattern.matches("^[0-9]*\\.?[0-9]*$", creditLimit.getText())) {
                         JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
                                 "Error credit limit", JOptionPane.ERROR_MESSAGE);
-                        creditLimit.setBackground(new Color(255, 155, 155, 255));
                     } else {
-                        creditLimit.setBackground(new Color(255, 255, 255, 255));
                         if (paymentCondition.getText().equals("")) {
                             newPaymentCondition = null;
                         } else {

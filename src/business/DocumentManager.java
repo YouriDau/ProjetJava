@@ -23,6 +23,10 @@ public class DocumentManager {
         return dao.getDocuments(workflowNumber);
     }
 
+    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
+        return dao.getAllDocumentTypes();
+    }
+
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         return dao.getAllDocuments();
     }

@@ -16,7 +16,6 @@ public class ItemSelectionPanel extends JPanel {
 
 
 
-
     }
 
     public void setContainer(Container container) {

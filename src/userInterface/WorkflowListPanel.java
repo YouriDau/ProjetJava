@@ -37,37 +37,37 @@ public class WorkflowListPanel extends JPanel {
                 listEmpty = new JLabel("The list is empty");
                 listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
-                back = new HomeButton(container);
-
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 0;
                 this.add(listEmpty, layoutConstraints);
 
                 layoutConstraints.gridx = 1;
-                this.add(back, layoutConstraints);
+                this.add(new BackButton(new WorkflowPanel(container), container), layoutConstraints);
             } else {
                 model = new DocumentByWorkflowModel(documents);
 
                 table = new JTable(model);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-                table.setPreferredScrollableViewportSize(new Dimension(345,300));
+                table.setPreferredScrollableViewportSize(new Dimension(425,300));
                 scrollPane = new JScrollPane(table);
 
                 setColumnsSize();
 
                 layoutConstraints.insets = new Insets(0, 0, 15, 0);
                 layoutConstraints.gridwidth = 2;
+                layoutConstraints.anchor = GridBagConstraints.CENTER;
+                layoutConstraints.gridy = 2;
+                layoutConstraints.gridx = 0;
+                this.add(new BackButton(new WorkflowPanel(container), container), layoutConstraints);
+
+                layoutConstraints.anchor = GridBagConstraints.CENTER;
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 0;
                 this.add(table.getTableHeader(), layoutConstraints);
 
                 layoutConstraints.gridy = 1;
                 this.add(scrollPane,layoutConstraints);
-
-                layoutConstraints.gridwidth = 1;
-                layoutConstraints.gridy = 2;
-                this.add(new HomeButton(container), layoutConstraints);
             }
         }
         catch(DBException exception) {
@@ -86,6 +86,8 @@ public class WorkflowListPanel extends JPanel {
         column = table.getColumnModel().getColumn(2);
         column.setPreferredWidth(80);
         column = table.getColumnModel().getColumn(3);
+        column.setPreferredWidth(80);
+        column = table.getColumnModel().getColumn(4);
         column.setPreferredWidth(130);
     }
 }

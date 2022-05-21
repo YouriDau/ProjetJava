@@ -1,11 +1,12 @@
 package model;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DocumentByWorkflowType {
     private Integer documentNumber;
     private Integer WorkflowNumber;
-    private GregorianCalendar dateCreation;
+    private GregorianCalendar creationDate;
     private Double creditLimit;
     private String documentType;
 
@@ -39,11 +40,19 @@ public class DocumentByWorkflowType {
     }
 
     public GregorianCalendar getCreationDate() {
-        return dateCreation;
+        return creationDate;
     }
 
-    public void setCreationDate(GregorianCalendar dateCreation) {
-        this.dateCreation = dateCreation;
+    public String getCreationDateStr() {
+        int year = creationDate.get(Calendar.YEAR);
+        int month = creationDate.get(Calendar.MONTH)+1;
+        int day = creationDate.get(Calendar.DAY_OF_MONTH);
+
+        return year + "-" + month + "-" + day;
+    }
+
+    public void setCreationDate(GregorianCalendar creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Double getCreditLimit() {

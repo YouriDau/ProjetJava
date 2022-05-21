@@ -17,7 +17,6 @@ public class ByPromoPanel extends JPanel {
     private AllPromotionsInformationModel model;
     private JLabel listEmpty;
     private GridBagConstraints layoutConstraints;
-    private JButton back;
     private JTable table;
     private TableColumn column;
 
@@ -35,8 +34,6 @@ public class ByPromoPanel extends JPanel {
                 listEmpty = new JLabel("The list is empty");
                 listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
-                back = new HomeButton(container);
-
                 layoutConstraints.gridwidth = 1;
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 0;
@@ -46,7 +43,7 @@ public class ByPromoPanel extends JPanel {
                 layoutConstraints.insets = new Insets(50, 0, 15, 0);
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 1;
-                this.add(back, layoutConstraints);
+                this.add(new BackButton(new ItemPanel(container), container), layoutConstraints);
             } else{
                 model = new AllPromotionsInformationModel(researchByPromos);
 
@@ -64,8 +61,7 @@ public class ByPromoPanel extends JPanel {
                 layoutConstraints.insets = new Insets(3, 0, 15, 0);
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 2;
-                back = new HomeButton(container);
-                this.add(back,layoutConstraints);
+                this.add(new BackButton(new ItemPanel(container), container),layoutConstraints);
 
                 layoutConstraints.gridwidth = 1;
                 layoutConstraints.anchor = GridBagConstraints.CENTER;

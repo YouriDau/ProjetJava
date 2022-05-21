@@ -12,6 +12,7 @@ public interface DataAccess {
     public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException;
 
     // Document / DocumentType
+    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException;
     public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException;
 
     // CRUD

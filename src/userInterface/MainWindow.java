@@ -14,7 +14,7 @@ public class MainWindow extends JFrame {
     private Container container;
     private JMenuBar menuBar;
     private JMenu applicationMenu, itemsMenu, documentsMenu, pointingMenu, promotionsMenu;
-    private JMenuItem quit, searchByPromo, searchByWorkflowType, allDocuments, pointingByDate, businessTask;
+    private JMenuItem quit, home, searchByPromo, searchByWorkflowType, allDocuments, pointingByDate, businessTask;
 
     public MainWindow() {
         super("Magasin");
@@ -33,8 +33,8 @@ public class MainWindow extends JFrame {
         pointingMenu = new JMenu("Pointing");
         promotionsMenu = new JMenu("Promotions");
 
-
         quit = new JMenuItem("Quit");
+        home = new JMenuItem("Home");
         searchByPromo = new JMenuItem("By promo");
         searchByWorkflowType = new JMenuItem("By workflow type");
         allDocuments = new JMenuItem("Documents list");
@@ -42,6 +42,7 @@ public class MainWindow extends JFrame {
         businessTask = new JMenuItem("By items");
 
         quit.addActionListener(new QuitListener());
+        home.addActionListener(new HomeListener());
         searchByPromo.addActionListener(new SearchByPromoListener());
         searchByWorkflowType.addActionListener(new SearchByWorkflowTypeListener());
         allDocuments.addActionListener(new AllDocumentsListener());
@@ -49,12 +50,12 @@ public class MainWindow extends JFrame {
         businessTask.addActionListener( new PromotionsByItemListener());
 
         applicationMenu.add(quit);
+        applicationMenu.add(home);
         itemsMenu.add(searchByPromo);
         documentsMenu.add(searchByWorkflowType);
         documentsMenu.add(allDocuments);
         pointingMenu.add(pointingByDate);
         promotionsMenu.add(businessTask);
-
 
         menuBar.add(applicationMenu);
         menuBar.add(itemsMenu);
@@ -77,7 +78,7 @@ public class MainWindow extends JFrame {
         });
         setLocationRelativeTo(null);
         setVisible(true);
-        //setResizable(false);
+        setResizable(false);
     }
 
     public class QuitListener implements ActionListener {
@@ -91,6 +92,16 @@ public class MainWindow extends JFrame {
                     JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                 }
             System.exit(0);
+        }
+    }
+
+    public class HomeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            container.removeAll();
+            container.add(new HomePanel());
+            container.repaint();
+            setVisible(true);
         }
     }
 

@@ -6,7 +6,6 @@ import exception.DBException;
 import exception.SingletonConnectionException;
 import model.BusinessTaskModel;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BusinessTaskManager {

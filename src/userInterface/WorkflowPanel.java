@@ -37,7 +37,6 @@ public class WorkflowPanel extends JPanel {
             fillWorkflowTypes(controller.getAllWorkflowTypes());
 
             submit = new JButton("Submit");
-            back = new HomeButton(container);
 
             submit.addActionListener(new SubmitListener());
 
@@ -59,7 +58,7 @@ public class WorkflowPanel extends JPanel {
             layoutConstraints.gridx = 1;
             layoutConstraints.gridy = 1;
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            this.add(back, layoutConstraints);
+            this.add(new BackButton(new HomePanel(), container), layoutConstraints);
         }
         catch (DBException exception) {
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);

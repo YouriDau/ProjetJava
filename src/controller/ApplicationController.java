@@ -31,6 +31,10 @@ public class ApplicationController {
         return  documentManager.getDocuments(workflowNumber);
     }
 
+    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
+        return documentManager.getAllDocumentTypes();
+    }
+
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         return documentManager.getAllDocuments();
     }

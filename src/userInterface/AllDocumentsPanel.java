@@ -52,8 +52,8 @@ public class AllDocumentsPanel extends JPanel{
 
             setColumnsSize();
 
-            layoutConstraints.gridwidth = 2;
             layoutConstraints.insets = new Insets(3, 0, 15, 0);
+            layoutConstraints.gridwidth = 4;
             layoutConstraints.anchor = GridBagConstraints.CENTER;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 0;
@@ -61,22 +61,24 @@ public class AllDocumentsPanel extends JPanel{
 
             layoutConstraints.gridwidth = 1;
             layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 4;
+            layoutConstraints.gridy = 3;
             this.add(modifyDocument, layoutConstraints);
 
-            layoutConstraints.gridwidth = 1;
-            layoutConstraints.anchor = GridBagConstraints.LINE_END;
+            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
-            layoutConstraints.gridy = 4;
             this.add(deleteDocument, layoutConstraints);
 
-            layoutConstraints.gridwidth = 2;
+            layoutConstraints.gridwidth = 1;
+            layoutConstraints.gridx = 2;
+            this.add(new BackButton(new HomePanel(), container), layoutConstraints);
+
+            layoutConstraints.gridwidth = 4;
+            layoutConstraints.anchor = GridBagConstraints.CENTER;
             layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 2;
+            layoutConstraints.gridy = 1;
             this.add(table.getTableHeader(), layoutConstraints);
 
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 3;
+            layoutConstraints.gridy = 2;
             this.add(scrollPane, layoutConstraints);
         }
         catch (DBException exception) {
@@ -94,12 +96,14 @@ public class AllDocumentsPanel extends JPanel{
         column = table.getColumnModel().getColumn(1);
         column.setPreferredWidth(80);
         column = table.getColumnModel().getColumn(2);
-        column.setPreferredWidth(100);
+        column.setPreferredWidth(115);
         column = table.getColumnModel().getColumn(3);
         column.setPreferredWidth(80);
         column = table.getColumnModel().getColumn(4);
         column.setPreferredWidth(100);
         column = table.getColumnModel().getColumn(5);
+        column.setPreferredWidth(100);
+        column = table.getColumnModel().getColumn(6);
         column.setPreferredWidth(100);
     }
 

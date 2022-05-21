@@ -6,6 +6,7 @@ import model.DocumentType;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DocumentByWorkflowModel extends AbstractTableModel {
@@ -37,10 +38,11 @@ public class DocumentByWorkflowModel extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         DocumentByWorkflowType document = contents.get(row);
 
+
         switch (column) {
             case 0: return document.getDocumentNumber();
             case 1: return document.getWorkflowNumber();
-            case 2: return document.getCreationDate();
+            case 2: return document.getCreationDateStr();
             case 3: {
                 if (document.getCreditLimit() != null)
                     return document.getCreditLimit();
@@ -59,7 +61,7 @@ public class DocumentByWorkflowModel extends AbstractTableModel {
                 break;
             case 1: c = Integer.class;
                 break;
-            case 2: c = GregorianCalendar.class;
+            case 2: c = String.class;
                 break;
             case 3: c = Double.class;
                 break;

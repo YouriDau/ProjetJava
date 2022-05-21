@@ -64,6 +64,28 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
+    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
+        DocumentType type;
+        ArrayList<DocumentType> types = new ArrayList<>();
+
+        String sqlInstruction = "SELECT * FROM document_type;";
+        Connection connection = SingletonConnection.getInstance();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+
+            while(data.next()) {
+                type = new DocumentType(data.getInt("id"), data.getString("wording"));
+                types.add(type);
+            }
+        }
+        catch (SQLException exception) {
+            throw new DBException(exception.getMessage());
+        }
+        return types;
+    }
+    @Override
     public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         Integer documentNumber;
         Integer workflowId;
@@ -112,6 +134,7 @@ public class DBAccess implements DataAccess {
         }
         return documents;
     }
+
     @Override
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
         Integer number;
@@ -122,9 +145,10 @@ public class DBAccess implements DataAccess {
         Integer processNumber;
         Double creditLimit;
         Boolean updateTheStock;
-        Document document;
 
+        Document document;
         ArrayList<Document> documents = new ArrayList<>();
+
         String sqlInstruction = "SELECT * FROM document;";
         Connection connection = SingletonConnection.getInstance();
 
@@ -162,7 +186,6 @@ public class DBAccess implements DataAccess {
         }
         return documents;
     }
-
     @Override
     public void addDocument(Document document) throws  DBException, SingletonConnectionException {
         int lastDocumentId;

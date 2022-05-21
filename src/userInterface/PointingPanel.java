@@ -43,7 +43,6 @@ public class PointingPanel extends JPanel {
         secondDate.setValue(today.getTime());
 
         submit = new JButton("Submit");
-        back = new HomeButton(container);
         reset = new JButton("Reset");
 
         layoutConstraints.fill = GridBagConstraints.BOTH;
@@ -74,7 +73,7 @@ public class PointingPanel extends JPanel {
 
         layoutConstraints.gridx = 1;
         layoutConstraints.gridy = 2;
-        this.add(back, layoutConstraints);
+        this.add(new BackButton(new HomePanel(), container), layoutConstraints);
 
         layoutConstraints.gridx = 2;
         layoutConstraints.gridy = 2;
