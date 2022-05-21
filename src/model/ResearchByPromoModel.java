@@ -1,11 +1,11 @@
 package model;
 
-public class ResearchByPromo {
+public class ResearchByPromoModel {
     Integer percentage;
     String wordingItem;
     Double lastUnitPriceDetail;
 
-    public ResearchByPromo(Integer percentage, String wordingItem,Double lastUnitPriceDetail){
+    public ResearchByPromoModel(Integer percentage, String wordingItem, Double lastUnitPriceDetail){
         setPercentage(percentage);
         setWordingItem(wordingItem);
         setLastUnitPriceDetail(lastUnitPriceDetail);

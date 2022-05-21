@@ -4,7 +4,7 @@ import controller.DataAccess;
 import dataAccess.DBAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.ResearchByPromo;
+import model.ResearchByPromoModel;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class ItemManager {
     public void setDao(DataAccess itemDBAccess){
         this.dao = itemDBAccess;
     }
-    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
         return dao.getResearchByPromo(littleValue, bigValue);
     }
 

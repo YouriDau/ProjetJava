@@ -282,15 +282,15 @@ public class DBAccess implements DataAccess {
         }
     }
 
-    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
         // valeurs a recuperer dans la base de données
         Integer percentage;
         String wordingItem;
         Double lastUnitPrice;
         // tableau a initialiser avec des ResearchByPromo
-        ArrayList<ResearchByPromo> researchByPromos = new ArrayList<>();
+        ArrayList<ResearchByPromoModel> researchByPromoModels = new ArrayList<>();
         // ResearchByPromo qui ira dans l'arrayList
-        ResearchByPromo researchByPromo;
+        ResearchByPromoModel researchByPromoModel;
         // requête SQL
         String SQLInstruction = "SELECT p.percentage, i.wording, d.unit_price FROM promotion p INNER JOIN item i on p.item = i.id INNER JOIN detail d on i.id = d.item WHERE percentage BETWEEN "
                 +littleValue
@@ -305,14 +305,14 @@ public class DBAccess implements DataAccess {
                 percentage = data.getInt("percentage");
                 wordingItem = data.getString("wording");
                 lastUnitPrice = data.getDouble("unit_price");
-                researchByPromo = new ResearchByPromo(percentage,wordingItem,lastUnitPrice);
-                researchByPromos.add(researchByPromo);
+                researchByPromoModel = new ResearchByPromoModel(percentage,wordingItem,lastUnitPrice);
+                researchByPromoModels.add(researchByPromoModel);
             }
 
         } catch (SQLException exception){
             throw new DBException(exception.getMessage());
         }
-        return researchByPromos;
+        return researchByPromoModels;
     }
 
     public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException{
@@ -334,7 +334,7 @@ public class DBAccess implements DataAccess {
                 "                INNER JOIN document doc ON d.document = doc.number " +
                 "                INNER JOIN document_type dt on doc.type = dt.id " +
                 "                WHERE dt.wording = 'Bon de vente' " +
-                "                AND i.wording = " + wordingItemReceive +
+                "                AND i.wording = '" + wordingItemReceive +"'"+
                 "                AND doc.creation_date BETWEEN p.start_date AND p.end_date " +
                 "                GROUP BY  p.id;";
         // création de la connexion
@@ -361,7 +361,29 @@ public class DBAccess implements DataAccess {
         return businessTaskModels;
     }
 
-    //public ArrayList<String>
-    // SELECT item.id, item.wording
-    // FROM item
-}
+    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException {
+        // Valeur a récupérer dans la BD
+        String wordingItem;
+        // Tableau a initialiser
+        ArrayList<String> wordingItems = new ArrayList<>();
+        // Requête SQL
+        String SQLInstruction = "Select wording FROM item;";
+        // établissement de la connexion
+        Connection connection = SingletonConnection.getInstance();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            while (data.next()) {
+                wordingItem = data.getString("wording");
+                wordingItems.add(wordingItem);
+            }
+        } catch (SQLException sqlException) {
+            throw new DBException(sqlException.getMessage());
+        }
+
+
+        return wordingItems;
+    }
+    }
+
+

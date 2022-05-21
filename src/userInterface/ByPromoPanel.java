@@ -3,7 +3,7 @@ package userInterface;
 import controller.ApplicationController;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.ResearchByPromo;
+import model.ResearchByPromoModel;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ByPromoPanel extends JPanel {
     private Container container;
     private ApplicationController applicationController;
-    private ArrayList<ResearchByPromo> researchByPromos;
+    private ArrayList<ResearchByPromoModel> researchByPromoModels;
     private AllPromotionsInformationModel model;
     private JLabel listEmpty;
     private GridBagConstraints layoutConstraints;
@@ -28,9 +28,9 @@ public class ByPromoPanel extends JPanel {
         this.container = container;
         try{
             applicationController = new ApplicationController();
-            researchByPromos = applicationController.getResearchByPromo(minvalue, maxValue);
+            researchByPromoModels = applicationController.getResearchByPromo(minvalue, maxValue);
 
-            if (researchByPromos.isEmpty()){
+            if (researchByPromoModels.isEmpty()){
                 listEmpty = new JLabel("The list is empty");
                 listEmpty.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -45,7 +45,7 @@ public class ByPromoPanel extends JPanel {
                 layoutConstraints.gridy = 1;
                 this.add(new BackButton(new ItemPanel(container), container), layoutConstraints);
             } else{
-                model = new AllPromotionsInformationModel(researchByPromos);
+                model = new AllPromotionsInformationModel(researchByPromoModels);
 
                 table = new JTable(model);
                 table.setPreferredScrollableViewportSize(new Dimension(515,300));

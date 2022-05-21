@@ -55,11 +55,14 @@ public class ApplicationController {
         documentManager.modifyDocument(document);
     }
 
-    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
         return itemManager.getResearchByPromo(littleValue, bigValue);
     }
 
     public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
         return businessTaskManager.getBusinessTaskInformation(wordingItemReceive);
+    }
+    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
+        return businessTaskManager.getAllItemsWording();
     }
 }
