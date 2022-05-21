@@ -22,13 +22,10 @@ public interface DataAccess {
     public void deleteDocument(Integer id) throws DBException, SingletonConnectionException;
     public void modifyDocument(Document document) throws DBException, SingletonConnectionException;
 
+    // Item
     public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException;
     public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException;
-
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException;
-    // Item
-    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException;
-    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException;
 
     // Pointing
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException;

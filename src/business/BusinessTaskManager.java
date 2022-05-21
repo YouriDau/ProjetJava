@@ -4,7 +4,7 @@ import controller.DataAccess;
 import dataAccess.DBAccess;
 import exception.DBException;
 import exception.SingletonConnectionException;
-import model.BusinessTask;
+import model.BusinessTaskModel;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class BusinessTaskManager {
         this.dao = businessTaskAccess;
     }
 
-    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
         return dao.getBusinessTaskInformation(wordingItemReceive);
     }
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{

@@ -7,7 +7,6 @@ import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
@@ -315,7 +314,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException {
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException {
         // valeurs a récuperer dans la BD
         String wordingItem;
         Integer percentagePromotion;
