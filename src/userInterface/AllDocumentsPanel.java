@@ -53,26 +53,26 @@ public class AllDocumentsPanel extends JPanel{
             setColumnsSize();
 
             layoutConstraints.insets = new Insets(3, 0, 15, 0);
-            layoutConstraints.gridwidth = 4;
+            layoutConstraints.gridwidth = 3;
             layoutConstraints.anchor = GridBagConstraints.CENTER;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 0;
             this.add(addDocument, layoutConstraints);
 
             layoutConstraints.gridwidth = 1;
+            layoutConstraints.anchor = GridBagConstraints.LINE_START;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 3;
             this.add(modifyDocument, layoutConstraints);
 
-            layoutConstraints.gridwidth = 2;
             layoutConstraints.gridx = 1;
             this.add(deleteDocument, layoutConstraints);
 
-            layoutConstraints.gridwidth = 1;
+            layoutConstraints.anchor = GridBagConstraints.LINE_END;
             layoutConstraints.gridx = 2;
             this.add(new BackButton(new HomePanel(), container), layoutConstraints);
 
-            layoutConstraints.gridwidth = 4;
+            layoutConstraints.gridwidth = 3;
             layoutConstraints.anchor = GridBagConstraints.CENTER;
             layoutConstraints.gridx = 0;
             layoutConstraints.gridy = 1;

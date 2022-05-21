@@ -21,7 +21,6 @@ public class SingletonConnection {
             }
             catch (SQLException exception) {
                 throw new SingletonConnectionException(exception.getMessage());
-                //JOptionPane.showMessageDialog(null, exception.getMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         return connection;
@@ -29,11 +28,11 @@ public class SingletonConnection {
 
     public static void closeConnection() throws SingletonConnectionException {
         try {
+            System.out.println("test");
             connection.close();
         }
         catch (SQLException exception) {
             throw new SingletonConnectionException(exception.getMessage());
-            //
         }
     }
 

@@ -7,6 +7,7 @@ import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
@@ -282,6 +283,7 @@ public class DBAccess implements DataAccess {
         }
     }
 
+    @Override
     public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
         // valeurs a recuperer dans la base de données
         Integer percentage;
@@ -314,8 +316,8 @@ public class DBAccess implements DataAccess {
         }
         return researchByPromos;
     }
-
-    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException{
+    @Override
+    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException{
         // valeurs a récuperer dans la BD
         String wordingItem;
         Integer percentagePromotion;
@@ -324,9 +326,9 @@ public class DBAccess implements DataAccess {
         GregorianCalendar endDate = new GregorianCalendar();
         Integer detailQuantity;
         // tableau a initialiser
-        ArrayList<BusinessTaskModel> businessTaskModels = new ArrayList<>();
+        ArrayList<BusinessTask> businessTasks = new ArrayList<>();
         // valeur qui s'ajoutera a l'array list
-        BusinessTaskModel businessTaskModel;
+        BusinessTask businessTask;
         // Requête SQL
         String SQLInstruction = "SELECT i.wording,p.percentage, p.id, p.start_date, p.end_date,SUM(d.quantity) as quantity FROM promotion p " +
                 "                INNER JOIN item i ON p.item = i.id " +
@@ -349,8 +351,8 @@ public class DBAccess implements DataAccess {
                 startDate.setTime(data.getDate("start_date"));
                 endDate.setTime(data.getDate("end_date"));
                 detailQuantity = data.getInt("quantity");
-                businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
-                businessTaskModels.add(businessTaskModel);
+                businessTask = new BusinessTask(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
+                businessTasks.add(businessTask);
             }
 
         }catch (SQLException sqlException){
@@ -358,10 +360,70 @@ public class DBAccess implements DataAccess {
         }
 
 
-        return businessTaskModels;
+        return businessTasks;
     }
 
     //public ArrayList<String>
     // SELECT item.id, item.wording
     // FROM item
+
+
+    @Override
+    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
+        /*String lastName;
+        String firstName; // can be null
+        String personType;
+        GregorianCalendar pointingDate;
+        Time pointingHour;
+        String pointingType;
+        java.sql.Date firstSQLDate;
+        java.sql.Date secondSQLDate;
+
+        PointingBetweenDates pointing;
+        ArrayList<PointingBetweenDates> pointings = new ArrayList<>();
+
+        String sqlInstruction = "SELECT po.date, po.hour, po.type, pe.last_name, pe.first_name, pet.wording " +
+                                "FROM pointing po" +
+                                "INNER JOIN person pe" +
+                                "ON (po.employee = pe.number) " +
+                                "INNER JOIN person_type pet " +
+                                "ON (pe.type = pet.id) " +
+                                "WHERE po.date" +
+                                    "BETWEEN ? AND ?";
+        Connection connection = SingletonConnection.getInstance();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            firstSQLDate = new java.sql.Date(firstDate.getTimeInMillis());
+            secondSQLDate = new java.sql.Date(secondDate.getTimeInMillis());
+
+            preparedStatement.setDate(1, firstSQLDate);
+            preparedStatement.setDate(2, secondSQLDate);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                lastName = data.getString("pe.last_name");
+                personType = data.getString("pet.type");
+
+                paymentCondition = data.getString("payment_condition");
+                if (!data.wasNull()) {
+                    document.setPaymentCondition(paymentCondition);
+                }
+
+                creditLimit = data.getDouble("credit_limit");
+                if (!data.wasNull()) {
+                    document.setCreditLimit(creditLimit);
+                }
+
+                documents.add(document);
+            }
+        }
+        catch (SQLException exception) {
+            throw new DBException(exception.getMessage());
+        }
+        return null;*/
+        return null;
+    }
 }

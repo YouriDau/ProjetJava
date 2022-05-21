@@ -59,7 +59,7 @@ public class ApplicationController {
         return itemManager.getResearchByPromo(littleValue, bigValue);
     }
 
-    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
+    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
         return businessTaskManager.getBusinessTaskInformation(wordingItemReceive);
     }
 }

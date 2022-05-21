@@ -2,7 +2,7 @@ package model;
 
 import java.util.GregorianCalendar;
 
-public class BusinessTaskModel {
+public class BusinessTask {
     private String wordingItem;
     private Integer percentagePromotion;
     private Integer percentageId;
@@ -10,7 +10,7 @@ public class BusinessTaskModel {
     private  GregorianCalendar endDate;
     private Integer detailQuantity;
 
-    public BusinessTaskModel(String wordingItem,Integer percentagePromotion,Integer percentageId, GregorianCalendar startDate, GregorianCalendar endDate, Integer detailQuantity){
+    public BusinessTask(String wordingItem, Integer percentagePromotion, Integer percentageId, GregorianCalendar startDate, GregorianCalendar endDate, Integer detailQuantity){
         setWordingItem(wordingItem);
         setPercentagePromotion(percentagePromotion);
         setPercentageId(percentageId);

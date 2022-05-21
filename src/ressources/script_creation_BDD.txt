@@ -13,12 +13,12 @@ CREATE TABLE person_type (
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE person (
                         number INT AUTO_INCREMENT,
-                        lastName varchar(30) NOT NULL,
-                        phoneNumber numeric(11) NOT NULL,
+                        last_name varchar(30) NOT NULL,
+                        phone_number numeric(11) NOT NULL,
                         email varchar(50) NOT NULL,
-                        firstName varchar(30),
-                        VATNumber numeric,
-                        nbFidelityPoints numeric,
+                        first_name varchar(30),
+                        VAT_number numeric,
+                        nb_fidelity_points numeric,
                         hasBadge boolean NOT NULL,
                         type INT NOT NULL,
 
@@ -33,13 +33,13 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE address (
                          house_number numeric(10),
                          street_name varchar(45),
-                         cityName varchar(45),
+                         city_name varchar(45),
                          postal_code numeric(8),
                          country varchar(25),
                          inhabitant INT NOT NULL,
 
                          CONSTRAINT address_pk
-                             PRIMARY KEY(house_number, street_name, cityName, postal_code, country),
+                             PRIMARY KEY(house_number, street_name, city_name, postal_code, country),
                          CONSTRAINT address_fk
                              FOREIGN KEY(inhabitant)
                                  REFERENCES person(number)
@@ -80,12 +80,12 @@ CREATE TABLE document (
                           number INT AUTO_INCREMENT,
                           creation_date date NOT NULL,
                           payment_condition varchar(100),
-                          credit_limit decimal(5, 2),
+                          credit_limit decimal(8, 2),
                           type INT NOT NULL,
                           process INT NOT NULL NOT NULL,
                           update_the_stock BOOLEAN NOT NULL,
 
-                              CONSTRAINT document_pk
+                          CONSTRAINT document_pk
                               PRIMARY KEY(number),
                           CONSTRAINT document_fk
                               FOREIGN KEY(type)
@@ -97,11 +97,12 @@ CREATE TABLE document (
 DROP TABLE IF EXISTS `pointing`;
 CREATE TABLE pointing(
                          employee INT NOT NULL,
-                         pointing_date date NOT NULL,
-                         pointing_hour numeric(4) NOT NULL,
+                         date date NOT NULL,
+                         hour numeric(4) NOT NULL,
+                         type VARCHAR(50) NOT NULL,
 
                          CONSTRAINT pointing_pk
-                             PRIMARY KEY(employee, pointing_date, pointing_hour),
+                             PRIMARY KEY(employee, date, hour),
                          CONSTRAINT pointing_fk
                              FOREIGN KEY (employee)
                                  REFERENCES person(number)

@@ -4,7 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
+import java.util.regex.Pattern;
 
 public class PointingPanel extends JPanel {
     private JLabel firstDateLabel;
@@ -17,7 +22,6 @@ public class PointingPanel extends JPanel {
     private GridBagConstraints layoutConstraints;
     private Container container;
     private JButton submit;
-    private JButton back;
     private JButton reset;
 
     public PointingPanel(Container container) {
@@ -44,6 +48,8 @@ public class PointingPanel extends JPanel {
 
         submit = new JButton("Submit");
         reset = new JButton("Reset");
+
+        submit.addActionListener(new SubmitListener());
 
         layoutConstraints.fill = GridBagConstraints.BOTH;
         layoutConstraints.insets = new Insets(0,0, 15, 15);
@@ -90,10 +96,27 @@ public class PointingPanel extends JPanel {
         }
     }
 
-    public class Submit implements ActionListener{
+    public class SubmitListener implements ActionListener{
+        private Pattern pattern;
+
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // vérifier si la PREMIERE date respecte le format dd-mm-yyyy et si l'année n'est pas inférieure à 1000 ni supérieur à 2999
+            if (!pattern.matches("^[0-9]{2}-[0-9]{2}-[1-2][0-9]{3}$", firstEditor.getTextField().getText())) {
+                JOptionPane.showMessageDialog(null, "The first date must respect the format dd-mm-yyyy\nAnd it must be a credible date",
+                        "Error date format", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Même vérif qu'au dessus pour la DEUXIEME date
+                if (!pattern.matches("^[0-9]{2}-[0-9]{2}-[1-2]{1}[0-9]{3}$", secondEditor.getTextField().getText())) {
+                    JOptionPane.showMessageDialog(null, "The second date must respect the format dd-mm-yyyy\nAnd it must be a credible date",
+                            "Error date format", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    container.removeAll();
+                    container.add(new PointingListPanel(container, firstDate, secondDate));
+                    container.revalidate();
+                    container.repaint();
+                }
+            }
         }
     }
 }

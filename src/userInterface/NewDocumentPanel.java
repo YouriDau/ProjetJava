@@ -38,7 +38,6 @@ public class NewDocumentPanel extends JPanel {
     private ButtonGroup buttonsStock;
 
     private JButton submit;
-    private JButton back;
 
     public NewDocumentPanel(Container container) {
         this.container = container;
@@ -186,13 +185,13 @@ public class NewDocumentPanel extends JPanel {
             } else {
 
                 // Vérifier si le text est alphanumérique uniquement de "a" à "z" et des chiffres
-                if (!pattern.matches("^[A-Za-z'.\\d\\n\\p{javaWhitespace}]*$", paymentCondition.getText())) {
-                    JOptionPane.showMessageDialog(null, "Les conditions de paiements doivent uniquement\ncomprendre des lettres et des chiffres",
+                if (!pattern.matches("^[A-Za-zçàùéè'.\\d\\n\\p{javaWhitespace}]*$", paymentCondition.getText())) {
+                    JOptionPane.showMessageDialog(null, "Payment conditons only accept A-Z, a-z, 1-9, ç, à, ù, é, è, ', .",
                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
 
                 } else {
                     if (!pattern.matches("^[0-9]*\\.?[0-9]*$", creditLimit.getText())) {
-                        JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XXX",
+                        JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XX",
                                 "Error credit limit", JOptionPane.ERROR_MESSAGE);
                     } else {
                         if (paymentCondition.getText().equals("")) {
