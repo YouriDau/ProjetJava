@@ -7,7 +7,11 @@ import model.BusinessTaskModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PromotionsByItemPanel extends JPanel {
     private Container container;
@@ -16,11 +20,14 @@ public class PromotionsByItemPanel extends JPanel {
     private ArrayList<BusinessTaskModel> businessTaskModels;
     private JLabel label;
     private JButton back;
+    private JButton add;
     private JTable table;
     private JScrollPane scrollPane;
-    PromotionsByItemModel model;
+    private PromotionsByItemModel model;
+    private String wordingItem;
 
     public PromotionsByItemPanel(Container container, String wordingItem){
+        setWordingItem(wordingItem);
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
         setContainer(container);
@@ -41,27 +48,46 @@ public class PromotionsByItemPanel extends JPanel {
                 layoutConstraints.insets = new Insets(15,0,0,0);
                 this.add(back, layoutConstraints);
             } else {
+                // Préparation du label
                 label = new JLabel(wordingItem+": ");
+                // Ajout de style au label
+                label.setFont(new Font("Verdana", Font.PLAIN, 24));
+                // Ajout d'un soulignage
+                Font font = label.getFont();
+                Map attributes = font.getAttributes();
+                attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                label.setFont(font.deriveFont(attributes));
+                // Centrer le label
                 label.setHorizontalAlignment(SwingConstants.CENTER);
+                // création du model
                 model = new PromotionsByItemModel(businessTaskModels);
+                // Préparation des composants
                 back = new BackButton( new ItemSelectionPanel(container),container);
+                add = new JButton("Add promotion");
+                add.addActionListener(new AddListener());
                 table = new JTable(model);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-
-                table.setPreferredScrollableViewportSize(new Dimension(425,300));
+                table.setPreferredScrollableViewportSize(new Dimension(425,250));
                 scrollPane = new JScrollPane(table);
-
-                layoutConstraints.gridwidth = 1;
+                // Ajouts des composants
+                layoutConstraints.gridwidth = 2;
                 layoutConstraints.insets = new Insets(0,0,15,0);
                 layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 0;
                 this.add(label, layoutConstraints);
 
+                layoutConstraints.gridwidth = 1;
                 layoutConstraints.insets = new Insets(15,0,0,0);
                 layoutConstraints.gridy = 3;
+                layoutConstraints.gridx = 0;
                 this.add(back, layoutConstraints);
 
-                layoutConstraints.insets = new Insets(0,0,0,0);
+                layoutConstraints.gridx = 1;
+                layoutConstraints.anchor = GridBagConstraints.LINE_END;
+                this.add(add, layoutConstraints);
+
+                layoutConstraints.gridwidth = 2;
+                layoutConstraints.gridx = 0;
                 layoutConstraints.gridy = 1;
                 this.add(table.getTableHeader(), layoutConstraints);
 
@@ -76,7 +102,21 @@ public class PromotionsByItemPanel extends JPanel {
         }
     }
 
+    public void setWordingItem(String wordingItem) {
+        this.wordingItem = wordingItem;
+    }
+
     public void setContainer(Container container) {
         this.container = container;
+    }
+
+    public class AddListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            container.removeAll();
+            container.add(new NewPromotionPanel(container, wordingItem));
+            container.revalidate();
+            container.repaint();
+        }
     }
 }
