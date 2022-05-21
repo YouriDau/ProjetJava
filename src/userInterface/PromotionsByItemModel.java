@@ -1,11 +1,9 @@
 package userInterface;
 
 import model.BusinessTaskModel;
-import model.DocumentByWorkflowType;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class PromotionsByItemModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
@@ -22,9 +20,6 @@ public class PromotionsByItemModel extends AbstractTableModel {
     }
 
     public void setContents(ArrayList<BusinessTaskModel> contents) {
-        for (BusinessTaskModel business:contents) {
-            System.out.println(business.getDateStr(business.getStartDate()));
-        }
         this.contents = contents;
     }
 
@@ -39,7 +34,6 @@ public class PromotionsByItemModel extends AbstractTableModel {
     }
     public Object getValueAt(int row, int column) {
         BusinessTaskModel businessTaskModel = contents.get(row);
-
 
         switch (column) {
             case 0: return businessTaskModel.getPercentagePromotion();

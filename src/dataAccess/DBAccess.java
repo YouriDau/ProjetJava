@@ -109,9 +109,9 @@ public class DBAccess implements DataAccess {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, workflowNumber);
             ResultSet data = preparedStatement.executeQuery();
-            creationDate = new GregorianCalendar();
 
             while (data.next()) {
+                creationDate = new GregorianCalendar();
                 documentNumber = data.getInt("d.number");
                 sqlDate = data.getDate("d.creation_date");
                 workflowId = data.getInt("w.id");
@@ -290,10 +290,14 @@ public class DBAccess implements DataAccess {
         // ResearchByPromo qui ira dans l'arrayList
         ResearchByPromoModel researchByPromoModel;
         // requête SQL
-        String SQLInstruction = "SELECT p.percentage, i.wording, d.unit_price FROM promotion p INNER JOIN item i on p.item = i.id INNER JOIN detail d on i.id = d.item WHERE percentage BETWEEN "
-                + littleValue
-                + " AND " + bigValue
-                + " AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
+        String SQLInstruction = "SELECT p.percentage, i.wording, d.unit_price " +
+                                "FROM promotion p " +
+                                "INNER JOIN item i" +
+                                "ON p.item = i.id " +
+                                "INNER JOIN detail d " +
+                                "ON i.id = d.item " +
+                                "WHERE percentage BETWEEN " + littleValue + " AND " + bigValue +
+                                " AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
 
         Connection connection = SingletonConnection.getInstance();
         try {
