@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class BusinessTask {
@@ -43,7 +44,34 @@ public class BusinessTask {
         this.endDate = endDate;
     }
 
+    public String getWordingItem() {
+        return wordingItem;
+    }
+
+    public Integer getPercentagePromotion() {
+        return percentagePromotion;
+    }
+
     public Integer getPercentageId() {
         return percentageId;
+    }
+
+    public GregorianCalendar getStartDate() {
+        return startDate;
+    }
+
+    public GregorianCalendar getEndDate() {
+        return endDate;
+    }
+
+    public Integer getDetailQuantity() {
+        return detailQuantity;
+    }
+    public String getDateStr(GregorianCalendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH)+1;
+        int day = date.get(Calendar.DAY_OF_MONTH);
+
+        return year + "-" + month + "-" + day;
     }
 }

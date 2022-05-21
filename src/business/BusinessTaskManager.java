@@ -22,4 +22,7 @@ public class BusinessTaskManager {
     public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
         return dao.getBusinessTaskInformation(wordingItemReceive);
     }
+    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
+        return dao.getAllItemsWording();
+    }
 }

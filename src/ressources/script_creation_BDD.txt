@@ -234,13 +234,15 @@ INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (10, '2022-06-01','2022-07-31' , 3);
 INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (70, '2021-04-01','2021-05-31' , 1);
+#Création lot
 INSERT INTO lot(arrivage_date, expiration_date)
 VALUES ('2020-06-01','2025-07-31');
+#Création détail
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (2.50,50,0.26 ,null,2,3,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (5.99,30,0.26 ,null,2,1,1);
+VALUES (5.99,30,0.26 ,null,2,3,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (5.99,20,0.26 ,null,1,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (2,10,0.26 ,null,2,3,1);
+VALUES (2,10,0.26 ,null,4,3,1);

@@ -1,38 +1,38 @@
 package userInterface;
 
-import model.ResearchByPromo;
+import model.ResearchByPromoModel;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 public class AllPromotionsInformationModel extends AbstractTableModel {
     ArrayList<String> columnNames;
-    ArrayList<ResearchByPromo> researchByPromos;
-    public AllPromotionsInformationModel(ArrayList<ResearchByPromo> researchByPromos){
+    ArrayList<ResearchByPromoModel> researchByPromoModels;
+    public AllPromotionsInformationModel(ArrayList<ResearchByPromoModel> researchByPromoModels){
         columnNames = new ArrayList<>();
         columnNames.add("Percentage");
         columnNames.add("WordingItem");
         columnNames.add("Last unit price");
-        setResearchByPromos(researchByPromos);
+        setResearchByPromos(researchByPromoModels);
     }
 
-    public void setResearchByPromos(ArrayList<ResearchByPromo> researchByPromos) {
-        this.researchByPromos = researchByPromos;
+    public void setResearchByPromos(ArrayList<ResearchByPromoModel> researchByPromoModels) {
+        this.researchByPromoModels = researchByPromoModels;
     }
 
     public int getRowCount(){
-        return researchByPromos.size();
+        return researchByPromoModels.size();
     }
     public int getColumnCount(){
         return columnNames.size();
     }
     public Object getValueAt(int row, int column){
-        ResearchByPromo researchByPromo = researchByPromos.get(row);
+        ResearchByPromoModel researchByPromoModel = researchByPromoModels.get(row);
 
         switch (column){
-            case 0 : return researchByPromo.getPercentage();
-            case 1 : return researchByPromo.getWordingItem();
-            case 2 : return researchByPromo.getLastUnitPriceDetail();
+            case 0 : return researchByPromoModel.getPercentage();
+            case 1 : return researchByPromoModel.getWordingItem();
+            case 2 : return researchByPromoModel.getLastUnitPriceDetail();
             default: return null;
         }
     }

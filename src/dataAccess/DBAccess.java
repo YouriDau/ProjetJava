@@ -31,14 +31,14 @@ public class DBAccess implements DataAccess {
                 id = data.getInt("id");
                 workflowNumbers.add(id);
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
         return workflowNumbers;
     }
+
     @Override
-    public ArrayList<WorkflowType> getAllWorkflowTypes()  throws DBException, SingletonConnectionException{
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
         Integer id;
         String wording;
         WorkflowType workflowType;
@@ -56,8 +56,7 @@ public class DBAccess implements DataAccess {
                 workflowType = new WorkflowType(id, wording);
                 workflowTypes.add(workflowType);
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
 
@@ -76,16 +75,16 @@ public class DBAccess implements DataAccess {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
 
-            while(data.next()) {
+            while (data.next()) {
                 type = new DocumentType(data.getInt("id"), data.getString("wording"));
                 types.add(type);
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
         return types;
     }
+
     @Override
     public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         Integer documentNumber;
@@ -99,12 +98,12 @@ public class DBAccess implements DataAccess {
         ArrayList<DocumentByWorkflowType> documents = new ArrayList<>();
 
         String sqlInstruction = "SELECT d.number, d.creation_date, d.credit_limit, w.id, dt.wording " +
-                                "FROM document d " +
-                                "INNER JOIN workflow w " +
-                                "ON (d.process = w.id) " +
-                                "INNER JOIN document_type dt " +
-                                "ON (d.type = dt.id) " +
-                                "WHERE d.process = ?;";
+                "FROM document d " +
+                "INNER JOIN workflow w " +
+                "ON (d.process = w.id) " +
+                "INNER JOIN document_type dt " +
+                "ON (d.type = dt.id) " +
+                "WHERE d.process = ?;";
         Connection connection = SingletonConnection.getInstance();
 
         try {
@@ -120,7 +119,7 @@ public class DBAccess implements DataAccess {
                 documentType = data.getString("dt.wording");
 
                 creationDate.setTime(sqlDate);
-                document = new DocumentByWorkflowType(documentNumber, workflowId, creationDate,  documentType);
+                document = new DocumentByWorkflowType(documentNumber, workflowId, creationDate, documentType);
 
                 creditLimit = data.getDouble("d.credit_limit");
                 if (!data.wasNull()) {
@@ -129,8 +128,7 @@ public class DBAccess implements DataAccess {
 
                 documents.add(document);
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
         return documents;
@@ -181,18 +179,18 @@ public class DBAccess implements DataAccess {
 
                 documents.add(document);
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
         return documents;
     }
+
     @Override
-    public void addDocument(Document document) throws  DBException, SingletonConnectionException {
+    public void addDocument(Document document) throws DBException, SingletonConnectionException {
         int lastDocumentId;
         ResultSet data;
         String sqlInstruction = "INSERT INTO document(creation_date, type, process, update_the_stock) " +
-                                "VALUES(?, ?, ?, ?);";
+                "VALUES(?, ?, ?, ?);";
         Connection connection = SingletonConnection.getInstance();
 
         try {
@@ -214,7 +212,7 @@ public class DBAccess implements DataAccess {
 
             if (document.getPaymentCondition() != null) {
                 sqlInstruction = "UPDATE document SET payment_condition = ?" +
-                                 "WHERE number = ?";
+                        "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, document.getPaymentCondition());
                 preparedStatement.setString(2, Integer.toString(lastDocumentId));
@@ -223,43 +221,43 @@ public class DBAccess implements DataAccess {
 
             if (document.getCreditLimit() != null) {
                 sqlInstruction = "UPDATE document SET credit_limit = ?" +
-                                 "WHERE number = ?";
+                        "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setDouble(1, document.getCreditLimit());
                 preparedStatement.setString(2, Integer.toString(lastDocumentId));
                 preparedStatement.executeUpdate();
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
     }
+
     @Override
     public void deleteDocument(Integer id) throws DBException, SingletonConnectionException {
         String sqlInstruction = "DELETE FROM document " +
-                                "WHERE number = ?";
+                "WHERE number = ?";
 
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-        }
-        catch(SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
     }
+
     @Override
     public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
         String sqlInstruction = "UPDATE document " +
-                                "SET payment_condition = ?, credit_limit = ?, type = ?, process = ?, update_the_stock = ? " +
-                                "WHERE number = ?";
+                "SET payment_condition = ?, credit_limit = ?, type = ?, process = ?, update_the_stock = ? " +
+                "WHERE number = ?";
         Connection connection = SingletonConnection.getInstance();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
-            if (document.getPaymentCondition() != null){
+            if (document.getPaymentCondition() != null) {
                 preparedStatement.setString(1, document.getPaymentCondition());
             } else {
                 preparedStatement.setNull(1, Types.VARCHAR);
@@ -277,47 +275,47 @@ public class DBAccess implements DataAccess {
             preparedStatement.setInt(6, document.getNumber());
 
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
     }
 
     @Override
-    public ArrayList<ResearchByPromo> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException {
         // valeurs a recuperer dans la base de données
         Integer percentage;
         String wordingItem;
         Double lastUnitPrice;
         // tableau a initialiser avec des ResearchByPromo
-        ArrayList<ResearchByPromo> researchByPromos = new ArrayList<>();
+        ArrayList<ResearchByPromoModel> researchByPromoModels = new ArrayList<>();
         // ResearchByPromo qui ira dans l'arrayList
-        ResearchByPromo researchByPromo;
+        ResearchByPromoModel researchByPromoModel;
         // requête SQL
         String SQLInstruction = "SELECT p.percentage, i.wording, d.unit_price FROM promotion p INNER JOIN item i on p.item = i.id INNER JOIN detail d on i.id = d.item WHERE percentage BETWEEN "
-                +littleValue
-                +" AND "+ bigValue
-                +" AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
+                + littleValue
+                + " AND " + bigValue
+                + " AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
 
         Connection connection = SingletonConnection.getInstance();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
             ResultSet data = preparedStatement.executeQuery();
-            while (data.next()){
+            while (data.next()) {
                 percentage = data.getInt("percentage");
                 wordingItem = data.getString("wording");
                 lastUnitPrice = data.getDouble("unit_price");
-                researchByPromo = new ResearchByPromo(percentage,wordingItem,lastUnitPrice);
-                researchByPromos.add(researchByPromo);
+                researchByPromoModel = new ResearchByPromoModel(percentage, wordingItem, lastUnitPrice);
+                researchByPromoModels.add(researchByPromoModel);
             }
 
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return researchByPromos;
+        return researchByPromoModels;
     }
+
     @Override
-    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException{
+    public ArrayList<BusinessTask> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException {
         // valeurs a récuperer dans la BD
         String wordingItem;
         Integer percentagePromotion;
@@ -326,9 +324,9 @@ public class DBAccess implements DataAccess {
         GregorianCalendar endDate = new GregorianCalendar();
         Integer detailQuantity;
         // tableau a initialiser
-        ArrayList<BusinessTask> businessTasks = new ArrayList<>();
+        ArrayList<BusinessTaskModel> businessTaskModels = new ArrayList<>();
         // valeur qui s'ajoutera a l'array list
-        BusinessTask businessTask;
+        BusinessTaskModel businessTaskModel;
         // Requête SQL
         String SQLInstruction = "SELECT i.wording,p.percentage, p.id, p.start_date, p.end_date,SUM(d.quantity) as quantity FROM promotion p " +
                 "                INNER JOIN item i ON p.item = i.id " +
@@ -336,7 +334,7 @@ public class DBAccess implements DataAccess {
                 "                INNER JOIN document doc ON d.document = doc.number " +
                 "                INNER JOIN document_type dt on doc.type = dt.id " +
                 "                WHERE dt.wording = 'Bon de vente' " +
-                "                AND i.wording = " + wordingItemReceive +
+                "                AND i.wording = '" + wordingItemReceive + "'" +
                 "                AND doc.creation_date BETWEEN p.start_date AND p.end_date " +
                 "                GROUP BY  p.id;";
         // création de la connexion
@@ -344,29 +342,46 @@ public class DBAccess implements DataAccess {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
             ResultSet data = preparedStatement.executeQuery();
-            while (data.next()){
+            while (data.next()) {
                 wordingItem = data.getString("wording");
                 percentagePromotion = data.getInt("percentage");
                 percentageId = data.getInt("id");
                 startDate.setTime(data.getDate("start_date"));
                 endDate.setTime(data.getDate("end_date"));
                 detailQuantity = data.getInt("quantity");
-                businessTask = new BusinessTask(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
-                businessTasks.add(businessTask);
+                businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
+                businessTaskModels.add(businessTaskModel);
             }
 
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             throw new DBException(sqlException.getMessage());
         }
 
 
-        return businessTasks;
+        return businessTaskModels;
     }
 
-    //public ArrayList<String>
-    // SELECT item.id, item.wording
-    // FROM item
-
+    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException {
+        // Valeur a récupérer dans la BD
+        String wordingItem;
+        // Tableau a initialiser
+        ArrayList<String> wordingItems = new ArrayList<>();
+        // Requête SQL
+        String SQLInstruction = "Select wording FROM item;";
+        // établissement de la connexion
+        Connection connection = SingletonConnection.getInstance();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            while (data.next()) {
+                wordingItem = data.getString("wording");
+                wordingItems.add(wordingItem);
+            }
+        } catch (SQLException sqlException) {
+            throw new DBException(sqlException.getMessage());
+        }
+            return wordingItems;
+    }
 
     @Override
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
@@ -427,3 +442,6 @@ public class DBAccess implements DataAccess {
         return null;
     }
 }
+
+
+
