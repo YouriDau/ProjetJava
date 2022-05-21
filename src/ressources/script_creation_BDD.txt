@@ -248,3 +248,4 @@ INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, l
 VALUES (5.99,20,0.26 ,null,1,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (2,10,0.26 ,null,4,3,1);
+#coucou
