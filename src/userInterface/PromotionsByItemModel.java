@@ -50,9 +50,15 @@ public class PromotionsByItemModel extends AbstractTableModel {
     public Class getColumnClass(int column) {
         Class c;
         switch (column) {
-            case 0,1,4: c = Integer.class;
+            case 0: c = Integer.class;
                 break;
-            case 2,3: c = String.class;
+            case 1: c = Integer.class;
+                break;
+            case 2: c = String.class;
+                break;
+            case 3: c = String.class;
+                break;
+            case 4: c = Integer.class;
                 break;
             default: c = String.class;
         }
