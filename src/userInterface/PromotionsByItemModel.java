@@ -22,6 +22,9 @@ public class PromotionsByItemModel extends AbstractTableModel {
     }
 
     public void setContents(ArrayList<BusinessTaskModel> contents) {
+        for (BusinessTaskModel business:contents) {
+            System.out.println(business.getDateStr(business.getStartDate()));
+        }
         this.contents = contents;
     }
 
