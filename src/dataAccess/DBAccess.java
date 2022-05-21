@@ -319,8 +319,8 @@ public class DBAccess implements DataAccess {
         String wordingItem;
         Integer percentagePromotion;
         Integer percentageId;
-        GregorianCalendar startDate = new GregorianCalendar();
-        GregorianCalendar endDate = new GregorianCalendar();
+        GregorianCalendar startDate ;
+        GregorianCalendar endDate ;
         Integer detailQuantity;
         // tableau a initialiser
         ArrayList<BusinessTaskModel> businessTaskModels = new ArrayList<>();
@@ -341,7 +341,10 @@ public class DBAccess implements DataAccess {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
             ResultSet data = preparedStatement.executeQuery();
-            while (data.next()) {
+
+            while (data.next()){
+                startDate = new GregorianCalendar();
+                endDate = new GregorianCalendar();
                 wordingItem = data.getString("wording");
                 percentagePromotion = data.getInt("percentage");
                 percentageId = data.getInt("id");

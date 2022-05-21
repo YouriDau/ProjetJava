@@ -219,6 +219,8 @@ INSERT INTO document(creation_date, payment_condition, credit_limit, type, proce
 VALUES (CURRENT_DATE, 'payment''s conditions here', 90.9, 4, 2, TRUE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
 VALUES ('2021-05-01', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-06-06', null, null, 4, 2, TRUE);
 
 #Création d'item
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
@@ -245,4 +247,4 @@ VALUES (5.99,30,0.26 ,null,2,3,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (5.99,20,0.26 ,null,1,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (2,10,0.26 ,null,3,3,1);
+VALUES (2,10,0.26 ,null,4,3,1);

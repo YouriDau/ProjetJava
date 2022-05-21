@@ -44,7 +44,9 @@ public class PromotionsByItemModel extends AbstractTableModel {
         switch (column) {
             case 0: return businessTaskModel.getPercentagePromotion();
             case 1: return businessTaskModel.getPercentageId();
-            case 2: return businessTaskModel.getDateStr(businessTaskModel.getStartDate());
+            case 2:
+
+                return businessTaskModel.getDateStr(businessTaskModel.getStartDate());
             case 3: return businessTaskModel.getDateStr(businessTaskModel.getEndDate());
             case 4: return businessTaskModel.getDetailQuantity();
             default: return null;
