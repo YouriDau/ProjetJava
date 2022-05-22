@@ -17,7 +17,6 @@ public class ByPromoPanel extends JPanel {
     private GridBagConstraints layoutConstraints;
     private JTable table;
     private TableColumn column;
-
     private JScrollPane jScrollPane;
 
     public ByPromoPanel (int minvalue, int maxValue, Container container){

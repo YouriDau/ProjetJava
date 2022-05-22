@@ -38,6 +38,7 @@ public class ItemSelectionPanel extends JPanel {
             for (String wording : allWordingItems){
                 itemSelection.addItem(wording);
             }
+
             // préparation des boutons
             submit = new JButton("Submit");
             back = new BackButton(new HomePanel() ,container);
