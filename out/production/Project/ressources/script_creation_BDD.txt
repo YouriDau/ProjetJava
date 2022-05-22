@@ -17,9 +17,9 @@ CREATE TABLE person (
                         phone_number numeric(11) NOT NULL,
                         email varchar(50) NOT NULL,
                         first_name varchar(30),
-                        VAT_number numeric,
+                        VAT_number varchar(12),
                         nb_fidelity_points numeric,
-                        hasBadge boolean NOT NULL,
+                        has_badge boolean NOT NULL,
                         type INT NOT NULL,
 
                         CONSTRAINT person_pk
@@ -97,12 +97,11 @@ CREATE TABLE document (
 DROP TABLE IF EXISTS `pointing`;
 CREATE TABLE pointing(
                          employee INT NOT NULL,
-                         date date NOT NULL,
-                         hour numeric(4) NOT NULL,
+                         date datetime NOT NULL,
                          type VARCHAR(50) NOT NULL,
 
                          CONSTRAINT pointing_pk
-                             PRIMARY KEY(employee, date, hour),
+                             PRIMARY KEY(employee, date),
                          CONSTRAINT pointing_fk
                              FOREIGN KEY (employee)
                                  REFERENCES person(number)
@@ -194,16 +193,19 @@ CREATE TABLE recipe(
                            REFERENCES item(id)
 );
 
+#Création workflow_type
 INSERT INTO workflow_type(wording)
 VALUES ('Purchasing process');
 INSERT INTO workflow_type(wording)
 VALUES ('selling process');
 
+#Création workflow
 INSERT INTO workflow(type)
 VALUES (1);
 INSERT INTO workflow(type)
 VALUES (2);
 
+# Création document_type
 INSERT INTO document_type(wording)
 VALUES ('Facture');
 INSERT INTO document_type(wording)
@@ -213,6 +215,7 @@ VALUES ('Bon de livraison');
 INSERT INTO document_type(wording)
 VALUES ('Bon de vente');
 
+# Création document
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
 VALUES (CURRENT_DATE, 'payment''s conditions here', 135.5, 1, 1, FALSE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
@@ -222,13 +225,14 @@ VALUES ('2021-05-01', null, null, 4, 2, TRUE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
 VALUES ('2022-06-06', null, null, 4, 2, TRUE);
 
-#Création d'item
+# Création d'item
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
 VALUES ('coca', CURRENT_DATE, 'pack de 6', 60, 200);
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
 VALUES ('fanta', CURRENT_DATE, 'pack de 6', 40, 120);
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
 VALUES ('pomme', CURRENT_DATE, 'en Vrac', 30, 60);
+
 #Création Promotion
 INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (30, '2022-04-01','2022-05-31' , 3);
@@ -236,9 +240,11 @@ INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (10, '2022-06-01','2022-07-31' , 3);
 INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (70, '2021-04-01','2021-05-31' , 1);
+
 #Création lot
 INSERT INTO lot(arrivage_date, expiration_date)
 VALUES ('2020-06-01','2025-07-31');
+
 #Création détail
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (2.50,50,0.26 ,null,2,3,1);
@@ -248,4 +254,47 @@ INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, l
 VALUES (5.99,20,0.26 ,null,1,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (2,10,0.26 ,null,4,3,1);
-#coucou
+
+# Création person_type
+INSERT INTO person_type(wording)
+VALUES ('Employee');
+INSERT INTO person_type(wording)
+VALUES ('Customer');
+INSERT INTO person_type(wording)
+VALUES ('Supplier');
+
+# Création personne
+INSERT INTO person (last_name, phone_number, email, first_name, VAT_number, nb_fidelity_points, has_badge, type)
+VALUES ('Dautrebande', 0470468180, 'etu45973@henallux.be', 'Youri', '456123789456', 50, TRUE, 1);
+INSERT INTO person (last_name, phone_number, email, first_name, VAT_number, nb_fidelity_points, has_badge, type)
+VALUES ('Filée', 0470468180, 'etu45973@henallux.be', 'Arnauld', '456123789456', 50, FALSE, 1);
+INSERT INTO person (last_name, phone_number, email, first_name, VAT_number, nb_fidelity_points, has_badge, type)
+VALUES ('Molitor', 0470468180, 'etu45973@henallux.be', 'Bryce', '456123789456', 50, FALSE, 2);
+INSERT INTO person (last_name, phone_number, email, first_name, VAT_number, nb_fidelity_points, has_badge, type)
+VALUES ('Casano', 0470468180, 'etu45973@henallux.be', '', '456123789456', 50, TRUE, 1);
+INSERT INTO person (last_name, phone_number, email, first_name, VAT_number, nb_fidelity_points, has_badge, type)
+VALUES ('Ciciotti', 0470468180, 'etu45973@henallux.be', 'Timothé', '456123789456', 50, FALSE, 3);
+
+#Création pointing (type de pointage = entrée/sortie)
+INSERT INTO pointing(employee, date, type)
+VALUES (1, '2022-02-28 08:35', 'Entrée');
+INSERT INTO pointing(employee, date, type)
+VALUES (4, '2022-02-28 09:01', 'Entrée');
+INSERT INTO pointing(employee, date, type)
+VALUES (4, '2022-02-28 17:30', 'Sortie');
+INSERT INTO pointing(employee, date, type)
+VALUES (1, '2022-02-28 17:32', 'Sortie');
+INSERT INTO pointing(employee, date, type)
+VALUES (2, '2022-03-03 07:50', 'Entrée');
+INSERT INTO pointing(employee, date, type)
+VALUES (4, '2022-03-03 08:05', 'Entrée');
+INSERT INTO pointing(employee, date, type)
+VALUES (2, '2022-03-03 18:00', 'Sortie');
+INSERT INTO pointing(employee, date, type)
+VALUES (4, '2022-03-03 18:05', 'Sortie');
+INSERT INTO pointing(employee, date, type)
+VALUES (1, '2022-03-04 07:55', 'Entrée');
+INSERT INTO pointing(employee, date, type)
+VALUES (2, '2022-03-04 07:59', 'Entrée');
+
+

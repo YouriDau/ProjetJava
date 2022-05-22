@@ -6,6 +6,7 @@ import exception.SingletonConnectionException;
 import model.PointingBetweenDates;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,7 +59,7 @@ public class PointingListPanel extends JPanel {
                 table.setPreferredScrollableViewportSize(new Dimension(425,300));
                 scrollPane = new JScrollPane(table);
 
-                //setColumnsSize();
+                setColumnsSize();
 
                 layoutConstraints.insets = new Insets(0, 0, 15, 0);
                 layoutConstraints.gridwidth = 2;
@@ -82,5 +83,19 @@ public class PointingListPanel extends JPanel {
         catch (SingletonConnectionException exception){
             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SingletonConnexion exception", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void setColumnsSize() {
+        TableColumn column;
+        column = table.getColumnModel().getColumn(0);
+        column.setPreferredWidth(100);
+        column = table.getColumnModel().getColumn(1);
+        column.setPreferredWidth(95);
+        column = table.getColumnModel().getColumn(2);
+        column.setPreferredWidth(80);
+        column = table.getColumnModel().getColumn(3);
+        column.setPreferredWidth(110);
+        column = table.getColumnModel().getColumn(4);
+        column.setPreferredWidth(80);
     }
 }

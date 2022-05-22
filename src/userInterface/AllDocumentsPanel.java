@@ -18,7 +18,6 @@ public class AllDocumentsPanel extends JPanel{
     private ArrayList<Document> allDocuments;
     private DocumentsModel model;
     private JTable table;
-    private TableColumn column;
     private JScrollPane scrollPane;
     private GridBagConstraints layoutConstraints;
     private JButton addDocument;
@@ -91,6 +90,7 @@ public class AllDocumentsPanel extends JPanel{
     }
 
     public void setColumnsSize() {
+        TableColumn column;
         column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(55);
         column = table.getColumnModel().getColumn(1);

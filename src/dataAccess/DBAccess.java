@@ -404,6 +404,7 @@ public class DBAccess implements DataAccess {
         String firstName; // can be null
         String personType;
         GregorianCalendar pointingDate;
+        GregorianCalendar pointingHour;
         String pointingType;
         java.sql.Date firstSQLDate;
         java.sql.Date secondSQLDate;
@@ -434,12 +435,16 @@ public class DBAccess implements DataAccess {
 
             while (data.next()) {
                 pointingDate = new GregorianCalendar();
+                pointingHour = new GregorianCalendar();
 
                 lastName = data.getString("pe.last_name");
                 personType = data.getString("pet.wording");
                 pointingDate.setTime(data.getDate("po.date"));
-                pointingDate.setTime(data.getTime("po.date"));
                 pointingType = data.getString("po.type");
+
+                pointingHour.setTime(data.getTime("po.date"));
+                pointingDate.set(Calendar.HOUR, pointingHour.get(Calendar.HOUR));
+                pointingDate.set(Calendar.MINUTE, pointingHour.get(Calendar.MINUTE));
 
                 pointing = new PointingBetweenDates(lastName, personType, pointingDate, pointingType);
 
