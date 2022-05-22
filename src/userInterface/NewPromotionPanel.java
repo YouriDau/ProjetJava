@@ -147,13 +147,13 @@ public class NewPromotionPanel extends JPanel {
     }
 
     public boolean firstDateInferiorToSecond(GregorianCalendar date1, GregorianCalendar date2){
-        if (date1.get(Calendar.YEAR) < date2.get(Calendar.YEAR)){
+        if (date1.get(Calendar.YEAR) <= date2.get(Calendar.YEAR)){
             return true;
         } else{
-            if (date1.get(Calendar.MONTH) < date2.get(Calendar.MONTH)){
+            if (date1.get(Calendar.MONTH) <= date2.get(Calendar.MONTH)){
                 return true;
             } else {
-                if (date1.get(Calendar.DAY_OF_MONTH) < date2.get(Calendar.DAY_OF_MONTH)){
+                if (date1.get(Calendar.DAY_OF_MONTH) <= date2.get(Calendar.DAY_OF_MONTH)){
                     return true;
                 }
                 else {
