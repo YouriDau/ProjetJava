@@ -7,7 +7,8 @@ public class SingletonConnectionException extends Exception {
         this.errorMessage = errorMessage;
     }
 
-    public String getErrorMessage() {
+    @Override
+    public String getMessage() {
         return this.errorMessage;
     }
 

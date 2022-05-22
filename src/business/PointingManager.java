@@ -2,7 +2,6 @@ package business;
 
 import controller.DataAccess;
 import dataAccess.DBAccess;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.PointingBetweenDates;
 
@@ -20,7 +19,7 @@ public class PointingManager {
         this.dao = itemDBAccess;
     }
 
-    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws DBException, SingletonConnectionException {
+    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws SingletonConnectionException {
         return dao.getPointingBetweenDates(firstDate, secondDate);
     }
 }

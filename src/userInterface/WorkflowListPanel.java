@@ -41,7 +41,7 @@ public class WorkflowListPanel extends JPanel {
                 layoutConstraints.gridy = 0;
                 this.add(listEmpty, layoutConstraints);
 
-                layoutConstraints.gridx = 1;
+                layoutConstraints.gridy = 1;
                 this.add(new BackButton(new WorkflowPanel(container), container), layoutConstraints);
             } else {
                 model = new DocumentByWorkflowModel(documents);
@@ -70,11 +70,8 @@ public class WorkflowListPanel extends JPanel {
                 this.add(scrollPane,layoutConstraints);
             }
         }
-        catch(DBException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
-        }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
     }
 

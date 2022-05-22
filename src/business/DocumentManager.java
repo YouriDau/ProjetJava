@@ -19,15 +19,15 @@ public class DocumentManager {
         this.dao = documentDBAccess;
     }
 
-    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws SingletonConnectionException {
         return dao.getDocuments(workflowNumber);
     }
 
-    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentType> getAllDocumentTypes() throws SingletonConnectionException {
         return dao.getAllDocumentTypes();
     }
 
-    public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
+    public ArrayList<Document> getAllDocuments() throws SingletonConnectionException {
         return dao.getAllDocuments();
     }
 

@@ -71,7 +71,7 @@ public class MainWindow extends JFrame {
                         SingletonConnection.closeConnection();
                     }
                     catch(SingletonConnectionException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                     }
                 System.exit(0);
             }
@@ -89,7 +89,7 @@ public class MainWindow extends JFrame {
                     SingletonConnection.closeConnection();
                 }
                 catch(SingletonConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                 }
             System.exit(0);
         }

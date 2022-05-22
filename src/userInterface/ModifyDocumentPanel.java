@@ -164,11 +164,8 @@ public class ModifyDocumentPanel extends JPanel {
             layoutConstraints.gridx = 1;
             this.add(new BackButton(new AllDocumentsPanel(container), container), layoutConstraints);
         }
-        catch(DBException exception){
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-        }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -242,7 +239,7 @@ public class ModifyDocumentPanel extends JPanel {
                             JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
                         }
                         catch (SingletonConnectionException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                         }
 
                         container.removeAll();

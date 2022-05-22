@@ -78,11 +78,8 @@ public class ByPromoPanel extends JPanel {
 
             }
         }
-        catch (DBException exception){
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
-        }
         catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
     }
     public void setColumnSize(){

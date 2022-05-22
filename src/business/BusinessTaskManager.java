@@ -20,10 +20,10 @@ public class BusinessTaskManager {
         this.dao = businessTaskAccess;
     }
 
-    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws SingletonConnectionException{
         return dao.getBusinessTaskInformation(wordingItemReceive);
     }
-    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
+    public ArrayList<String> getAllItemsWording() throws SingletonConnectionException{
         return dao.getAllItemsWording();
     }
     public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws AddPromotionException, SingletonConnectionException{

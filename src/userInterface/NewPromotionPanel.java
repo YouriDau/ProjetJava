@@ -43,97 +43,97 @@ public class NewPromotionPanel extends JPanel {
         setContainer(container);
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
-        try{
-            // Création du controller
-            controller = new ApplicationController();
-            // Préparation des JLabels
-            percentageLabel = new JLabel("Promotion percentage : ");
-            startDateLabel = new JLabel("Start date of the promotion : ");
-            endDateLabel = new JLabel("End date of the promotion : ");
-            wordingItemLabel = new JLabel(wordingItem);
-            wordingItemLabel.setFont(new Font("Verdana", Font.PLAIN, 24));
-            Font font = wordingItemLabel.getFont();
-            Map attributes = font.getAttributes();
-            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-            wordingItemLabel.setFont(font.deriveFont(attributes));
-            sliderValue = new JLabel(""+50);
 
-            // Préparations des entrées
-                // preparation du JSlider
-            percentageSlider = new JSlider(JSlider.HORIZONTAL,0,100,50);
-            percentageSlider.setMajorTickSpacing(20);
-            percentageSlider.setMinorTickSpacing(5);
-            percentageSlider.setPaintTicks(true);
-            percentageSlider.setPaintLabels(true);
-            percentageSlider.addChangeListener(new SliderListener());
-                // preparation des JSpinner.DateEditor
-            date = new GregorianCalendar();
-            startDateSpinner = new JSpinner(new SpinnerDateModel());
-            endDateSpinner = new JSpinner(new SpinnerDateModel());
-            startDateSpinnerEditor = new JSpinner.DateEditor(startDateSpinner, "dd-MM-yyyy");
-            endDateSpinnerEditor = new JSpinner.DateEditor(endDateSpinner, "dd-MM-yyyy");
-            startDateSpinner.setEditor(startDateSpinnerEditor);
-            endDateSpinner.setEditor(endDateSpinnerEditor);
-            startDateSpinner.setValue(date.getTime());
-            endDateSpinner.setValue(date.getTime());
-                // preparation des boutons
-            back = new BackButton(new PromotionsByItemPanel(container, wordingItem), container);
-            submit = new JButton("Submit");
-            submit.addActionListener(new SubmitListener());
-            // ajouts composants
-            layoutConstraints.insets = new Insets(0,0,15,0);
-            layoutConstraints.gridwidth = 2;
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 0;
-            this.add(wordingItemLabel, layoutConstraints);
+        // Création du controller
+        controller = new ApplicationController();
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            layoutConstraints.gridwidth = 1;
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 2;
-            this.add(percentageLabel, layoutConstraints);
+        // Préparation des JLabels
+        percentageLabel = new JLabel("Promotion percentage : ");
+        startDateLabel = new JLabel("Start date of the promotion : ");
+        endDateLabel = new JLabel("End date of the promotion : ");
+        wordingItemLabel = new JLabel(wordingItem);
+        wordingItemLabel.setFont(new Font("Verdana", Font.PLAIN, 24));
+        Font font = wordingItemLabel.getFont();
+        Map attributes = font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        wordingItemLabel.setFont(font.deriveFont(attributes));
+        sliderValue = new JLabel(""+50);
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_END;
-            layoutConstraints.gridx = 1;
-            this.add(percentageSlider, layoutConstraints);
+        // Préparations des entrées
+        // preparation du JSlider
+        percentageSlider = new JSlider(JSlider.HORIZONTAL,0,100,50);
+        percentageSlider.setMajorTickSpacing(20);
+        percentageSlider.setMinorTickSpacing(5);
+        percentageSlider.setPaintTicks(true);
+        percentageSlider.setPaintLabels(true);
+        percentageSlider.addChangeListener(new SliderListener());
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_END;
-            layoutConstraints.gridx = 2;
-            this.add(sliderValue, layoutConstraints);
+        // preparation des JSpinner.DateEditor
+        date = new GregorianCalendar();
+        startDateSpinner = new JSpinner(new SpinnerDateModel());
+        endDateSpinner = new JSpinner(new SpinnerDateModel());
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 3;
-            this.add(startDateLabel, layoutConstraints);
+        startDateSpinnerEditor = new JSpinner.DateEditor(startDateSpinner, "dd-MM-yyyy");
+        endDateSpinnerEditor = new JSpinner.DateEditor(endDateSpinner, "dd-MM-yyyy");
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_END;
-            layoutConstraints.gridx = 1;
-            this.add(startDateSpinner, layoutConstraints);
+        startDateSpinner.setEditor(startDateSpinnerEditor);
+        endDateSpinner.setEditor(endDateSpinnerEditor);
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 4;
-            this.add(endDateLabel, layoutConstraints);
+        startDateSpinner.setValue(date.getTime());
+        endDateSpinner.setValue(date.getTime());
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_END;
-            layoutConstraints.gridx = 1;
-            this.add(endDateSpinner, layoutConstraints);
+        // preparation des boutons
+        back = new BackButton(new PromotionsByItemPanel(container, wordingItem), container);
+        submit = new JButton("Submit");
+        submit.addActionListener(new SubmitListener());
 
-            layoutConstraints.gridx = 0;
-            layoutConstraints.gridy = 5;
-            layoutConstraints.anchor = GridBagConstraints.LINE_START;
-            this.add(back, layoutConstraints);
+        // ajouts composants
+        layoutConstraints.insets = new Insets(0,0,15,0);
+        layoutConstraints.gridwidth = 2;
+        layoutConstraints.gridx = 0;
+        layoutConstraints.gridy = 0;
+        this.add(wordingItemLabel, layoutConstraints);
 
-            layoutConstraints.anchor = GridBagConstraints.LINE_END;
-            layoutConstraints.gridx = 1;
-            this.add(submit, layoutConstraints);
+        layoutConstraints.anchor = GridBagConstraints.LINE_START;
+        layoutConstraints.gridwidth = 1;
+        layoutConstraints.gridx = 0;
+        layoutConstraints.gridy = 2;
+        this.add(percentageLabel, layoutConstraints);
 
+        layoutConstraints.anchor = GridBagConstraints.LINE_END;
+        layoutConstraints.gridx = 1;
+        this.add(percentageSlider, layoutConstraints);
 
-        } catch (DBException exception){
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-        } catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
-        }
+        layoutConstraints.anchor = GridBagConstraints.LINE_END;
+        layoutConstraints.gridx = 2;
+        this.add(sliderValue, layoutConstraints);
+
+        layoutConstraints.anchor = GridBagConstraints.LINE_START;
+        layoutConstraints.gridx = 0;
+        layoutConstraints.gridy = 3;
+        this.add(startDateLabel, layoutConstraints);
+
+        layoutConstraints.anchor = GridBagConstraints.LINE_END;
+        layoutConstraints.gridx = 1;
+        this.add(startDateSpinner, layoutConstraints);
+
+        layoutConstraints.anchor = GridBagConstraints.LINE_START;
+        layoutConstraints.gridx = 0;
+        layoutConstraints.gridy = 4;
+        this.add(endDateLabel, layoutConstraints);
+
+        layoutConstraints.anchor = GridBagConstraints.LINE_END;
+        layoutConstraints.gridx = 1;
+        this.add(endDateSpinner, layoutConstraints);
+
+        layoutConstraints.gridx = 0;
+        layoutConstraints.gridy = 5;
+        layoutConstraints.anchor = GridBagConstraints.LINE_START;
+        this.add(back, layoutConstraints);
+
+        layoutConstraints.anchor = GridBagConstraints.LINE_END;
+        layoutConstraints.gridx = 1;
+        this.add(submit, layoutConstraints);
     }
 
     public void setContainer(Container container) {
@@ -202,7 +202,7 @@ public class NewPromotionPanel extends JPanel {
                         } catch (AddPromotionException exception){
                             JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
                         } catch (SingletonConnectionException exception){
-                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                         }
                         container.removeAll();
                         container.add(new PromotionsByItemPanel(container, wordingItemLabel.getText()));

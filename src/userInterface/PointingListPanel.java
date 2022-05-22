@@ -77,11 +77,8 @@ public class PointingListPanel extends JPanel {
                 this.add(scrollPane,layoutConstraints);
             }
         }
-        catch(DBException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "Data base exception", JOptionPane.ERROR_MESSAGE);
-        }
         catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SingletonConnexion exception", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "SingletonConnexion exception", JOptionPane.ERROR_MESSAGE);
         }
     }
 

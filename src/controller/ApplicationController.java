@@ -15,7 +15,7 @@ public class ApplicationController {
     private PointingManager pointingManager;
 
 
-    public ApplicationController() throws DBException, SingletonConnectionException {
+    public ApplicationController() {
         setWorkflowManager(new WorkflowManager());
         setDocumentManager(new DocumentManager());
         setItemManager(new ItemManager());
@@ -43,23 +43,23 @@ public class ApplicationController {
         this.pointingManager = pointingManager;
     }
 
-    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws SingletonConnectionException {
         return workflowManager.getAllWorkflowTypes();
     }
 
-    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws SingletonConnectionException {
         return  documentManager.getDocuments(workflowNumber);
     }
 
-    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentType> getAllDocumentTypes() throws SingletonConnectionException {
         return documentManager.getAllDocumentTypes();
     }
 
-    public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
+    public ArrayList<Document> getAllDocuments() throws SingletonConnectionException {
         return documentManager.getAllDocuments();
     }
 
-    public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException {
+    public ArrayList<Integer> getAllWorkflow() throws SingletonConnectionException {
         return workflowManager.getAllWorkflow();
     }
 
@@ -75,13 +75,14 @@ public class ApplicationController {
         documentManager.modifyDocument(document);
     }
 
-    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws SingletonConnectionException{
         return itemManager.getResearchByPromo(littleValue, bigValue);
     }
 
-    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws DBException, SingletonConnectionException{
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive)throws SingletonConnectionException{
         return businessTaskManager.getBusinessTaskInformation(wordingItemReceive);
     }
+
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
         return businessTaskManager.getAllItemsWording();
     }
@@ -90,7 +91,7 @@ public class ApplicationController {
         businessTaskManager.addPromotion(percentage, startDate, endDate, itemWording);
     }
 
-    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
+    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  SingletonConnectionException {
         return pointingManager.getPointingBetweenDates(firstDate, secondDate);
     }
 }

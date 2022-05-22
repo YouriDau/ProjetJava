@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class WorkflowManager {
     private DataAccess dao;
 
-    public WorkflowManager() throws DBException, SingletonConnectionException {
+    public WorkflowManager() {
         setDao(new DBAccess());
     }
 
@@ -19,11 +19,11 @@ public class WorkflowManager {
         this.dao = workflowTypeDBAccess;
     }
 
-    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException{
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws SingletonConnectionException{
         return dao.getAllWorkflowTypes();
     }
 
-    public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException {
+    public ArrayList<Integer> getAllWorkflow() throws SingletonConnectionException {
         return dao.getAllWorkflow();
     }
 }

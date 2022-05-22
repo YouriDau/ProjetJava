@@ -19,7 +19,7 @@ public class ItemManager {
         this.dao = itemDBAccess;
     }
 
-    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException{
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws SingletonConnectionException{
         return dao.getResearchByPromo(littleValue, bigValue);
     }
 

@@ -60,11 +60,8 @@ public class WorkflowPanel extends JPanel {
             layoutConstraints.anchor = GridBagConstraints.LINE_START;
             this.add(new BackButton(new HomePanel(), container), layoutConstraints);
         }
-        catch (DBException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-        }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
     }
 

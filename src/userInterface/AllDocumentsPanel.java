@@ -81,11 +81,8 @@ public class AllDocumentsPanel extends JPanel{
             layoutConstraints.gridy = 2;
             this.add(scrollPane, layoutConstraints);
         }
-        catch (DBException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQL Error", JOptionPane.ERROR_MESSAGE);
-        }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -137,7 +134,7 @@ public class AllDocumentsPanel extends JPanel{
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
             }
             catch (SingletonConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
