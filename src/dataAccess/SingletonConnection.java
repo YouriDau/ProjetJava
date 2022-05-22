@@ -10,14 +10,12 @@ import java.sql.SQLException;
 public class SingletonConnection {
     private static Connection connection;
 
-
     public static Connection getInstance() throws SingletonConnectionException {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store",
                         "root",
                         "root");
-
             }
             catch (SQLException exception) {
                 throw new SingletonConnectionException(exception.getMessage());

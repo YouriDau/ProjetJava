@@ -83,7 +83,7 @@ public class ApplicationController {
         return businessTaskManager.getBusinessTaskInformation(wordingItemReceive);
     }
 
-    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
+    public ArrayList<String> getAllItemsWording() throws SingletonConnectionException{
         return businessTaskManager.getAllItemsWording();
     }
 

@@ -1,7 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.ModifyDocumentException;
 import exception.SingletonConnectionException;
 import model.Document;
@@ -36,7 +35,6 @@ public class ModifyDocumentPanel extends JPanel {
     private JRadioButton no;
     private ButtonGroup buttonsStock;
     private JButton submit;
-    private JButton back;
 
     public ModifyDocumentPanel(Container container, Document document) {
         this.container = container;
