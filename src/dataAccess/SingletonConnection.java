@@ -28,7 +28,6 @@ public class SingletonConnection {
 
     public static void closeConnection() throws SingletonConnectionException {
         try {
-            System.out.println("test");
             connection.close();
         }
         catch (SQLException exception) {

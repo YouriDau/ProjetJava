@@ -24,8 +24,11 @@ public interface DataAccess {
 
     // Item
     public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException;
+
+    // Business Task
     public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException;
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException;
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException;
 
     // Pointing
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException;

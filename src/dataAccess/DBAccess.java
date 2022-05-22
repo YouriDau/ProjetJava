@@ -392,6 +392,25 @@ public class DBAccess implements DataAccess {
             return wordingItems;
     }
 
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
+        String SQLInstruction = "INSERT INTO promotion(percentage, start_date, end_date, item) " +
+                " VALUES ( ? , ? , ? , (SELECT id FROM item WHERE wording = ?));";
+        Connection connection = SingletonConnection.getInstance();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            preparedStatement.setInt(1,percentage);
+            preparedStatement.setString(2, startDate);
+            preparedStatement.setString(3, endDate);
+            preparedStatement.setString(4, itemWording);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception){
+            throw new DBException(exception.getMessage());
+        }
+
+    }
+
     @Override
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
         /*String lastName;

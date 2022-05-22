@@ -65,4 +65,8 @@ public class ApplicationController {
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
         return businessTaskManager.getAllItemsWording();
     }
+
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
+        businessTaskManager.addPromotion(percentage, startDate, endDate, itemWording);
+    }
 }
