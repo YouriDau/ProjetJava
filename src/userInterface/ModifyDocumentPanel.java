@@ -2,6 +2,7 @@ package userInterface;
 
 import controller.ApplicationController;
 import exception.DBException;
+import exception.ModifyDocumentException;
 import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
@@ -237,8 +238,8 @@ public class ModifyDocumentPanel extends JPanel {
                         try {
                             controller.modifyDocument(document);
                         }
-                        catch (DBException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                        catch (ModifyDocumentException exception) {
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
                         }
                         catch (SingletonConnectionException exception) {
                             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);

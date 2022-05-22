@@ -1,15 +1,14 @@
 package controller;
 
-import exception.AddDocumentException;
-import exception.DBException;
-import exception.SingletonConnectionException;
+import exception.*;
 import model.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public interface DataAccess {
-    // Workflow / WorkflowType
+
+    // Workflow/workflowtype
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException;
     public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException;
 
@@ -20,8 +19,8 @@ public interface DataAccess {
     // CRUD
     public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException;
     public void addDocument(Document document) throws AddDocumentException, SingletonConnectionException;
-    public void deleteDocument(Integer id) throws DBException, SingletonConnectionException;
-    public void modifyDocument(Document document) throws DBException, SingletonConnectionException;
+    public void deleteDocument(Integer id) throws DeleteDocumentException, SingletonConnectionException;
+    public void modifyDocument(Document document) throws ModifyDocumentException, SingletonConnectionException;
 
     // Item
     public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException;
@@ -29,7 +28,7 @@ public interface DataAccess {
     // Business Task
     public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException;
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException;
-    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException;
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  AddPromotionException, SingletonConnectionException;
 
 
     // Pointing

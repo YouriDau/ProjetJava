@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 public class PointingManager {
     private DataAccess dao;
 
-    public PointingManager() throws DBException, SingletonConnectionException{
+    public PointingManager() {
         setDao(new DBAccess());
     }
 

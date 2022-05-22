@@ -1,9 +1,7 @@
 package controller;
 
 import business.*;
-import exception.AddDocumentException;
-import exception.DBException;
-import exception.SingletonConnectionException;
+import exception.*;
 import model.*;
 
 import java.util.ArrayList;
@@ -69,11 +67,11 @@ public class ApplicationController {
         documentManager.addDocument(document);
     }
 
-    public void deleteDocument(int id) throws DBException, SingletonConnectionException {
+    public void deleteDocument(int id) throws DeleteDocumentException, SingletonConnectionException {
         documentManager.deleteDocument(id);
     }
 
-    public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
+    public void modifyDocument(Document document) throws ModifyDocumentException, SingletonConnectionException {
         documentManager.modifyDocument(document);
     }
 
@@ -88,7 +86,7 @@ public class ApplicationController {
         return businessTaskManager.getAllItemsWording();
     }
 
-    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  AddPromotionException, SingletonConnectionException{
         businessTaskManager.addPromotion(percentage, startDate, endDate, itemWording);
     }
 

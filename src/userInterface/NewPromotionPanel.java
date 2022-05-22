@@ -1,6 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
+import exception.AddPromotionException;
 import exception.DBException;
 import exception.SingletonConnectionException;
 
@@ -198,8 +199,8 @@ public class NewPromotionPanel extends JPanel {
 
                         try {
                             controller.addPromotion(percentageSlider.getValue(), lastStartDate, lastEndDate, wordingItemLabel.getText());
-                        } catch (DBException exception){
-                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                        } catch (AddPromotionException exception){
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
                         } catch (SingletonConnectionException exception){
                             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
                         }

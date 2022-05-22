@@ -1,9 +1,7 @@
 package dataAccess;
 
 import controller.DataAccess;
-import exception.AddDocumentException;
-import exception.DBException;
-import exception.SingletonConnectionException;
+import exception.*;
 import model.*;
 
 import java.sql.*;
@@ -17,8 +15,9 @@ public class DBAccess implements DataAccess {
 
     }
 
+    // Workflow / WorkflowType
     @Override
-    public ArrayList<Integer> getAllWorkflow() throws DBException, SingletonConnectionException {
+    public ArrayList<Integer> getAllWorkflow() throws SingletonConnectionException {
         Integer id;
         ArrayList<Integer> workflowNumbers = new ArrayList<>();
         String sqlInstruction = "SELECT id FROM workflow;";
@@ -32,14 +31,13 @@ public class DBAccess implements DataAccess {
                 id = data.getInt("id");
                 workflowNumbers.add(id);
             }
-            return workflowNumbers;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
-        }
-    }
 
+        }
+        return workflowNumbers;
+    }
     @Override
-    public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
+    public ArrayList<WorkflowType> getAllWorkflowTypes() throws SingletonConnectionException {
         Integer id;
         String wording;
         WorkflowType workflowType;
@@ -57,14 +55,15 @@ public class DBAccess implements DataAccess {
                 workflowType = new WorkflowType(id, wording);
                 workflowTypes.add(workflowType);
             }
-            return workflowTypes;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+
         }
+        return workflowTypes;
     }
 
+    // Document / DocumentType
     @Override
-    public ArrayList<DocumentType> getAllDocumentTypes() throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentType> getAllDocumentTypes() throws SingletonConnectionException {
         DocumentType type;
         ArrayList<DocumentType> types = new ArrayList<>();
 
@@ -79,14 +78,13 @@ public class DBAccess implements DataAccess {
                 type = new DocumentType(data.getInt("id"), data.getString("wording"));
                 types.add(type);
             }
-            return types;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
-        }
-    }
 
+        }
+        return types;
+    }
     @Override
-    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
+    public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws SingletonConnectionException {
         Integer documentNumber;
         Integer workflowId;
         Double creditLimit;
@@ -128,14 +126,15 @@ public class DBAccess implements DataAccess {
 
                 documents.add(document);
             }
-            return documents;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+
         }
+        return documents;
     }
 
+    // CRUD
     @Override
-    public ArrayList<Document> getAllDocuments() throws DBException, SingletonConnectionException {
+    public ArrayList<Document> getAllDocuments() throws SingletonConnectionException {
         Integer number;
         GregorianCalendar date;
         java.sql.Date sqlDate;
@@ -179,12 +178,11 @@ public class DBAccess implements DataAccess {
 
                 documents.add(document);
             }
-            return documents;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
-        }
-    }
 
+        }
+        return documents;
+    }
     @Override
     public void addDocument(Document document) throws AddDocumentException, SingletonConnectionException {
         int lastDocumentId;
@@ -231,9 +229,8 @@ public class DBAccess implements DataAccess {
             throw new AddDocumentException();
         }
     }
-
     @Override
-    public void deleteDocument(Integer id) throws DBException, SingletonConnectionException {
+    public void deleteDocument(Integer id) throws DeleteDocumentException, SingletonConnectionException {
         String sqlInstruction = "DELETE FROM document " +
                 "WHERE number = ?";
 
@@ -243,12 +240,11 @@ public class DBAccess implements DataAccess {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+            throw new DeleteDocumentException();
         }
     }
-
     @Override
-    public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
+    public void modifyDocument(Document document) throws ModifyDocumentException, SingletonConnectionException {
         String sqlInstruction = "UPDATE document " +
                 "SET payment_condition = ?, credit_limit = ?, type = ?, process = ?, update_the_stock = ? " +
                 "WHERE number = ?";
@@ -276,12 +272,13 @@ public class DBAccess implements DataAccess {
 
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+            throw new ModifyDocumentException();
         }
     }
 
+    // Item
     @Override
-    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws DBException, SingletonConnectionException {
+    public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws SingletonConnectionException {
         // valeurs a recuperer dans la base de données
         Integer percentage;
         String wordingItem;
@@ -313,14 +310,15 @@ public class DBAccess implements DataAccess {
                 researchByPromoModel = new ResearchByPromoModel(percentage, wordingItem, lastUnitPrice);
                 researchByPromoModels.add(researchByPromoModel);
             }
-            return researchByPromoModels;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+
         }
+        return researchByPromoModels;
     }
 
+    // Business Task
     @Override
-    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws DBException, SingletonConnectionException {
+    public ArrayList<BusinessTaskModel> getBusinessTaskInformation(String wordingItemReceive) throws SingletonConnectionException {
         // valeurs a récuperer dans la BD
         String wordingItem;
         Integer percentagePromotion;
@@ -361,13 +359,13 @@ public class DBAccess implements DataAccess {
                 businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
                 businessTaskModels.add(businessTaskModel);
             }
-            return businessTaskModels;
         } catch (SQLException sqlException) {
-            throw new DBException(sqlException.getMessage());
-        }
-    }
 
-    public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException {
+        }
+        return businessTaskModels;
+    }
+    @Override
+    public ArrayList<String> getAllItemsWording() throws SingletonConnectionException {
         // Valeur a récupérer dans la BD
         String wordingItem;
         // Tableau a initialiser
@@ -383,13 +381,13 @@ public class DBAccess implements DataAccess {
                 wordingItem = data.getString("wording");
                 wordingItems.add(wordingItem);
             }
-            return wordingItems;
         } catch (SQLException sqlException) {
-            throw new DBException(sqlException.getMessage());
-        }
-    }
 
-    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
+        }
+        return wordingItems;
+    }
+    @Override
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  AddPromotionException, SingletonConnectionException{
         String SQLInstruction = "INSERT INTO promotion(percentage, start_date, end_date, item) " +
                 " VALUES ( ? , ? , ? , (SELECT id FROM item WHERE wording = ?));";
         Connection connection = SingletonConnection.getInstance();
@@ -403,12 +401,13 @@ public class DBAccess implements DataAccess {
 
             preparedStatement.executeUpdate();
         } catch (SQLException exception){
-            throw new DBException(exception.getMessage());
+            throw new AddPromotionException();
         }
     }
 
+    // Pointing
     @Override
-    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
+    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  SingletonConnectionException {
         String lastName;
         String firstName; // can be null
         String personType;
@@ -462,10 +461,10 @@ public class DBAccess implements DataAccess {
                 }
                 pointings.add(pointing);
             }
-            return pointings;
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+
         }
+        return pointings;
     }
 }
 

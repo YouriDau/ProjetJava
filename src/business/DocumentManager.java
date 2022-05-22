@@ -2,9 +2,7 @@ package business;
 
 import controller.DataAccess;
 import dataAccess.DBAccess;
-import exception.AddDocumentException;
-import exception.DBException;
-import exception.SingletonConnectionException;
+import exception.*;
 import model.Document;
 import model.DocumentByWorkflowType;
 import model.DocumentType;
@@ -14,12 +12,13 @@ import java.util.ArrayList;
 public class DocumentManager {
     private DataAccess dao;
 
-    public DocumentManager() throws DBException, SingletonConnectionException {
+    public DocumentManager() {
         setDao(new DBAccess());
     }
     public void setDao(DataAccess documentDBAccess) {
         this.dao = documentDBAccess;
     }
+
     public ArrayList<DocumentByWorkflowType> getDocuments(Integer workflowNumber) throws DBException, SingletonConnectionException {
         return dao.getDocuments(workflowNumber);
     }
@@ -36,11 +35,11 @@ public class DocumentManager {
         dao.addDocument(document);
     }
 
-    public void deleteDocument(int id) throws DBException, SingletonConnectionException {
+    public void deleteDocument(int id) throws DeleteDocumentException, SingletonConnectionException {
         dao.deleteDocument(id);
     }
 
-    public void modifyDocument(Document document) throws DBException, SingletonConnectionException {
+    public void modifyDocument(Document document) throws ModifyDocumentException, SingletonConnectionException {
         dao.modifyDocument(document);
     }
 }
