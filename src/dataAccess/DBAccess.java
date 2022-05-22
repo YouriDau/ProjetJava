@@ -409,7 +409,6 @@ public class DBAccess implements DataAccess {
         } catch (SQLException exception){
             throw new DBException(exception.getMessage());
         }
-
     }
 
     @Override
