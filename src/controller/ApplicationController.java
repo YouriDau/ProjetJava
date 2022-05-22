@@ -17,11 +17,31 @@ public class ApplicationController {
     private PointingManager pointingManager;
 
     public ApplicationController() throws DBException, SingletonConnectionException {
-        workflowManager = new WorkflowManager();
-        documentManager = new DocumentManager();
-        itemManager = new ItemManager();
-        businessTaskManager = new BusinessTaskManager();
-        pointingManager = new PointingManager();
+        setWorkflowManager(new WorkflowManager());
+        setDocumentManager(new DocumentManager());
+        setItemManager(new ItemManager());
+        setBusinessTaskManager(new BusinessTaskManager());
+        setPointingManager(new PointingManager());
+    }
+
+    public void setWorkflowManager(WorkflowManager workflowManager) {
+        this.workflowManager = workflowManager;
+    }
+
+    public void setDocumentManager(DocumentManager documentManager) {
+        this.documentManager = documentManager;
+    }
+
+    public void setItemManager(ItemManager itemManager) {
+        this.itemManager = itemManager;
+    }
+
+    public void setBusinessTaskManager(BusinessTaskManager businessTaskManager) {
+        this.businessTaskManager = businessTaskManager;
+    }
+
+    public void setPointingManager(PointingManager pointingManager) {
+        this.pointingManager = pointingManager;
     }
 
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
