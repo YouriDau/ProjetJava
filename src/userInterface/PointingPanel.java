@@ -4,6 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
@@ -83,10 +89,23 @@ public class PointingPanel extends JPanel {
         this.add(reset, layoutConstraints);
     }
 
+    public boolean firstDateInferiorToSecond(JSpinner.DateEditor firstEditor,JSpinner.DateEditor secondEditor) {
+        Date date1 = new Date();
+        Date date2 = new Date();
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            date1 = simpleDateFormat.parse(firstEditor.getTextField().getText());
+            date2 = simpleDateFormat.parse(secondEditor.getTextField().getText());
+        }catch (ParseException e){
+
+        }
+        return date1.before(date2) || date1.equals(date2);
+
+    }
+
     public class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(firstEditor.getTextField().getText());
             firstDate.setValue(today.getTime());
             secondDate.setValue(today.getTime());
         }
@@ -107,10 +126,16 @@ public class PointingPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, "The second date must respect the format dd-mm-yyyy\nAnd it must be a credible date",
                             "Error date format", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    container.removeAll();
-                    container.add(new PointingListPanel(container, firstDate, secondDate));
-                    container.revalidate();
-                    container.repaint();
+                    // Vérification que la 1ere date est inférieur a la deuxième
+                    if (firstDateInferiorToSecond(firstEditor, secondEditor)){
+                        container.removeAll();
+                        container.add(new PointingListPanel(container, firstDate, secondDate));
+                        container.revalidate();
+                        container.repaint();
+                    }else {
+                        JOptionPane.showMessageDialog(null, "The first date must be inferior to the second date",
+                                "Error date", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }
