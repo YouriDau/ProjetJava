@@ -27,13 +27,14 @@ public class SingletonConnection {
     }
 
     public static void closeConnection() throws CloseConnectionException {
-        if (connection == null)
+        if (connection != null) {
             try {
                 connection.close();
                 connection = null;
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 throw new CloseConnectionException();
             }
+        }
     }
 
     public static boolean connectionIsNull() {
