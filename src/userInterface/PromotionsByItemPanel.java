@@ -105,7 +105,7 @@ public class PromotionsByItemPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             container.removeAll();
-            container.add(new NewPromotionPanel(container, wordingItem));
+            container.add(new NewPromotionPanel(container, wordingItem, businessTaskModels));
             container.revalidate();
             container.repaint();
         }

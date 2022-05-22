@@ -3,6 +3,7 @@ package userInterface;
 import controller.ApplicationController;
 import exception.AddPromotionException;
 import exception.SingletonConnectionException;
+import model.BusinessTaskModel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,10 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class NewPromotionPanel extends JPanel {
@@ -36,13 +34,16 @@ public class NewPromotionPanel extends JPanel {
     private JSpinner.DateEditor endDateSpinnerEditor;
     private GregorianCalendar date;
 
+
     private JButton back;
     private JButton submit;
+    private ArrayList<BusinessTaskModel> businessTaskModels;
 
 
-    public NewPromotionPanel(Container container, String wordingItem){
+    public NewPromotionPanel(Container container, String wordingItem, ArrayList<BusinessTaskModel> businessTaskModels){
         this.container = container;
         this.setLayout(new GridBagLayout());
+        setBusinessTaskModels(businessTaskModels);
         layoutConstraints = new GridBagConstraints();
 
         // Création du controller
@@ -137,28 +138,40 @@ public class NewPromotionPanel extends JPanel {
         this.add(submit, layoutConstraints);
     }
 
+    public void setBusinessTaskModels(ArrayList<BusinessTaskModel> businessTaskModels) {
+        this.businessTaskModels = businessTaskModels;
+    }
+
     public GregorianCalendar convertJspinnerEditortoDate(JSpinner.DateEditor startDateSpinner){
         GregorianCalendar date = new GregorianCalendar();
         date.setTime((Date) startDateSpinner.getTextField().getValue());
         date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1,date.get(Calendar.DAY_OF_MONTH));
-        System.out.println(date.get(Calendar.YEAR) + " " + date.get(Calendar.MONTH) +  " "+date.get(Calendar.DAY_OF_MONTH));
         return date;
     }
 
     public boolean firstDateInferiorToSecond(JSpinner.DateEditor startDateSpinnerEditor,JSpinner.DateEditor endDateSpinnerEditor) {
-        Date date1 = new Date();
-        Date date2 = new Date();
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            date1 = simpleDateFormat.parse(startDateSpinnerEditor.getTextField().getText());
-            date2 = simpleDateFormat.parse(endDateSpinnerEditor.getTextField().getText());
-        }catch (ParseException e){
-
-        }
+        GregorianCalendar date1 = convertJspinnerEditortoDate(startDateSpinnerEditor);
+        GregorianCalendar date2 = convertJspinnerEditortoDate(endDateSpinnerEditor);
         return date1.before(date2) || date1.equals(date2);
 
     }
 
+    public boolean dateBetweenTwoDates(GregorianCalendar date, GregorianCalendar lowDate, GregorianCalendar highDate){
+        int resultFirstComparison = date.compareTo(lowDate);// si la valeur < 0 alors date1 est avant date 2
+        int resultSecondComparison = date.compareTo(highDate);
+        return resultFirstComparison > 0 && resultSecondComparison < 0 ;
+    }
+
+    public boolean dateAlreadyInPromo(GregorianCalendar date, ArrayList<BusinessTaskModel> businessTaskModels){
+        boolean result = false;
+        for (BusinessTaskModel businessTaskModel : businessTaskModels){
+            if (dateBetweenTwoDates(date, businessTaskModel.getStartDate(), businessTaskModel.getEndDate())){
+                result = true;
+            }
+
+        }
+        return result;
+    }
 
     public class SliderListener implements ChangeListener {
         @Override
@@ -190,20 +203,32 @@ public class NewPromotionPanel extends JPanel {
                         startDate = convertJspinnerEditortoDate(startDateSpinnerEditor);
                         GregorianCalendar endDate;
                         endDate = convertJspinnerEditortoDate(endDateSpinnerEditor);
-                        String lastStartDate = startDate.get(Calendar.YEAR) + "-"+startDate.get(Calendar.MONTH)+"-"+startDate.get(Calendar.DAY_OF_MONTH);
-                        String lastEndDate = endDate.get(Calendar.YEAR) + "-"+endDate.get(Calendar.MONTH)+"-"+endDate.get(Calendar.DAY_OF_MONTH);
+                        // Vérification que la start date de la promotion créé ne sois pas comprise dans une promotion existante pour cette article
+                        if (dateAlreadyInPromo(startDate, businessTaskModels)){
+                            System.out.println("test");
+                            JOptionPane.showMessageDialog(null, "Start date already exist in promotion for this item", "Start date error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            // Vérification que la end date de la promotion créé ne sois pas comprise dans une promotion existante pour cette article
+                            if (dateAlreadyInPromo(endDate, businessTaskModels)){
+                                System.out.println("test2");
+                                JOptionPane.showMessageDialog(null, "End date already exist in promotion for this item", "End date error", JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                String lastStartDate = startDate.get(Calendar.YEAR) + "-"+startDate.get(Calendar.MONTH)+"-"+startDate.get(Calendar.DAY_OF_MONTH);
+                                String lastEndDate = endDate.get(Calendar.YEAR) + "-"+endDate.get(Calendar.MONTH)+"-"+endDate.get(Calendar.DAY_OF_MONTH);
 
-                        try {
-                            controller.addPromotion(percentageSlider.getValue(), lastStartDate, lastEndDate, wordingItemLabel.getText());
-                        } catch (AddPromotionException exception){
-                            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
-                        } catch (SingletonConnectionException exception){
-                            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                                try {
+                                    controller.addPromotion(percentageSlider.getValue(), lastStartDate, lastEndDate, wordingItemLabel.getText());
+                                } catch (AddPromotionException exception){
+                                    JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                                } catch (SingletonConnectionException exception){
+                                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                                }
+                                container.removeAll();
+                                container.add(new PromotionsByItemPanel(container, wordingItemLabel.getText()));
+                                container.revalidate();
+                                container.repaint();
+                            }
                         }
-                        container.removeAll();
-                        container.add(new PromotionsByItemPanel(container, wordingItemLabel.getText()));
-                        container.revalidate();
-                        container.repaint();
                     } else {
                         JOptionPane.showMessageDialog(null, "The start date must inferior to the end date",
                                 "Error date", JOptionPane.ERROR_MESSAGE);

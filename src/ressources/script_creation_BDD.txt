@@ -224,14 +224,29 @@ INSERT INTO document(creation_date, payment_condition, credit_limit, type, proce
 VALUES ('2021-05-01', null, null, 4, 2, TRUE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
 VALUES ('2022-06-06', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-04-02', null, null, 4, 2, TRUE);
 
 # Création d'item
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
-VALUES ('coca', CURRENT_DATE, 'pack de 6', 60, 200);
+VALUES ('coca', CURRENT_DATE, 'pack of 6', 60, 200);
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
-VALUES ('fanta', CURRENT_DATE, 'pack de 6', 40, 120);
+VALUES ('fanta', CURRENT_DATE, 'pack of 6', 40, 120);
 INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
-VALUES ('pomme', CURRENT_DATE, 'en Vrac', 30, 60);
+VALUES ('apple', CURRENT_DATE, 'pack of 6', 30, 60);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('butter', CURRENT_DATE, '250 g', 15, 32);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('burger', CURRENT_DATE, '2 x 100 g', 2, 10);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('fishStick', CURRENT_DATE, '500 g', 15, 36);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('chocolate', CURRENT_DATE, '2 x 100 g', 20, 50);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('bread', CURRENT_DATE, 'sliced', 1, 15);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('potatoes', CURRENT_DATE, '1kg', 20, 30);
+
 
 #Création Promotion
 INSERT INTO promotion(percentage, start_date, end_date, item)
@@ -251,7 +266,7 @@ VALUES (2.50,50,0.26 ,null,2,3,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (5.99,30,0.26 ,null,2,3,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (5.99,20,0.26 ,null,1,1,1);
+VALUES (5.99,20,0.26 ,null,5,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
 VALUES (2,10,0.26 ,null,4,3,1);
 
