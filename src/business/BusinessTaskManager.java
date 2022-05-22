@@ -25,4 +25,7 @@ public class BusinessTaskManager {
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException{
         return dao.getAllItemsWording();
     }
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
+        dao.addPromotion(percentage, startDate, endDate, itemWording);
+    }
 }
