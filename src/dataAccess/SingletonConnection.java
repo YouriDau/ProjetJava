@@ -1,5 +1,7 @@
 package dataAccess;
 
+import exception.CloseConnectionException;
+import exception.DBException;
 import exception.SingletonConnectionException;
 
 import javax.swing.*;
@@ -24,13 +26,14 @@ public class SingletonConnection {
         return connection;
     }
 
-    public static void closeConnection() throws SingletonConnectionException {
-        try {
-            connection.close();
-        }
-        catch (SQLException exception) {
-            throw new SingletonConnectionException(exception.getMessage());
-        }
+    public static void closeConnection() throws CloseConnectionException {
+        if (connection == null)
+            try {
+                connection.close();
+                connection = null;
+            } catch (SQLException e){
+                throw new CloseConnectionException();
+            }
     }
 
     public static boolean connectionIsNull() {

@@ -1,6 +1,9 @@
 package userInterface;
 
+import controller.ApplicationController;
 import dataAccess.SingletonConnection;
+import exception.CloseConnectionException;
+import exception.DBException;
 import exception.SingletonConnectionException;
 
 import javax.swing.*;
@@ -15,6 +18,7 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu applicationMenu, itemsMenu, documentsMenu, pointingMenu, promotionsMenu;
     private JMenuItem quit, home, searchByPromo, searchByWorkflowType, allDocuments, pointingByDate, businessTask;
+
 
     public MainWindow() {
         super("Magasin");
@@ -64,16 +68,17 @@ public class MainWindow extends JFrame {
         menuBar.add(promotionsMenu);
 
         addWindowListener(new WindowAdapter() {
+            ApplicationController controller = new ApplicationController();
             @Override
             public void windowClosing(WindowEvent e) {
-                if (!SingletonConnection.connectionIsNull())
-                    try {
-                        SingletonConnection.closeConnection();
-                    }
-                    catch(SingletonConnectionException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
-                    }
-                System.exit(0);
+                try {
+                    controller.closeConnection();
+                    System.exit(0);
+                } catch (CloseConnectionException exception){
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+                }
+
+
             }
         });
         setLocationRelativeTo(null);
@@ -82,16 +87,17 @@ public class MainWindow extends JFrame {
     }
 
     public class QuitListener implements ActionListener {
+        ApplicationController controller = new ApplicationController();
         @Override
         public void actionPerformed(ActionEvent event) {
-            if (!SingletonConnection.connectionIsNull())
-                try {
-                    SingletonConnection.closeConnection();
-                }
-                catch(SingletonConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
-                }
-            System.exit(0);
+
+            try {
+                controller.closeConnection();
+                System.exit(0);
+            } catch (CloseConnectionException exception){
+                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }
 

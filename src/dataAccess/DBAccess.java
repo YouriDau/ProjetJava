@@ -31,6 +31,7 @@ public class DBAccess implements DataAccess {
                 id = data.getInt("id");
                 workflowNumbers.add(id);
             }
+
         } catch (SQLException exception) {
 
         }
@@ -229,6 +230,7 @@ public class DBAccess implements DataAccess {
             throw new AddDocumentException();
         }
     }
+
     @Override
     public void deleteDocument(Integer id) throws DeleteDocumentException, SingletonConnectionException {
         String sqlInstruction = "DELETE FROM document " +
@@ -466,6 +468,11 @@ public class DBAccess implements DataAccess {
         }
         return pointings;
     }
+
+    public void closeConnection() throws CloseConnectionException {
+        SingletonConnection.closeConnection();
+    }
+
 }
 
 

@@ -1,5 +1,8 @@
 package controller;
 
+
+import exception.DBException;
+import exception.SingletonConnectionException;
 import exception.*;
 import model.*;
 
@@ -33,4 +36,7 @@ public interface DataAccess {
 
     // Pointing
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws SingletonConnectionException;
+
+    // closeConnection
+    public void closeConnection() throws CloseConnectionException;
 }

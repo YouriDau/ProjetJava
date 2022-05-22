@@ -4,6 +4,7 @@ import business.*;
 import exception.*;
 import model.*;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -13,6 +14,7 @@ public class ApplicationController {
     private ItemManager itemManager;
     private BusinessTaskManager businessTaskManager;
     private PointingManager pointingManager;
+    private ConnectionManager manager;
 
 
     public ApplicationController() {
@@ -21,6 +23,7 @@ public class ApplicationController {
         setItemManager(new ItemManager());
         setBusinessTaskManager(new BusinessTaskManager());
         setPointingManager(new PointingManager());
+        setManager(new ConnectionManager());
     }
 
     public void setWorkflowManager(WorkflowManager workflowManager) {
@@ -42,7 +45,9 @@ public class ApplicationController {
     public void setPointingManager(PointingManager pointingManager) {
         this.pointingManager = pointingManager;
     }
-
+    public void setManager(ConnectionManager manager) {
+        this.manager = manager;
+    }
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws SingletonConnectionException {
         return workflowManager.getAllWorkflowTypes();
     }
@@ -93,5 +98,9 @@ public class ApplicationController {
 
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  SingletonConnectionException {
         return pointingManager.getPointingBetweenDates(firstDate, secondDate);
+    }
+
+    public void closeConnection() throws CloseConnectionException{
+        manager.closeConnection();
     }
 }
