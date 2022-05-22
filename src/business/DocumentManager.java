@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DocumentManager {
     private DataAccess dao;
 
-    public DocumentManager() throws AddDocumentException, SingletonConnectionException {
+    public DocumentManager() throws DBException, SingletonConnectionException {
         setDao(new DBAccess());
     }
     public void setDao(DataAccess documentDBAccess) {

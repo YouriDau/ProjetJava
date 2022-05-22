@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
 
-    public DBAccess() throws AddDocumentException, SingletonConnectionException {
+    public DBAccess() throws DBException, SingletonConnectionException {
 
     }
 
