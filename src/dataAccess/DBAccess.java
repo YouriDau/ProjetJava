@@ -212,7 +212,7 @@ public class DBAccess implements DataAccess {
 
             if (document.getPaymentCondition() != null) {
                 sqlInstruction = "UPDATE document SET payment_condition = ?" +
-                                 "WHERE number = ?";
+                        "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, document.getPaymentCondition());
                 preparedStatement.setString(2, Integer.toString(lastDocumentId));
@@ -221,7 +221,7 @@ public class DBAccess implements DataAccess {
 
             if (document.getCreditLimit() != null) {
                 sqlInstruction = "UPDATE document SET credit_limit = ?" +
-                                 "WHERE number = ?";
+                        "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setDouble(1, document.getCreditLimit());
                 preparedStatement.setString(2, Integer.toString(lastDocumentId));
@@ -393,8 +393,22 @@ public class DBAccess implements DataAccess {
             return wordingItems;
     }
 
-    @Override
-    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException {
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
+        String SQLInstruction = "INSERT INTO promotion(percentage, start_date, end_date, item) " +
+                " VALUES ( ? , ? , ? , (SELECT id FROM item WHERE wording = ?));";
+        Connection connection = SingletonConnection.getInstance();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
+            preparedStatement.setInt(1,percentage);
+            preparedStatement.setString(2, startDate);
+            preparedStatement.setString(3, endDate);
+            preparedStatement.setString(4, itemWording);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception){
+            throw new DBException(exception.getMessage());
+        }
 
     }
 
@@ -413,13 +427,13 @@ public class DBAccess implements DataAccess {
         ArrayList<PointingBetweenDates> pointings = new ArrayList<>();
 
         String sqlInstruction = "SELECT po.date, po.type, pe.last_name, pe.first_name, pet.wording " +
-                                "FROM pointing po " +
-                                "INNER JOIN person pe " +
-                                "ON (po.employee = pe.number) " +
-                                "INNER JOIN person_type pet " +
-                                "ON (pe.type = pet.id) " +
-                                "WHERE po.date " +
-                                "BETWEEN ? AND ?";
+                "FROM pointing po " +
+                "INNER JOIN person pe " +
+                "ON (po.employee = pe.number) " +
+                "INNER JOIN person_type pet " +
+                "ON (pe.type = pet.id) " +
+                "WHERE po.date " +
+                "BETWEEN ? AND ?";
         Connection connection = SingletonConnection.getInstance();
 
         try {
@@ -432,15 +446,14 @@ public class DBAccess implements DataAccess {
             preparedStatement.setDate(2, secondSQLDate);
 
             ResultSet data = preparedStatement.executeQuery();
-
             while (data.next()) {
                 pointingDate = new GregorianCalendar();
                 pointingHour = new GregorianCalendar();
 
-                lastName = data.getString("pe.last_name");
-                personType = data.getString("pet.wording");
-                pointingDate.setTime(data.getDate("po.date"));
-                pointingType = data.getString("po.type");
+                lastName = data.getString("last_name");
+                personType = data.getString("wording");
+                pointingDate.setTime(data.getDate("date"));
+                pointingType = data.getString("type");
 
                 pointingHour.setTime(data.getTime("po.date"));
                 pointingDate.set(Calendar.HOUR, pointingHour.get(Calendar.HOUR));
@@ -448,7 +461,7 @@ public class DBAccess implements DataAccess {
 
                 pointing = new PointingBetweenDates(lastName, personType, pointingDate, pointingType);
 
-                firstName = data.getString("pe.first_name");
+                firstName = data.getString("first_name");
                 if (!data.wasNull()) {
                     pointing.setFirstName(firstName);
                 }
