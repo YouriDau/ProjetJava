@@ -1,24 +1,27 @@
 package model;
 
 import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class PointingBetweenDates {
     private String lastName;
     private String firstName; // can be null
     private String personType;
-    private GregorianCalendar pointingDate;
-    private Time pointingHour;
+    private GregorianCalendar pointingDateHour;
     private String pointingType;
 
-    public PointingBetweenDates(String lastName, String firstName, String personType, GregorianCalendar pointingDate,
-                                Time pointingHour, String pointingType) {
+    public PointingBetweenDates(String lastName, String firstName, String personType, GregorianCalendar pointingDate, String pointingType) {
         setLastName(lastName);
         setFirstName(firstName);
         setPersonType(personType);
-        setPointingDate(pointingDate);
-        setPointingHour(pointingHour);
+        setPointingDateHour(pointingDate);
         setPointingType(pointingType);
+    }
+
+    public PointingBetweenDates(String lastName, String personType, GregorianCalendar pointingDate, String pointingType) {
+        this(lastName, null, personType, pointingDate, pointingType);
     }
 
     public String getLastName() {
@@ -45,20 +48,22 @@ public class PointingBetweenDates {
         this.personType = personType;
     }
 
-    public GregorianCalendar getPointingDate() {
-        return pointingDate;
+    public GregorianCalendar getPointingDateHour() {
+        return pointingDateHour;
     }
 
-    public void setPointingDate(GregorianCalendar pointingDate) {
-        this.pointingDate = pointingDate;
+    public String getPointingDateHourStr() {
+        int year = pointingDateHour.get(Calendar.YEAR);
+        int month = pointingDateHour.get(Calendar.MONTH)+1;
+        int day = pointingDateHour.get(Calendar.DAY_OF_MONTH);
+        int hour = pointingDateHour.get(Calendar.HOUR);
+        int minutes = pointingDateHour.get(Calendar.MINUTE);
+
+        return year + "-" + month + "-" + day + " " + hour + ":" + minutes;
     }
 
-    public Time getPointingHour() {
-        return pointingHour;
-    }
-
-    public void setPointingHour(Time pointingHour) {
-        this.pointingHour = pointingHour;
+    public void setPointingDateHour(GregorianCalendar pointingDate) {
+        this.pointingDateHour = pointingDate;
     }
 
     public String getPointingType() {

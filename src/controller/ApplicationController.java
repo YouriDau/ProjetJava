@@ -1,26 +1,26 @@
 package controller;
 
-import business.BusinessTaskManager;
-import business.DocumentManager;
-import business.ItemManager;
-import business.WorkflowManager;
+import business.*;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class ApplicationController {
     private WorkflowManager workflowManager;
     private DocumentManager documentManager;
     private ItemManager itemManager;
     private BusinessTaskManager businessTaskManager;
+    private PointingManager pointingManager;
 
     public ApplicationController() throws DBException, SingletonConnectionException {
         workflowManager = new WorkflowManager();
         documentManager = new DocumentManager();
         itemManager = new ItemManager();
         businessTaskManager = new BusinessTaskManager();
+        pointingManager = new PointingManager();
     }
 
     public ArrayList<WorkflowType> getAllWorkflowTypes() throws DBException, SingletonConnectionException {
@@ -68,5 +68,9 @@ public class ApplicationController {
 
     public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
         businessTaskManager.addPromotion(percentage, startDate, endDate, itemWording);
+    }
+
+    public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
+        return pointingManager.getPointingBetweenDates(firstDate, secondDate);
     }
 }

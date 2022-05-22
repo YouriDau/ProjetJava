@@ -30,6 +30,7 @@ public interface DataAccess {
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException;
     public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException;
 
+
     // Pointing
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException;
 }

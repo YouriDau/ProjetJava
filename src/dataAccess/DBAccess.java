@@ -7,6 +7,7 @@ import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
@@ -211,7 +212,7 @@ public class DBAccess implements DataAccess {
 
             if (document.getPaymentCondition() != null) {
                 sqlInstruction = "UPDATE document SET payment_condition = ?" +
-                        "WHERE number = ?";
+                                 "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, document.getPaymentCondition());
                 preparedStatement.setString(2, Integer.toString(lastDocumentId));
@@ -220,7 +221,7 @@ public class DBAccess implements DataAccess {
 
             if (document.getCreditLimit() != null) {
                 sqlInstruction = "UPDATE document SET credit_limit = ?" +
-                        "WHERE number = ?";
+                                 "WHERE number = ?";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setDouble(1, document.getCreditLimit());
                 preparedStatement.setString(2, Integer.toString(lastDocumentId));
@@ -392,32 +393,17 @@ public class DBAccess implements DataAccess {
             return wordingItems;
     }
 
-    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
-        String SQLInstruction = "INSERT INTO promotion(percentage, start_date, end_date, item) " +
-                " VALUES ( ? , ? , ? , (SELECT id FROM item WHERE wording = ?));";
-        Connection connection = SingletonConnection.getInstance();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQLInstruction);
-            preparedStatement.setInt(1,percentage);
-            preparedStatement.setString(2, startDate);
-            preparedStatement.setString(3, endDate);
-            preparedStatement.setString(4, itemWording);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException exception){
-            throw new DBException(exception.getMessage());
-        }
+    @Override
+    public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException {
 
     }
 
     @Override
     public ArrayList<PointingBetweenDates> getPointingBetweenDates(GregorianCalendar firstDate, GregorianCalendar secondDate) throws  DBException, SingletonConnectionException {
-        /*String lastName;
+        String lastName;
         String firstName; // can be null
         String personType;
         GregorianCalendar pointingDate;
-        Time pointingHour;
         String pointingType;
         java.sql.Date firstSQLDate;
         java.sql.Date secondSQLDate;
@@ -425,14 +411,14 @@ public class DBAccess implements DataAccess {
         PointingBetweenDates pointing;
         ArrayList<PointingBetweenDates> pointings = new ArrayList<>();
 
-        String sqlInstruction = "SELECT po.date, po.hour, po.type, pe.last_name, pe.first_name, pet.wording " +
-                                "FROM pointing po" +
-                                "INNER JOIN person pe" +
+        String sqlInstruction = "SELECT po.date, po.type, pe.last_name, pe.first_name, pet.wording " +
+                                "FROM pointing po " +
+                                "INNER JOIN person pe " +
                                 "ON (po.employee = pe.number) " +
                                 "INNER JOIN person_type pet " +
                                 "ON (pe.type = pet.id) " +
-                                "WHERE po.date" +
-                                    "BETWEEN ? AND ?";
+                                "WHERE po.date " +
+                                "BETWEEN ? AND ?";
         Connection connection = SingletonConnection.getInstance();
 
         try {
@@ -447,27 +433,26 @@ public class DBAccess implements DataAccess {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
+                pointingDate = new GregorianCalendar();
+
                 lastName = data.getString("pe.last_name");
-                personType = data.getString("pet.type");
+                personType = data.getString("pet.wording");
+                pointingDate.setTime(data.getDate("po.date"));
+                pointingDate.setTime(data.getTime("po.date"));
+                pointingType = data.getString("po.type");
 
-                paymentCondition = data.getString("payment_condition");
+                pointing = new PointingBetweenDates(lastName, personType, pointingDate, pointingType);
+
+                firstName = data.getString("pe.first_name");
                 if (!data.wasNull()) {
-                    document.setPaymentCondition(paymentCondition);
+                    pointing.setFirstName(firstName);
                 }
-
-                creditLimit = data.getDouble("credit_limit");
-                if (!data.wasNull()) {
-                    document.setCreditLimit(creditLimit);
-                }
-
-                documents.add(document);
+                pointings.add(pointing);
             }
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return null;*/
-        return null;
+        return pointings;
     }
 }
 
