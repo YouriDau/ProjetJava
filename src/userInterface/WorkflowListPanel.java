@@ -71,7 +71,7 @@ public class WorkflowListPanel extends JPanel {
             }
         }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
     }
 

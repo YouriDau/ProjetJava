@@ -1,7 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.PointingBetweenDates;
 
@@ -29,12 +28,11 @@ public class PointingListPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         this.layoutConstraints = new GridBagConstraints();
         this.container = container;
+
         firstDate = new GregorianCalendar();
         firstDate.setTime((Date)firstDateSpinner.getValue());
         secondDate = new GregorianCalendar();
         secondDate.setTime((Date)secondDateSpinner.getValue());
-
-        System.out.println(firstDate.get(Calendar.YEAR) + " " + firstDate.get(Calendar.DAY_OF_MONTH));
 
         try {
             controller = new ApplicationController();
@@ -78,7 +76,7 @@ public class PointingListPanel extends JPanel {
             }
         }
         catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "SingletonConnexion exception", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
