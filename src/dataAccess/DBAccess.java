@@ -31,10 +31,10 @@ public class DBAccess implements DataAccess {
                 id = data.getInt("id");
                 workflowNumbers.add(id);
             }
+            return workflowNumbers;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return workflowNumbers;
     }
 
     @Override
@@ -56,11 +56,10 @@ public class DBAccess implements DataAccess {
                 workflowType = new WorkflowType(id, wording);
                 workflowTypes.add(workflowType);
             }
+            return workflowTypes;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-
-        return workflowTypes;
     }
 
     @Override
@@ -79,10 +78,10 @@ public class DBAccess implements DataAccess {
                 type = new DocumentType(data.getInt("id"), data.getString("wording"));
                 types.add(type);
             }
+            return types;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return types;
     }
 
     @Override
@@ -128,10 +127,10 @@ public class DBAccess implements DataAccess {
 
                 documents.add(document);
             }
+            return documents;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return documents;
     }
 
     @Override
@@ -179,10 +178,10 @@ public class DBAccess implements DataAccess {
 
                 documents.add(document);
             }
+            return documents;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return documents;
     }
 
     @Override
@@ -313,11 +312,10 @@ public class DBAccess implements DataAccess {
                 researchByPromoModel = new ResearchByPromoModel(percentage, wordingItem, lastUnitPrice);
                 researchByPromoModels.add(researchByPromoModel);
             }
-
+            return researchByPromoModels;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return researchByPromoModels;
     }
 
     @Override
@@ -362,13 +360,10 @@ public class DBAccess implements DataAccess {
                 businessTaskModel = new BusinessTaskModel(wordingItem, percentagePromotion, percentageId, startDate, endDate, detailQuantity);
                 businessTaskModels.add(businessTaskModel);
             }
-
+            return businessTaskModels;
         } catch (SQLException sqlException) {
             throw new DBException(sqlException.getMessage());
         }
-
-
-        return businessTaskModels;
     }
 
     public ArrayList<String> getAllItemsWording() throws DBException, SingletonConnectionException {
@@ -387,10 +382,10 @@ public class DBAccess implements DataAccess {
                 wordingItem = data.getString("wording");
                 wordingItems.add(wordingItem);
             }
+            return wordingItems;
         } catch (SQLException sqlException) {
             throw new DBException(sqlException.getMessage());
         }
-            return wordingItems;
     }
 
     public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  DBException, SingletonConnectionException{
@@ -466,10 +461,10 @@ public class DBAccess implements DataAccess {
                 }
                 pointings.add(pointing);
             }
+            return pointings;
         } catch (SQLException exception) {
             throw new DBException(exception.getMessage());
         }
-        return pointings;
     }
 }
 
