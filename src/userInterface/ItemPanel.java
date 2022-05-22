@@ -14,10 +14,8 @@ public class ItemPanel extends JPanel {
     private SpinnerNumberModel secondNumberModel;
     private GridBagConstraints layoutConstraints;
     private JButton submit;
-    private JButton back;
     private JButton reset;
     private Container container;
-    private MainWindow mainWindow;
 
     public ItemPanel (Container container) {
         this.container = container;
@@ -93,13 +91,14 @@ public class ItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             minValue = Integer.parseInt(firstNumber.getValue().toString());
             maxValue = Integer.parseInt(secondNumber.getValue().toString());
+
             if (minValue > maxValue){
                 JOptionPane.showMessageDialog(null, "Min value is higher than max value", "Error value", JOptionPane.ERROR_MESSAGE);
                 firstNumber.setValue(0);
                 secondNumber.setValue(0);
             } else {
                 container.removeAll();
-                container.add(new ByPromoPanel(minValue, maxValue, container));
+                container.add(new ByPromoPanel(minValue, maxValue,container));
                 container.revalidate();
                 container.repaint();
             }

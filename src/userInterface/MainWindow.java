@@ -1,10 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
-import dataAccess.SingletonConnection;
 import exception.CloseConnectionException;
-import exception.DBException;
-import exception.SingletonConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,8 +74,6 @@ public class MainWindow extends JFrame {
                 } catch (CloseConnectionException exception){
                     JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                 }
-
-
             }
         });
         setLocationRelativeTo(null);
@@ -136,7 +131,6 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
-            //MainWindow.this.setSize(561, 500);
             container.add(new AllDocumentsPanel(container), BorderLayout.PAGE_START);
             container.repaint();
             MainWindow.this.pack();

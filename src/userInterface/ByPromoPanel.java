@@ -1,7 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.ResearchByPromoModel;
 
@@ -11,7 +10,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ByPromoPanel extends JPanel {
-    private Container container;
     private ApplicationController applicationController;
     private ArrayList<ResearchByPromoModel> researchByPromoModels;
     private AllPromotionsInformationModel model;
@@ -25,7 +23,7 @@ public class ByPromoPanel extends JPanel {
     public ByPromoPanel (int minvalue, int maxValue, Container container){
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
-        this.container = container;
+
         try{
             applicationController = new ApplicationController();
             researchByPromoModels = applicationController.getResearchByPromo(minvalue, maxValue);
@@ -55,7 +53,6 @@ public class ByPromoPanel extends JPanel {
 
                 setColumnSize();
 
-
                 layoutConstraints.gridwidth = 1;
                 layoutConstraints.anchor = GridBagConstraints.CENTER;
                 layoutConstraints.insets = new Insets(3, 0, 15, 0);
@@ -79,7 +76,7 @@ public class ByPromoPanel extends JPanel {
             }
         }
         catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
     }
     public void setColumnSize(){

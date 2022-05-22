@@ -1,13 +1,9 @@
 package userInterface;
 
-import model.Document;
 import model.DocumentByWorkflowType;
-import model.DocumentType;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class DocumentByWorkflowModel extends AbstractTableModel {
     private ArrayList<String> columnNames;

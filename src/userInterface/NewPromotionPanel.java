@@ -2,7 +2,6 @@ package userInterface;
 
 import controller.ApplicationController;
 import exception.AddPromotionException;
-import exception.DBException;
 import exception.SingletonConnectionException;
 
 import javax.swing.*;
@@ -40,7 +39,7 @@ public class NewPromotionPanel extends JPanel {
 
 
     public NewPromotionPanel(Container container, String wordingItem){
-        setContainer(container);
+        this.container = container;
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
 
@@ -136,9 +135,6 @@ public class NewPromotionPanel extends JPanel {
         this.add(submit, layoutConstraints);
     }
 
-    public void setContainer(Container container) {
-        this.container = container;
-    }
     public GregorianCalendar convertJspinnerEditortoDate(JSpinner.DateEditor startDateSpinner){
         GregorianCalendar date = new GregorianCalendar();
         date.setTime((Date) startDateSpinner.getTextField().getValue());

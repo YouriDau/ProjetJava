@@ -163,7 +163,7 @@ public class ModifyDocumentPanel extends JPanel {
             this.add(new BackButton(new AllDocumentsPanel(container), container), layoutConstraints);
         }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
 
     }

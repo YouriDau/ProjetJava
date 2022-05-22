@@ -2,7 +2,6 @@ package userInterface;
 
 import controller.ApplicationController;
 import exception.AddDocumentException;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
 import model.DocumentType;
@@ -143,7 +142,7 @@ public class NewDocumentPanel extends JPanel {
             this.add(new BackButton(new AllDocumentsPanel(container), container), layoutConstraints);
         }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -211,10 +210,10 @@ public class NewDocumentPanel extends JPanel {
                             controller.addDocument(document);
                         }
                         catch(AddDocumentException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                         }
                         catch (SingletonConnectionException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                         }
                         container.removeAll();
                         container.add(new AllDocumentsPanel(container));

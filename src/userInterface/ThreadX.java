@@ -1,14 +1,7 @@
 package userInterface;
 
-import javax.imageio.IIOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class ThreadX extends Thread{
     private HomePanel homePanel;
@@ -45,13 +38,10 @@ public class ThreadX extends Thread{
                 else{
                     imageNumber = 0;
                 }
-
             }catch (Exception e){
                 JOptionPane.showMessageDialog(null, "Thread Error",
                         "Error Thread", JOptionPane.ERROR_MESSAGE);
             }
-
         }
-
     }
 }

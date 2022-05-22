@@ -1,7 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.WorkflowType;
 
@@ -17,7 +16,6 @@ public class WorkflowPanel extends JPanel {
     private WorkflowType[] workflowTypes;
     private GridBagConstraints layoutConstraints;
     private JButton submit;
-    private JButton back;
     private ApplicationController controller;
     private Container container;
 
@@ -61,7 +59,7 @@ public class WorkflowPanel extends JPanel {
             this.add(new BackButton(new HomePanel(), container), layoutConstraints);
         }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
     }
 

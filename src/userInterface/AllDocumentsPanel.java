@@ -1,13 +1,11 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.DeleteDocumentException;
 import exception.SingletonConnectionException;
 import model.Document;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,7 +80,7 @@ public class AllDocumentsPanel extends JPanel{
             this.add(scrollPane, layoutConstraints);
         }
         catch (SingletonConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -131,10 +129,10 @@ public class AllDocumentsPanel extends JPanel{
 
             }
             catch (DeleteDocumentException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
             }
             catch (SingletonConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

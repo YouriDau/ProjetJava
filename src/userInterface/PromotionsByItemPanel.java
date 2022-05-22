@@ -1,7 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.BusinessTaskModel;
 
@@ -27,10 +26,11 @@ public class PromotionsByItemPanel extends JPanel {
     private String wordingItem;
 
     public PromotionsByItemPanel(Container container, String wordingItem){
-        setWordingItem(wordingItem);
         this.setLayout(new GridBagLayout());
         layoutConstraints = new GridBagConstraints();
-        setContainer(container);
+        this.wordingItem = wordingItem;
+        this.container = container;
+
         try {
             controller = new ApplicationController();
             businessTaskModels = controller.getBusinessTaskInformation(wordingItem);
@@ -97,16 +97,8 @@ public class PromotionsByItemPanel extends JPanel {
             }
         }
         catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public void setWordingItem(String wordingItem) {
-        this.wordingItem = wordingItem;
-    }
-
-    public void setContainer(Container container) {
-        this.container = container;
     }
 
     public class AddListener implements ActionListener{

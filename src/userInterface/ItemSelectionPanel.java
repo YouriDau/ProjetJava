@@ -1,7 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.SingletonConnectionException;
 
 import javax.swing.*;
@@ -15,13 +14,13 @@ public class ItemSelectionPanel extends JPanel {
     private GridBagConstraints layoutconstraints;
     private JLabel label;
     private JComboBox itemSelection;
+    private JButton submit;
+    private  JButton back;
     private ArrayList<String> allWordingItems;
     private ApplicationController applicationController;
 
-    private JButton submit;
-    private  JButton back;
     public ItemSelectionPanel(Container container){
-        setContainer(container);
+        this.container = container;
         this.setLayout( new GridBagLayout());
         layoutconstraints = new GridBagConstraints();
         label = new JLabel("Choose an item :");
@@ -45,7 +44,6 @@ public class ItemSelectionPanel extends JPanel {
             submit.addActionListener(new  SubmitListener());
 
             // Ajouts au panel
-
             layoutconstraints.gridwidth = 2;
             layoutconstraints.gridx = 0;
             layoutconstraints.gridy = 0;
@@ -68,20 +66,16 @@ public class ItemSelectionPanel extends JPanel {
             this.add(back, layoutconstraints);
         }
         catch (SingletonConnectionException exception){
-            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
-
-
     }
 
-    public void setContainer(Container container) {
-        this.container = container;
-    }
     public class SubmitListener implements ActionListener{
         private String wordingItem;
         @Override
         public void actionPerformed(ActionEvent e) {
             wordingItem = itemSelection.getSelectedItem().toString();
+
             container.removeAll();
             container.add(new PromotionsByItemPanel(container, wordingItem));
             container.revalidate();
