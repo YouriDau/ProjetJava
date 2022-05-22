@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -143,21 +145,18 @@ public class NewPromotionPanel extends JPanel {
         return date;
     }
 
-    public boolean firstDateInferiorToSecond(GregorianCalendar date1, GregorianCalendar date2){
-        if (date1.get(Calendar.YEAR) <= date2.get(Calendar.YEAR)){
-            return true;
-        } else{
-            if (date1.get(Calendar.MONTH) <= date2.get(Calendar.MONTH)){
-                return true;
-            } else {
-                if (date1.get(Calendar.DAY_OF_MONTH) <= date2.get(Calendar.DAY_OF_MONTH)){
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
+    public boolean firstDateInferiorToSecond(JSpinner.DateEditor startDateSpinnerEditor,JSpinner.DateEditor endDateSpinnerEditor) {
+        Date date1 = new Date();
+        Date date2 = new Date();
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            date1 = simpleDateFormat.parse(startDateSpinnerEditor.getTextField().getText());
+            date2 = simpleDateFormat.parse(endDateSpinnerEditor.getTextField().getText());
+        }catch (ParseException e){
+
         }
+        return date1.before(date2) || date1.equals(date2);
+
     }
 
 
@@ -184,12 +183,13 @@ public class NewPromotionPanel extends JPanel {
                             "Error date format", JOptionPane.ERROR_MESSAGE);
 
                 } else {
-                    GregorianCalendar startDate;
-                    startDate = convertJspinnerEditortoDate(startDateSpinnerEditor);
-                    GregorianCalendar endDate;
-                    endDate = convertJspinnerEditortoDate(endDateSpinnerEditor);
+
                     // vérifie que la end date est > que la  start date
-                    if (firstDateInferiorToSecond(startDate, endDate)){
+                    if (firstDateInferiorToSecond(startDateSpinnerEditor, endDateSpinnerEditor)){
+                        GregorianCalendar startDate;
+                        startDate = convertJspinnerEditortoDate(startDateSpinnerEditor);
+                        GregorianCalendar endDate;
+                        endDate = convertJspinnerEditortoDate(endDateSpinnerEditor);
                         String lastStartDate = startDate.get(Calendar.YEAR) + "-"+startDate.get(Calendar.MONTH)+"-"+startDate.get(Calendar.DAY_OF_MONTH);
                         String lastEndDate = endDate.get(Calendar.YEAR) + "-"+endDate.get(Calendar.MONTH)+"-"+endDate.get(Calendar.DAY_OF_MONTH);
 
