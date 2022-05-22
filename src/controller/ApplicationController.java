@@ -1,6 +1,7 @@
 package controller;
 
 import business.*;
+import exception.AddDocumentException;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.*;
@@ -15,7 +16,7 @@ public class ApplicationController {
     private BusinessTaskManager businessTaskManager;
     private PointingManager pointingManager;
 
-    public ApplicationController() throws DBException, SingletonConnectionException {
+    public ApplicationController() throws DBException, AddDocumentException, SingletonConnectionException {
         workflowManager = new WorkflowManager();
         documentManager = new DocumentManager();
         itemManager = new ItemManager();
@@ -43,7 +44,7 @@ public class ApplicationController {
         return workflowManager.getAllWorkflow();
     }
 
-    public void addDocument(Document document) throws DBException, SingletonConnectionException {
+    public void addDocument(Document document) throws AddDocumentException, SingletonConnectionException {
         documentManager.addDocument(document);
     }
 

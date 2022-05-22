@@ -1,6 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
+import exception.AddDocumentException;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
@@ -212,8 +213,8 @@ public class NewDocumentPanel extends JPanel {
 
                             controller.addDocument(document);
                         }
-                        catch(DBException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getErrorMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                        catch(AddDocumentException exception) {
+                            JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
                         }
                         catch (SingletonConnectionException exception) {
                             JOptionPane.showMessageDialog(null, exception.getErrorMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);

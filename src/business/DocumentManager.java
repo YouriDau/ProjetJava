@@ -2,6 +2,7 @@ package business;
 
 import controller.DataAccess;
 import dataAccess.DBAccess;
+import exception.AddDocumentException;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.Document;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class DocumentManager {
     private DataAccess dao;
 
-    public DocumentManager() throws DBException, SingletonConnectionException {
+    public DocumentManager() throws AddDocumentException, SingletonConnectionException {
         setDao(new DBAccess());
     }
     public void setDao(DataAccess documentDBAccess) {
@@ -31,7 +32,7 @@ public class DocumentManager {
         return dao.getAllDocuments();
     }
 
-    public void addDocument(Document document) throws DBException, SingletonConnectionException {
+    public void addDocument(Document document) throws AddDocumentException, SingletonConnectionException {
         dao.addDocument(document);
     }
 

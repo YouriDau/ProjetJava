@@ -1,6 +1,7 @@
 package dataAccess;
 
 import controller.DataAccess;
+import exception.AddDocumentException;
 import exception.DBException;
 import exception.SingletonConnectionException;
 import model.*;
@@ -12,7 +13,7 @@ import java.util.GregorianCalendar;
 
 public class DBAccess implements DataAccess {
 
-    public DBAccess() throws DBException, SingletonConnectionException {
+    public DBAccess() throws AddDocumentException, SingletonConnectionException {
 
     }
 
@@ -185,7 +186,7 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public void addDocument(Document document) throws DBException, SingletonConnectionException {
+    public void addDocument(Document document) throws AddDocumentException, SingletonConnectionException {
         int lastDocumentId;
         ResultSet data;
         String sqlInstruction = "INSERT INTO document(creation_date, type, process, update_the_stock) " +
@@ -227,7 +228,7 @@ public class DBAccess implements DataAccess {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException exception) {
-            throw new DBException(exception.getMessage());
+            throw new AddDocumentException();
         }
     }
 
