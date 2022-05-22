@@ -16,6 +16,7 @@ public class ApplicationController {
     private BusinessTaskManager businessTaskManager;
     private PointingManager pointingManager;
 
+
     public ApplicationController() throws DBException, SingletonConnectionException {
         setWorkflowManager(new WorkflowManager());
         setDocumentManager(new DocumentManager());
