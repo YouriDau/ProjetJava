@@ -392,7 +392,7 @@ public class DBAccess implements DataAccess {
     }
     @Override
     public void addPromotion(int percentage, String startDate, String endDate, String itemWording) throws  AddPromotionException, SingletonConnectionException{
-        String SQLInstruction = "INSERT INTO promotion(percentagee, start_date, end_date, item) " +
+        String SQLInstruction = "INSERT INTO promotion(percentage, start_date, end_date, item) " +
                 " VALUES ( ? , ? , ? , (SELECT id FROM item WHERE wording = ?));";
         Connection connection = SingletonConnection.getInstance();
 
