@@ -221,9 +221,9 @@ public class NewPromotionPanel extends JPanel {
                                 try {
                                     controller.addPromotion(percentageSlider.getValue(), lastStartDate, lastEndDate, wordingItemLabel.getText());
                                 } catch (AddPromotionException exception){
-                                    JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                                 } catch (SingletonConnectionException exception){
-                                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                                 }
                                 container.removeAll();
                                 container.add(new PromotionsByItemPanel(container, wordingItemLabel.getText()));
