@@ -101,7 +101,7 @@ public class PromotionsByItemPanel extends JPanel {
         }
     }
 
-    public class AddListener implements ActionListener{
+    private class AddListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             container.removeAll();

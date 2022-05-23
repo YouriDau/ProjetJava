@@ -177,14 +177,14 @@ public class NewPromotionPanel extends JPanel {
         return result;
     }
 
-    public class SliderListener implements ChangeListener {
+    private class SliderListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent e) {
                 sliderValue.setText(""+percentageSlider.getValue());
         }
     }
 
-    public class SubmitListener implements ActionListener{
+    private class SubmitListener implements ActionListener{
         private Pattern pattern;
 
         @Override

@@ -81,7 +81,7 @@ public class MainWindow extends JFrame {
         setResizable(false);
     }
 
-    public class QuitListener implements ActionListener {
+    private class QuitListener implements ActionListener {
         ApplicationController controller = new ApplicationController();
         @Override
         public void actionPerformed(ActionEvent event) {
@@ -96,7 +96,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public class HomeListener implements ActionListener {
+    private class HomeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
@@ -106,7 +106,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public class SearchByPromoListener implements ActionListener {
+    private class SearchByPromoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
@@ -117,7 +117,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public class SearchByWorkflowTypeListener implements ActionListener {
+    private class SearchByWorkflowTypeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
@@ -127,7 +127,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public class AllDocumentsListener implements ActionListener {
+    private class AllDocumentsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
@@ -138,7 +138,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public class PointingByDateListener implements ActionListener {
+    private class PointingByDateListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
@@ -148,7 +148,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public class PromotionsByItemListener implements ActionListener{
+    private class PromotionsByItemListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             container.removeAll();

@@ -101,7 +101,7 @@ public class PointingPanel extends JPanel {
 
     }
 
-    public class ResetListener implements ActionListener {
+    private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             firstDate.setValue(today.getTime());
@@ -109,7 +109,7 @@ public class PointingPanel extends JPanel {
         }
     }
 
-    public class SubmitListener implements ActionListener{
+    private class SubmitListener implements ActionListener{
         private Pattern pattern;
 
         @Override

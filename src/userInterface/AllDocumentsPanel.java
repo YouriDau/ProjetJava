@@ -103,7 +103,7 @@ public class AllDocumentsPanel extends JPanel{
         column.setPreferredWidth(100);
     }
 
-    public class AddDocumentListener implements ActionListener {
+    private class AddDocumentListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();
@@ -113,7 +113,7 @@ public class AllDocumentsPanel extends JPanel{
         }
     }
 
-    public class DeleteDocumentListener implements ActionListener {
+    private class DeleteDocumentListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             try {
@@ -137,7 +137,7 @@ public class AllDocumentsPanel extends JPanel{
         }
     }
 
-    public class ModifyDocumentListener implements ActionListener {
+    private class ModifyDocumentListener implements ActionListener {
         private Document document;
         @Override
         public void actionPerformed(ActionEvent event) {

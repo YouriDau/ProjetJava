@@ -73,7 +73,7 @@ public class WorkflowPanel extends JPanel {
         }
     }
 
-    public class SubmitListener implements ActionListener {
+    private class SubmitListener implements ActionListener {
         private Integer workflowNumber;
 
         @Override

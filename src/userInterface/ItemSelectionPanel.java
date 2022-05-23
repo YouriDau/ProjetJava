@@ -71,7 +71,7 @@ public class ItemSelectionPanel extends JPanel {
         }
     }
 
-    public class SubmitListener implements ActionListener{
+    private class SubmitListener implements ActionListener{
         private String wordingItem;
         @Override
         public void actionPerformed(ActionEvent e) {

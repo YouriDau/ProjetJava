@@ -17,7 +17,7 @@ public class BackButton extends JButton {
         this.addActionListener(new BackListener());
     }
 
-    public class BackListener implements ActionListener {
+    private class BackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             container.removeAll();

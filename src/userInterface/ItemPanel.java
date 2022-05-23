@@ -76,7 +76,7 @@ public class ItemPanel extends JPanel {
         this.add(reset, layoutConstraints);
     }
 
-    public class ResetListener implements ActionListener {
+    private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             firstNumber.setValue(0);
@@ -84,7 +84,7 @@ public class ItemPanel extends JPanel {
         }
     }
 
-    public class SubmitListener implements ActionListener{
+    private class SubmitListener implements ActionListener{
         private Integer minValue;
         private Integer maxValue;
         @Override

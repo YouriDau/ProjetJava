@@ -188,7 +188,7 @@ public class ModifyDocumentPanel extends JPanel {
         }
     }
 
-    public class SubmitListener implements ActionListener {
+    private class SubmitListener implements ActionListener {
         private Pattern pattern;
         private Double newCreditLimit;
         private String newPaymentCondition;
