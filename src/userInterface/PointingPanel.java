@@ -1,5 +1,6 @@
 package userInterface;
 
+import javax.print.attribute.standard.JobPriority;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -93,8 +94,8 @@ public class PointingPanel extends JPanel {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             date1 = simpleDateFormat.parse(firstEditor.getTextField().getText());
             date2 = simpleDateFormat.parse(secondEditor.getTextField().getText());
-        }catch (ParseException e){
-
+        }catch (ParseException exception){
+            JOptionPane.showMessageDialog(null, "Error while parse date", exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
         return date1.before(date2) || date1.equals(date2);
 
