@@ -172,13 +172,6 @@ public class NewPromotionPanel extends JPanel {
             highDate.set(businessTaskModel.getEndDate().get(Calendar.YEAR), businessTaskModel.getEndDate().get(Calendar.MONTH)+1, businessTaskModel.getEndDate().get(Calendar.DAY_OF_MONTH));
 
             if (dateBetweenTwoDates(date, lowDate, highDate)){
-                /*System.out.println(date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH)+"-"+date.get(Calendar.YEAR) + "invalid date");
-
-                System.out.println(lowDate.get(Calendar.DAY_OF_MONTH) + "-" + lowDate.get(Calendar.MONTH)+"-"+lowDate.get(Calendar.YEAR)+ "low date");
-                System.out.println(businessTaskModel.getStartDate().get(Calendar.DAY_OF_MONTH) + "-" + businessTaskModel.getStartDate().get(Calendar.MONTH)+"-"+businessTaskModel.getStartDate().get(Calendar.YEAR) + "start date");
-
-                System.out.println(highDate.get(Calendar.DAY_OF_MONTH) + "-" + highDate.get(Calendar.MONTH)+"-"+highDate.get(Calendar.YEAR)+ "highDate");
-                System.out.println(businessTaskModel.getEndDate().get(Calendar.DAY_OF_MONTH) + "-" + businessTaskModel.getEndDate().get(Calendar.MONTH)+"-"+businessTaskModel.getEndDate().get(Calendar.YEAR)+ "end date");*/
                 result = true;
             }
 
