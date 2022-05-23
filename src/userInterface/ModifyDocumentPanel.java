@@ -239,10 +239,10 @@ public class ModifyDocumentPanel extends JPanel {
                                 controller.modifyDocument(document);
                             }
                             catch (ModifyDocumentException exception) {
-                                JOptionPane.showMessageDialog(null, exception.getMessage(), "SQLError", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                             }
                             catch (SingletonConnectionException exception) {
-                                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getErrorTitle(), JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                             }
 
                             container.removeAll();

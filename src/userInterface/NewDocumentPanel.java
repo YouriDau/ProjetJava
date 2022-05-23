@@ -217,7 +217,7 @@ public class NewDocumentPanel extends JPanel {
 
                                 controller.addDocument(document);
                             } catch (AddDocumentException exception) {
-                                JOptionPane.showMessageDialog(null, exception.getMessage(), getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                             } catch (SingletonConnectionException exception) {
                                 JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
                             }
