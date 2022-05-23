@@ -164,8 +164,21 @@ public class NewPromotionPanel extends JPanel {
 
     public boolean dateAlreadyInPromo(GregorianCalendar date, ArrayList<BusinessTaskModel> businessTaskModels){
         boolean result = false;
+
         for (BusinessTaskModel businessTaskModel : businessTaskModels){
-            if (dateBetweenTwoDates(date, businessTaskModel.getStartDate(), businessTaskModel.getEndDate())){
+            GregorianCalendar lowDate = new GregorianCalendar();
+            GregorianCalendar highDate = new GregorianCalendar();
+            lowDate.set(businessTaskModel.getStartDate().get(Calendar.YEAR), businessTaskModel.getStartDate().get(Calendar.MONTH)+1, businessTaskModel.getStartDate().get(Calendar.DAY_OF_MONTH));
+            highDate.set(businessTaskModel.getEndDate().get(Calendar.YEAR), businessTaskModel.getEndDate().get(Calendar.MONTH)+1, businessTaskModel.getEndDate().get(Calendar.DAY_OF_MONTH));
+
+            if (dateBetweenTwoDates(date, lowDate, highDate)){
+                /*System.out.println(date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH)+"-"+date.get(Calendar.YEAR) + "invalid date");
+
+                System.out.println(lowDate.get(Calendar.DAY_OF_MONTH) + "-" + lowDate.get(Calendar.MONTH)+"-"+lowDate.get(Calendar.YEAR)+ "low date");
+                System.out.println(businessTaskModel.getStartDate().get(Calendar.DAY_OF_MONTH) + "-" + businessTaskModel.getStartDate().get(Calendar.MONTH)+"-"+businessTaskModel.getStartDate().get(Calendar.YEAR) + "start date");
+
+                System.out.println(highDate.get(Calendar.DAY_OF_MONTH) + "-" + highDate.get(Calendar.MONTH)+"-"+highDate.get(Calendar.YEAR)+ "highDate");
+                System.out.println(businessTaskModel.getEndDate().get(Calendar.DAY_OF_MONTH) + "-" + businessTaskModel.getEndDate().get(Calendar.MONTH)+"-"+businessTaskModel.getEndDate().get(Calendar.YEAR)+ "end date");*/
                 result = true;
             }
 
@@ -205,12 +218,10 @@ public class NewPromotionPanel extends JPanel {
                         endDate = convertJspinnerEditortoDate(endDateSpinnerEditor);
                         // Vérification que la start date de la promotion créé ne sois pas comprise dans une promotion existante pour cette article
                         if (dateAlreadyInPromo(startDate, businessTaskModels)){
-                            System.out.println("test");
                             JOptionPane.showMessageDialog(null, "Start date already exist in promotion for this item", "Start date error", JOptionPane.ERROR_MESSAGE);
                         } else {
                             // Vérification que la end date de la promotion créé ne sois pas comprise dans une promotion existante pour cette article
                             if (dateAlreadyInPromo(endDate, businessTaskModels)){
-                                System.out.println("test2");
                                 JOptionPane.showMessageDialog(null, "End date already exist in promotion for this item", "End date error", JOptionPane.ERROR_MESSAGE);
                             } else {
                                 String lastStartDate = startDate.get(Calendar.YEAR) + "-"+startDate.get(Calendar.MONTH)+"-"+startDate.get(Calendar.DAY_OF_MONTH);
