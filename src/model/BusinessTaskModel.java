@@ -1,5 +1,7 @@
 package model;
 
+import business.BusinessTaskManager;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -18,6 +20,9 @@ public class BusinessTaskModel {
         setStartDate(startDate);
         setEndDate(endDate);
         setDetailQuantity(detailQuantity);
+    }
+    public BusinessTaskModel(){
+    // utile pour le test unitaire
     }
 
     public void setWordingItem(String wordingItem) {
