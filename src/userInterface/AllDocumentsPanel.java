@@ -39,6 +39,7 @@ public class AllDocumentsPanel extends JPanel{
             table.setPreferredScrollableViewportSize(new Dimension(515, 300));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
+            scrollPane.createVerticalScrollBar();
 
             addDocument = new JButton("Add a new document");
             deleteDocument = new JButton("Delete");

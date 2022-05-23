@@ -55,6 +55,7 @@ public class PointingListPanel extends JPanel {
 
                 table.setPreferredScrollableViewportSize(new Dimension(425,300));
                 scrollPane = new JScrollPane(table);
+                scrollPane.createVerticalScrollBar();
 
                 setColumnsSize();
 

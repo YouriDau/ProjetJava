@@ -69,6 +69,7 @@ public class PromotionsByItemPanel extends JPanel {
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
                 table.setPreferredScrollableViewportSize(new Dimension(425,250));
                 scrollPane = new JScrollPane(table);
+                scrollPane.createVerticalScrollBar();
                 // Ajouts des composants
                 layoutConstraints.gridwidth = 2;
                 layoutConstraints.insets = new Insets(0,0,15,0);
@@ -93,7 +94,6 @@ public class PromotionsByItemPanel extends JPanel {
 
                 layoutConstraints.gridy = 2;
                 this.add(scrollPane, layoutConstraints);
-
             }
         }
         catch (SingletonConnectionException exception){

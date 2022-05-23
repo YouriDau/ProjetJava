@@ -49,6 +49,7 @@ public class ByPromoPanel extends JPanel {
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
                 jScrollPane = new JScrollPane(table);
+                jScrollPane.createVerticalScrollBar();
 
                 setColumnSize();
 
