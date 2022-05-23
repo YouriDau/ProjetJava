@@ -185,40 +185,46 @@ public class NewDocumentPanel extends JPanel {
                 if (!pattern.matches("^[A-Za-zçàùéè'.\\d\\n\\p{javaWhitespace}]*$", paymentCondition.getText())) {
                     JOptionPane.showMessageDialog(null, "Payment conditons only accept A-Z, a-z, 1-9, ç, à, ù, é, è, ', .",
                             "Error payment condition", JOptionPane.ERROR_MESSAGE);
-
                 } else {
+
+                    // Vérifier si le nombre respecte bien le format décimal, entier ou null
                     if (!pattern.matches("^[0-9]*\\.?[0-9]*$", creditLimit.getText())) {
                         JOptionPane.showMessageDialog(null, "Credit limit peut être soit vide soit respecter le format suivant XXX OU XXX.XX",
                                 "Error credit limit", JOptionPane.ERROR_MESSAGE);
+                        creditLimit.setText("");
                     } else {
-                        if (paymentCondition.getText().equals("")) {
-                            newPaymentCondition = null;
+                        if (Double.parseDouble(creditLimit.getText()) >= 1000000) {
+                            JOptionPane.showMessageDialog(null, "The number max in Credit Limit is 999 999.xx",
+                                    "Error credit limit", JOptionPane.ERROR_MESSAGE);
+                            creditLimit.setText("");
                         } else {
-                            newPaymentCondition = paymentCondition.getText();
-                        }
-                        if (creditLimit.getText().equals("")) {
-                            newCreditLimit = null;
-                        } else {
-                            newCreditLimit = Double.parseDouble(creditLimit.getText());
-                        }
+                            if (paymentCondition.getText().equals("")) {
+                                newPaymentCondition = null;
+                            } else {
+                                newPaymentCondition = paymentCondition.getText();
+                            }
+                            if (creditLimit.getText().equals("")) {
+                                newCreditLimit = null;
+                            } else {
+                                newCreditLimit = Double.parseDouble(creditLimit.getText());
+                            }
 
-                        try {
-                            document = new Document(null, new GregorianCalendar(), newPaymentCondition, newCreditLimit,
-                                    documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber(),
-                                    workflowNumbers[workflowsComboBox.getSelectedIndex()], yes.isSelected());
+                            try {
+                                document = new Document(null, new GregorianCalendar(), newPaymentCondition, newCreditLimit,
+                                        documentTypes[documentTypesComboBox.getSelectedIndex()].getNumber(),
+                                        workflowNumbers[workflowsComboBox.getSelectedIndex()], yes.isSelected());
 
-                            controller.addDocument(document);
+                                controller.addDocument(document);
+                            } catch (AddDocumentException exception) {
+                                JOptionPane.showMessageDialog(null, exception.getMessage(), getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+                            } catch (SingletonConnectionException exception) {
+                                JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
+                            }
+                            container.removeAll();
+                            container.add(new AllDocumentsPanel(container));
+                            container.revalidate();
+                            container.repaint();
                         }
-                        catch(AddDocumentException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getMessage(), getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
-                        }
-                        catch (SingletonConnectionException exception) {
-                            JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
-                        }
-                        container.removeAll();
-                        container.add(new AllDocumentsPanel(container));
-                        container.revalidate();
-                        container.repaint();
                     }
                 }
             }
