@@ -429,7 +429,8 @@ public class DBAccess implements DataAccess {
                 "INNER JOIN person_type pet " +
                 "ON (pe.type = pet.id) " +
                 "WHERE po.date " +
-                "BETWEEN ? AND ?";
+                "BETWEEN ? AND ? " +
+                "ORDER BY po.date";
         Connection connection = SingletonConnection.getInstance();
 
         try {
