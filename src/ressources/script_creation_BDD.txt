@@ -82,7 +82,7 @@ CREATE TABLE document (
 	payment_condition CHAR(100),
 	credit_limit DECIMAL(8, 2),
 	type INT NOT NULL,
-	process INT NOT NULL NOT NULL,
+	process INT NOT NULL,
 	update_the_stock BOOLEAN NOT NULL,
 
 	CONSTRAINT credit_check
@@ -188,11 +188,11 @@ CREATE TABLE detail(
 	   PRIMARY KEY(code),
 	CONSTRAINT detail_fk
 	   FOREIGN KEY (document)
-		   REFERENCES document(number) ON DELETE CASCADE,
-	FOREIGN KEY (item)
-	   REFERENCES item(id),
-	FOREIGN KEY (lot)
-	   REFERENCES lot(reference)
+			REFERENCES document(number) ON DELETE CASCADE,
+		FOREIGN KEY (item)
+			REFERENCES item(id),
+		FOREIGN KEY (lot)
+			REFERENCES lot(reference)
 
 );
 

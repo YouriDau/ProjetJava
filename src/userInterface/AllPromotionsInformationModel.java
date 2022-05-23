@@ -11,7 +11,7 @@ public class AllPromotionsInformationModel extends AbstractTableModel {
     public AllPromotionsInformationModel(ArrayList<ResearchByPromoModel> researchByPromoModels){
         columnNames = new ArrayList<>();
         columnNames.add("Percentage");
-        columnNames.add("WordingItem");
+        columnNames.add("Wording item");
         columnNames.add("Last unit price");
         setResearchByPromos(researchByPromoModels);
     }

@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -51,13 +52,10 @@ public class PointingBetweenDates {
     }
 
     public String getPointingDateHourStr() {
-        int year = pointingDateHour.get(Calendar.YEAR);
-        int month = pointingDateHour.get(Calendar.MONTH)+1;
-        int day = pointingDateHour.get(Calendar.DAY_OF_MONTH);
-        int hour = pointingDateHour.get(Calendar.HOUR);
-        int minutes = pointingDateHour.get(Calendar.MINUTE);
+        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        date.setCalendar(new GregorianCalendar());
 
-        return year + "-" + month + "-" + day + " " + hour + ":" + minutes;
+        return date.format(pointingDateHour.getTime());
     }
 
     public void setPointingDateHour(GregorianCalendar pointingDate) {

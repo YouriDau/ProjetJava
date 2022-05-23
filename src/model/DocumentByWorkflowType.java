@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -44,11 +45,10 @@ public class DocumentByWorkflowType {
     }
 
     public String getCreationDateStr() {
-        int year = creationDate.get(Calendar.YEAR);
-        int month = creationDate.get(Calendar.MONTH)+1;
-        int day = creationDate.get(Calendar.DAY_OF_MONTH);
+        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+        date.setCalendar(new GregorianCalendar());
 
-        return year + "-" + month + "-" + day;
+        return date.format(creationDate.getTime());
     }
 
     public void setCreationDate(GregorianCalendar creationDate) {

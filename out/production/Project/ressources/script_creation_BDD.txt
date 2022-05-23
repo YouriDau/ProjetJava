@@ -4,202 +4,219 @@ USE store;
 
 DROP TABLE IF EXISTS `person_type`;
 CREATE TABLE person_type (
-                             id INT AUTO_INCREMENT,
-                             wording varchar(50) NOT NULL,
-                             CONSTRAINT person_type_pk
-                                 PRIMARY KEY(id)
+	id INT AUTO_INCREMENT,
+	wording CHAR(50) NOT NULL,
+	CONSTRAINT person_type_pk
+		PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE person (
-                        number INT AUTO_INCREMENT,
-                        last_name varchar(30) NOT NULL,
-                        phone_number numeric(11) NOT NULL,
-                        email varchar(50) NOT NULL,
-                        first_name varchar(30),
-                        VAT_number varchar(12),
-                        nb_fidelity_points numeric,
-                        has_badge boolean NOT NULL,
-                        type INT NOT NULL,
+	number INT AUTO_INCREMENT,
+	last_name CHAR(30) NOT NULL,
+	phone_number NUMERIC(11) NOT NULL,
+	email CHAR(50) NOT NULL,
+	first_name CHAR(30),
+	VAT_number CHAR(12),
+	nb_fidelity_points INT,
+	has_badge BOOLEAN NOT NULL,
+	type INT NOT NULL,
 
-                        CONSTRAINT person_pk
-                            PRIMARY KEY(number),
-                        CONSTRAINT person_fk
-                            FOREIGN KEY(type)
-                                REFERENCES person_type(id)
+	CONSTRAINT person_pk
+		PRIMARY KEY(number),
+	CONSTRAINT person_fk
+		FOREIGN KEY(type)
+			REFERENCES person_type(id)
 );
 
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE address (
-                         house_number numeric(10),
-                         street_name varchar(45),
-                         city_name varchar(45),
-                         postal_code numeric(8),
-                         country varchar(25),
-                         inhabitant INT NOT NULL,
+	house_number NUMERIC(10),
+	street_name CHAR(45),
+	city_name CHAR(45),
+	postal_code NUMERIC(8),
+	country CHAR(25),
+	inhabitant INT NOT NULL,
 
-                         CONSTRAINT address_pk
-                             PRIMARY KEY(house_number, street_name, city_name, postal_code, country),
-                         CONSTRAINT address_fk
-                             FOREIGN KEY(inhabitant)
-                                 REFERENCES person(number)
+	CONSTRAINT address_pk
+		PRIMARY KEY(house_number, street_name, city_name, postal_code, country),
+	CONSTRAINT address_fk
+		FOREIGN KEY(inhabitant)
+			REFERENCES person(number)
 );
 
 DROP TABLE IF EXISTS `document_type`;
 CREATE TABLE document_type (
-                               id INT AUTO_INCREMENT,
-                               wording varchar(50) NOT NULL,
+	id INT AUTO_INCREMENT,
+	wording CHAR(50) NOT NULL,
 
-                               CONSTRAINT document_type_pk
-                                   PRIMARY KEY(id)
+	CONSTRAINT document_type_pk
+		PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS `workflow_type`;
 CREATE TABLE workflow_type (
-                               id INT AUTO_INCREMENT,
-                               wording varchar(50) NOT NULL,
+	id INT AUTO_INCREMENT,
+	wording CHAR(50) NOT NULL,
 
-                               CONSTRAINT workflow_type_pk
-                                   PRIMARY KEY(id)
+	CONSTRAINT workflow_type_pk
+		PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS `workflow`;
 CREATE TABLE workflow (
-                          id INT AUTO_INCREMENT,
-                          type INT NOT NULL,
+	id INT AUTO_INCREMENT,
+	type INT NOT NULL,
 
-                          CONSTRAINT workflow_pk
-                              PRIMARY KEY(id),
-                          CONSTRAINT workflow_fk
-                              FOREIGN KEY(type)
-                                  REFERENCES workflow_type(id)
+	CONSTRAINT workflow_pk
+		PRIMARY KEY(id),
+	CONSTRAINT workflow_fk
+		FOREIGN KEY(type)
+			REFERENCES workflow_type(id)
 );
 
 DROP TABLE IF EXISTS `document`;
 CREATE TABLE document (
-                          number INT AUTO_INCREMENT,
-                          creation_date date NOT NULL,
-                          payment_condition varchar(100),
-                          credit_limit decimal(8, 2),
-                          type INT NOT NULL,
-                          process INT NOT NULL NOT NULL,
-                          update_the_stock BOOLEAN NOT NULL,
+	number INT AUTO_INCREMENT,
+	creation_date DATE NOT NULL,
+	payment_condition CHAR(100),
+	credit_limit DECIMAL(8, 2),
+	type INT NOT NULL,
+	process INT NOT NULL NOT NULL,
+	update_the_stock BOOLEAN NOT NULL,
 
-                          CONSTRAINT document_pk
-                              PRIMARY KEY(number),
-                          CONSTRAINT document_fk
-                              FOREIGN KEY(type)
-                                  REFERENCES document_type(id),
-                          FOREIGN KEY(process)
-                              REFERENCES workflow(id)
+	CONSTRAINT credit_check
+		CHECK(credit_limit >= 0),
+	CONSTRAINT document_pk
+		PRIMARY KEY(number),
+	CONSTRAINT document_fk
+		FOREIGN KEY(type)
+			REFERENCES document_type(id),
+		FOREIGN KEY(process)
+			REFERENCES workflow(id)
 );
 
 DROP TABLE IF EXISTS `pointing`;
 CREATE TABLE pointing(
-                         employee INT NOT NULL,
-                         date datetime NOT NULL,
-                         type VARCHAR(50) NOT NULL,
+	employee INT NOT NULL,
+	date DATETIME NOT NULL,
+	type CHAR(50) NOT NULL,
 
-                         CONSTRAINT pointing_pk
-                             PRIMARY KEY(employee, date),
-                         CONSTRAINT pointing_fk
-                             FOREIGN KEY (employee)
-                                 REFERENCES person(number)
+	CONSTRAINT pointing_pk
+		PRIMARY KEY(employee, date),
+	CONSTRAINT pointing_fk
+		FOREIGN KEY (employee)
+			REFERENCES person(number)
 );
 
 DROP TABLE IF EXISTS `traceability`;
 CREATE TABLE traceability(
-                             person INT NOT NULL,
-                             document INT NOT NULL,
+	person INT NOT NULL,
+	document INT NOT NULL,
 
-                             CONSTRAINT traceability_pk
-                                 PRIMARY KEY(person, document),
-                             CONSTRAINT traceability_fk
-                                 FOREIGN KEY (person)
-                                     REFERENCES person(number),
-                             FOREIGN KEY (document)
-                                 REFERENCES document(number) ON DELETE CASCADE
+	CONSTRAINT traceability_pk
+		PRIMARY KEY(person, document),
+	CONSTRAINT traceability_fk
+		FOREIGN KEY (person)
+			REFERENCES person(number),
+		FOREIGN KEY (document)
+			REFERENCES document(number) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE item(
-                     id INT AUTO_INCREMENT,
-                     wording varchar(50) NOT NULL,
-                     production_date date,
-                     packaging varchar(50) NOT NULL,
-                     minimum_level numeric(4) NOT NULL,
-                     quantity_in_stock INT NOT NULL,
-                     CONSTRAINT item_pk
-                         PRIMARY KEY(id)
+	id INT AUTO_INCREMENT,
+	wording CHAR(50) NOT NULL,
+	production_date DATE,
+	packaging CHAR(50) NOT NULL,
+	minimum_level NUMERIC(4) NOT NULL,
+	quantity_in_stock INT NOT NULL,
+
+	CONSTRAINT minimum_level_check
+		CHECK(minimum_level >= 0),
+	CONSTRAINT item_pk
+		PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS `promotion`;
 CREATE TABLE promotion(
-                          id INT AUTO_INCREMENT,
-                          percentage INT NOT NULL,
-                          start_date date NOT NULL,
-                          end_date date NOT NULL,
-                          item INT NOT NULL,
+	id INT AUTO_INCREMENT,
+	percentage INT NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
+	item INT NOT NULL,
 
-                          CONSTRAINT promotion_pk
-                              PRIMARY KEY(id),
-                          CONSTRAINT promotion_fk
-                              FOREIGN KEY (item)
-                                  REFERENCES item(id)
+	CONSTRAINT promotion_dates_check
+	CHECK(start_date <= end_date),
+	CONSTRAINT promotion_pk
+		PRIMARY KEY(id),
+	CONSTRAINT promotion_fk
+		FOREIGN KEY (item)
+			REFERENCES item(id)
 );
 
 DROP TABLE IF EXISTS `lot`;
 CREATE TABLE lot(
-                    reference INT AUTO_INCREMENT,
-                    arrivage_date date NOT NULL,
-                    expiration_date date NOT NULL,
+	reference INT AUTO_INCREMENT,
+	arrivage_date DATE NOT NULL,
+	expiration_date DATE NOT NULL,
 
-                    CONSTRAINT lot_pk
-                        PRIMARY KEY(reference)
+	CONSTRAINT lot_dates_check
+		CHECK(arrivage_date <= expiration_date),
+	CONSTRAINT lot_pk
+		PRIMARY KEY(reference)
 );
 
 DROP TABLE IF EXISTS `detail`;
 CREATE TABLE detail(
-                       code INT AUTO_INCREMENT,
-                       unit_price decimal(5,2) NOT NULL,
-                       quantity numeric(4) NOT NULL,
-                       vat_rate decimal(3,3) NOT NULL,
-                       back_order numeric(4),
-                       document INT NOT NULL,
-                       item INT NOT NULL,
-                       lot INT,
-                       CONSTRAINT detail_pk
-                           PRIMARY KEY(code),
-                       CONSTRAINT detail_fk
-                           FOREIGN KEY (document)
-                               REFERENCES document(number) ON DELETE CASCADE,
-                       FOREIGN KEY (item)
-                           REFERENCES item(id),
-                       FOREIGN KEY (lot)
-                           REFERENCES lot(reference)
+	code INT AUTO_INCREMENT,
+	unit_price DECIMAL(5,2) NOT NULL,
+	quantity NUMERIC(4) NOT NULL,
+	vat_rate DECIMAL(3,3) NOT NULL,
+	back_order NUMERIC(4),
+	document INT NOT NULL,
+	item INT NOT NULL,
+	lot INT,
+
+	CONSTRAINT unit_price_check
+		CHECK(unit_price > 0),
+	CONSTRAINT quantity_check
+		CHECK(unit_price > 0),
+	CONSTRAINT vat_rate_check
+		CHECK(vat_rate >= 0),
+	CONSTRAINT detail_pk
+	   PRIMARY KEY(code),
+	CONSTRAINT detail_fk
+	   FOREIGN KEY (document)
+		   REFERENCES document(number) ON DELETE CASCADE,
+	FOREIGN KEY (item)
+	   REFERENCES item(id),
+	FOREIGN KEY (lot)
+	   REFERENCES lot(reference)
 
 );
 
 DROP TABLE IF EXISTS `recipe`;
 CREATE TABLE recipe(
-                       ingredient INT,
-                       food INT,
-                       CONSTRAINT recipe_pk
-                           PRIMARY KEY(ingredient, food),
-                       CONSTRAINT recipe_fk
-                           FOREIGN KEY (ingredient)
-                               REFERENCES item(id),
-                       FOREIGN KEY (food)
-                           REFERENCES item(id)
+	ingredient INT,
+	food INT,
+
+	CONSTRAINT recipe_pk
+		PRIMARY KEY(ingredient, food),
+	CONSTRAINT recipe_fk
+		FOREIGN KEY (ingredient)
+			REFERENCES item(id),
+		FOREIGN KEY (food)
+			REFERENCES item(id)
 );
 
-#Création workflow_type
+# Création workflow_type
 INSERT INTO workflow_type(wording)
 VALUES ('Purchasing process');
 INSERT INTO workflow_type(wording)
 VALUES ('selling process');
 
-#Création workflow
+# Création workflow
 INSERT INTO workflow(type)
 VALUES (1);
 INSERT INTO workflow(type)
@@ -217,27 +234,77 @@ VALUES ('Bon de vente');
 
 # Création document
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
-VALUES (CURRENT_DATE, 'payment''s conditions here', 135.5, 1, 1, FALSE);
+VALUES (CURRENT_DATE, 'To pay before the next month', 135.5, 1, 1, FALSE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
-VALUES (CURRENT_DATE, 'payment''s conditions here', 90.9, 4, 2, TRUE);
+VALUES (CURRENT_DATE, null, null, 4, 2, TRUE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
-VALUES ('2021-05-01', null, null, 4, 2, TRUE);
+VALUES('2022-02-20', null, null, 4, 2, TRUE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
-VALUES ('2022-06-06', null, null, 4, 2, TRUE);
+VALUES('2022-03-15', null, null, 4, 2, TRUE);
 INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
-VALUES ('2022-04-02', null, null, 4, 2, TRUE);
+VALUES('2022-03-23', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES('2022-04-15', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-05-15', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-06-14', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-07-14', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-08-14', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES('2022-09-10', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES('2022-03-05', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES('2022-04-23', null, null, 4, 2, TRUE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-05-21', 'To pay before the next month', 180.5, 1, 1, FALSE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-05-28', 'To pay before the October', 65.5, 1, 1, FALSE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-06-15', 'To pay before the  December', 35.1, 1, 1, FALSE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-07-5', null, null, 2, 1, FALSE);
+INSERT INTO document(creation_date, payment_condition, credit_limit, type, process, update_the_stock)
+VALUES ('2022-07-25', null, null, 2, 1, FALSE);
 
 # Création d'item
-
-
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('coca', CURRENT_DATE, 'pack of 6', 60, 200);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('fanta', CURRENT_DATE, 'pack of 6', 40, 120);
+INSERT INTO item(wording, production_date, packaging, minimum_level, quantity_in_stock)
+VALUES ('pomme', CURRENT_DATE, 'en Vrac', 30, 60);
 
 #Création Promotion
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (35, '2022-02-01','2022-02-28' , 1);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (55, '2022-03-01','2022-03-15' , 1);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (48, '2022-03-20','2022-03-26' , 1);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (18, '2022-04-02','2022-04-16' , 1);
+
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (28, '2022-03-01','2022-03-06' , 2);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (65, '2022-03-20','2022-03-30' , 2);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (15, '2022-04-20','2022-04-29' , 2);
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (51, '2022-06-02','2022-06-20' , 2);
+
+INSERT INTO promotion(percentage, start_date, end_date, item)
+VALUES (43, '2022-03-03','2022-03-25' , 3);
 INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (30, '2022-04-01','2022-05-31' , 3);
 INSERT INTO promotion(percentage, start_date, end_date, item)
 VALUES (10, '2022-06-01','2022-07-31' , 3);
 INSERT INTO promotion(percentage, start_date, end_date, item)
-VALUES (70, '2021-04-01','2021-05-31' , 1);
+VALUES (50, '2022-09-05','2022-09-15' , 3);
 
 #Création lot
 INSERT INTO lot(arrivage_date, expiration_date)
@@ -245,13 +312,33 @@ VALUES ('2020-06-01','2025-07-31');
 
 #Création détail
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (2.50,50,0.26 ,null,2,3,1);
+VALUES (5.99,15,0.26 ,null,3,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (5.99,30,0.26 ,null,2,3,1);
+VALUES (5.99,25,0.26 ,null,4,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (5.99,20,0.26 ,null,5,1,1);
+VALUES (6.23,5,0.26 ,null,5,1,1);
 INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
-VALUES (2,10,0.26 ,null,4,3,1);
+VALUES (6.23,10,0.26 ,null,6,1,1);
+
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (5.99,12,0.26 ,null,12,2,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (5.99,30,0.26 ,null,5,2,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (6.23,11,0.26 ,null,13,2,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (6.23,9,0.26 ,null, 8,2,1);
+
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (2.50,50,0.26 ,null,5,3,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (5.99,30,0.26 ,null,6,3,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (2,10,0.26 ,null,7,3,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (2.1,20,0.26 ,null,8,3,1);
+INSERT INTO detail(unit_price, quantity, vat_rate, back_order, document, item, lot)
+VALUES (2.1,20,0.26 ,null,11,3,1);
 
 # Création person_type
 INSERT INTO person_type(wording)
