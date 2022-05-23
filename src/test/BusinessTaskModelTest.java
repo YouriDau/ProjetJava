@@ -12,12 +12,12 @@ class BusinessTaskModelTest {
     private BusinessTaskModel businessTaskModel;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp(){
         businessTaskModel = new BusinessTaskModel();
     }
 
     @Test
-    public void wordingItem() throws Exception{
+    public void wordingItem(){
         businessTaskModel.setWordingItem("potatoes");
         assertEquals("potatoes", businessTaskModel.getWordingItem());
     }
