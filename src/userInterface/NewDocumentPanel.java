@@ -177,7 +177,7 @@ public class NewDocumentPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
 
             if (paymentCondition.getText().length() > 100) {
-                JOptionPane.showMessageDialog(null, "Le nombre de caractères ne peut pas être suppérieur à 100\nNombre de caractères actuel : " + paymentCondition.getText().length(),
+                JOptionPane.showMessageDialog(null, "The number of characters can't be higher than 100\nCurrent number of characters:  : " + paymentCondition.getText().length(),
                         "Error payment condition", JOptionPane.ERROR_MESSAGE);
             } else {
 

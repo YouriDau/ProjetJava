@@ -36,10 +36,10 @@ public class AllDocumentsPanel extends JPanel{
 
             table = new JTable(model);
 
-            table.setPreferredScrollableViewportSize(new Dimension(515, 300));
+            table.setPreferredScrollableViewportSize(new Dimension(515, 304));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             scrollPane = new JScrollPane(table);
-            scrollPane.createVerticalScrollBar();
+            scrollPane.setVisible(true);
 
             addDocument = new JButton("Add a new document");
             deleteDocument = new JButton("Delete");
@@ -83,7 +83,6 @@ public class AllDocumentsPanel extends JPanel{
         catch (SingletonConnectionException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public void setColumnsSize() {
