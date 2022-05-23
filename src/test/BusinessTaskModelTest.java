@@ -19,6 +19,6 @@ class BusinessTaskModelTest {
     @Test
     public void wordingItem(){
         businessTaskModel.setWordingItem("potatoes");
-        assertEquals("potatoes", businessTaskModel.getWordingItem());
+        assertEquals("potat", businessTaskModel.getWordingItem());
     }
 }
