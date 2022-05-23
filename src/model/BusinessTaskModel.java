@@ -26,7 +26,7 @@ public class BusinessTaskModel {
     }
 
     public void setWordingItem(String wordingItem) {
-        wordingItem = wordingItem;
+        this.wordingItem = wordingItem;
     }
 
     public void setPercentagePromotion(Integer percentagePromotion) {
