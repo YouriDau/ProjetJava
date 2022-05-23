@@ -212,7 +212,7 @@ public class ModifyDocumentPanel extends JPanel {
                                 "Error credit limit", JOptionPane.ERROR_MESSAGE);
                         creditLimit.setText("");
                     } else {
-                        if (Double.parseDouble(creditLimit.getText()) >= 1000000) {
+                        if (!creditLimit.getText().equals("") && Double.parseDouble(creditLimit.getText()) >= 1000000) {
                             JOptionPane.showMessageDialog(null, "The number max in Credit Limit is 999 999.xx",
                                     "Error credit limit", JOptionPane.ERROR_MESSAGE);
                             creditLimit.setText("");
