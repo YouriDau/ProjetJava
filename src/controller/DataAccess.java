@@ -1,8 +1,6 @@
 package controller;
 
 
-import exception.DBException;
-import exception.SingletonConnectionException;
 import exception.*;
 import model.*;
 

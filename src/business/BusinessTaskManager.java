@@ -3,7 +3,6 @@ package business;
 import controller.DataAccess;
 import dataAccess.DBAccess;
 import exception.AddPromotionException;
-import exception.DBException;
 import exception.SingletonConnectionException;
 import model.BusinessTaskModel;
 

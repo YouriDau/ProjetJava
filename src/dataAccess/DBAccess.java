@@ -278,7 +278,7 @@ public class DBAccess implements DataAccess {
         }
     }
 
-    // Item
+    // Item by promotion
     @Override
     public ArrayList<ResearchByPromoModel> getResearchByPromo(int littleValue, int bigValue) throws SingletonConnectionException {
         // valeurs a recuperer dans la base de données
@@ -297,7 +297,8 @@ public class DBAccess implements DataAccess {
                                 "INNER JOIN detail d " +
                                 "ON i.id = d.item " +
                                 "WHERE percentage BETWEEN ? AND ?" +
-                                " AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item));";
+                                " AND d.code IN (SELECT max(d.code) FROM detail d GROUP BY (d.item))" +
+                                "ORDER BY p.percentage;";
 
         Connection connection = SingletonConnection.getInstance();
         try {
@@ -341,7 +342,8 @@ public class DBAccess implements DataAccess {
                 "                WHERE dt.wording = 'Bon de vente' " +
                 "                AND i.wording = ?" +
                 "                AND doc.creation_date BETWEEN p.start_date AND p.end_date " +
-                "                GROUP BY  p.id;";
+                "                GROUP BY  p.id" +
+                "                ORDER BY p.id;";
         // création de la connexion
         Connection connection = SingletonConnection.getInstance();
         try {

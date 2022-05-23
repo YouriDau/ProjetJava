@@ -4,6 +4,7 @@ import model.BusinessTaskModel;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class PromotionsByItemModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
@@ -17,6 +18,7 @@ public class PromotionsByItemModel extends AbstractTableModel {
         columnNames.add("End date");
         columnNames.add("quantity sold");
         setContents(businessTaskModels);
+        GregorianCalendar date = new GregorianCalendar();
     }
 
     public void setContents(ArrayList<BusinessTaskModel> contents) {

@@ -1,6 +1,7 @@
 package userInterface;
 
 import model.Document;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 

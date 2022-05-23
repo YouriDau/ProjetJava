@@ -1,9 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exception.DBException;
 import exception.SingletonConnectionException;
-import model.Document;
 import model.DocumentByWorkflowType;
 
 import javax.swing.*;

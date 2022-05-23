@@ -1,15 +1,7 @@
 package model;
 
-import exception.DBException;
-import exception.SingletonConnectionException;
-import userInterface.AllDocumentsPanel;
-
-import javax.swing.*;
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Document {
     public static final String[] columnsTitles = {"Number", "Creation date", "Payment condition", "Credit limit", "Document type", "Workflow number"};

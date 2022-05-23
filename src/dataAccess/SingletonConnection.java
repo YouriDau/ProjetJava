@@ -1,10 +1,8 @@
 package dataAccess;
 
 import exception.CloseConnectionException;
-import exception.DBException;
 import exception.SingletonConnectionException;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
