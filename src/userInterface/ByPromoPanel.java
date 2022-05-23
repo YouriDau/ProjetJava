@@ -48,7 +48,7 @@ public class ByPromoPanel extends JPanel {
                 table.setPreferredScrollableViewportSize(new Dimension(515,300));
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-                jScrollPane = new JScrollPane(table);
+                jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 jScrollPane.setVisible(true);
 
                 setColumnSize();

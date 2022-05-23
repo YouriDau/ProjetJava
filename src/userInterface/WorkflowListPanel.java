@@ -48,7 +48,7 @@ public class WorkflowListPanel extends JPanel {
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
                 table.setPreferredScrollableViewportSize(new Dimension(425,300));
-                scrollPane = new JScrollPane(table);
+                scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 scrollPane.setVisible(true);
 
                 setColumnsSize();
